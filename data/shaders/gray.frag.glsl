@@ -30,18 +30,21 @@ uniform sampler2D tex;
 
 void main()
 {
-	frag_color = vec4(0.5, 0.5, 0.5, 1.0);
-	// vec4 ambient = light.ambient * material.ambient * light.color;
+	vec4 ambient = light.ambient * material.ambient * light.color;
 
-	// vec3 norm = normal_matrix * normalize(normal);
-	// vec3 lightDir = normalize(light.position - frag_pos);
-	// float diffuse_strength = max(dot(norm, lightDir), 0.0);
-	// vec4 diffuse = light.diffuse * diffuse_strength * material.diffuse * light.color;
+	vec3 camera_direction = normalize(camera_pos - frag_pos);
+	vec3 light_direction = normalize(light.position - frag_pos);
 
-	// vec3 camera_direction = normalize(camera_pos - frag_pos);
-	// vec3 reflectDir = reflect(-lightDir, norm);
-	// float specular_strength = pow(max(dot(camera_direction, reflectDir), 0.0), material.shininess);
-	// vec4 specular = light.specular * specular_strength * material.specular * light.color;
+	vec3 norm = normal_matrix * normalize(normal);
+	float diffuse_strength = max(dot(norm, light_direction), 0.0);
+	vec4 diffuse = light.diffuse * diffuse_strength * material.diffuse * light.color;
 
-	// frag_color = texture(tex, uv) * (ambient + diffuse + specular);
+	vec3 reflectDir = reflect(-light_direction, norm);
+	float specular_strength = pow(max(dot(camera_direction, reflectDir), 0.0), material.shininess);
+	vec4 specular = light.specular * specular_strength * material.specular * light.color;
+
+	// TODO: this is a hack lol
+	specular = vec4(0.15, 0.15, 0.15, 0);
+
+	frag_color = (ambient + diffuse + specular);
 }

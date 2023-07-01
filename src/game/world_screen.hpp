@@ -19,7 +19,7 @@ namespace duckhacker
 		class WorldScreen : public Screen
 		{
 		public:
-			WorldScreen(content::Manager * content_manager);
+			WorldScreen(content::Manager * content_manager, world::World * world);
 			~WorldScreen();
 
 			void Update(double dt) override;

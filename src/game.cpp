@@ -73,9 +73,9 @@ namespace duckhacker
 		// TODO: who owns this?
 		world::World * world = new world::World();
 
-		game::WorldScreen world_screen(&content_manager_);
+		game::WorldScreen world_screen(&content_manager_, world);
 
-		current_screen_ = nullptr;//&song_screen;
+		current_screen_ = &world_screen;
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -96,6 +96,8 @@ namespace duckhacker
 		uint64_t now = SDL_GetPerformanceCounter();
 		double perf_freq = (double) SDL_GetPerformanceFrequency();
 		double dt;
+
+		glEnable(GL_DEPTH_TEST);
 
 		SDL_Event e;
 		while (running)

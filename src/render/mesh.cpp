@@ -55,7 +55,7 @@ namespace duckhacker
 			glDeleteBuffers(1, &buffer_id_);
 		}
 
-		void Mesh::Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position)
+		void Mesh::Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light)
 		{
 			shader_->Activate();
 			shader_->SetUniformMatrix4x4("projection", projection);
@@ -65,16 +65,16 @@ namespace duckhacker
 
 			shader_->SetUniformVector3("camera_pos", camera_position);
 
-			// shader_->SetUniformVector4("material.ambient", &material_properties.Ambient);
-			// shader_->SetUniformVector4("material.diffuse", &material_properties.Diffuse);
-			// shader_->SetUniformVector4("material.specular", &material_properties.Specular);
-			// shader_->SetUniformFloat("material.shininess", material_properties.Shininess);
+			shader_->SetUniformVector4("material.ambient", &material_properties.Ambient);
+			shader_->SetUniformVector4("material.diffuse", &material_properties.Diffuse);
+			shader_->SetUniformVector4("material.specular", &material_properties.Specular);
+			shader_->SetUniformFloat("material.shininess", material_properties.Shininess);
 
-			// shader_->SetUniformVector3("light.position", &light->Position);
-			// shader_->SetUniformVector4("light.color", &light->Color);
-			// shader_->SetUniformVector4("light.ambient", &light->Ambient);
-			// shader_->SetUniformVector4("light.diffuse", &light->Diffuse);
-			// shader_->SetUniformVector4("light.specular", &light->Specular);
+			shader_->SetUniformVector3("light.position", &light->Position);
+			shader_->SetUniformVector4("light.color", &light->Color);
+			shader_->SetUniformVector4("light.ambient", &light->Ambient);
+			shader_->SetUniformVector4("light.diffuse", &light->Diffuse);
+			shader_->SetUniformVector4("light.specular", &light->Specular);
 
 			// if (texture_)
 			// {
