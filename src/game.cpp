@@ -11,6 +11,9 @@
 #include "external/imgui/backends/imgui_impl_sdl2.h"
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
+#include "game/world_screen.hpp"
+#include "world/world.hpp"
+
 namespace duckhacker
 {
 	void Game::HandleFatalError(const char * message)
@@ -74,7 +77,12 @@ namespace duckhacker
 		// TODO: error checking, read from an archive
 		PHYSFS_mount("data/", nullptr, 0);
 
-		current_screen_ = nullptr;
+		// TODO: who owns this?
+		world::World * world = new world::World();
+
+		game::WorldScreen world_screen(&content_manager_);
+
+		current_screen_ = nullptr;//&song_screen;
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -141,7 +149,7 @@ namespace duckhacker
 
 			if (current_screen_ != nullptr)
 			{
-				current_screen_->Draw(renderer_, &content_manager_);
+				current_screen_->Draw(&content_manager_);
 			}
 
 			ImGui::Render();

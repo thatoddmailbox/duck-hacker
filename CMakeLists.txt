@@ -26,6 +26,8 @@ file(GLOB SOURCES
 	"src/external/imgui/backends/imgui_impl_opengl3.cpp"
 	"src/game/*.c"
 	"src/game/*.cpp"
+	"src/world/*.c"
+	"src/world/*.cpp"
 )
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})

@@ -11,7 +11,7 @@ namespace duckhacker
 		{
 		public:
 			virtual void Update(double dt) = 0;
-			virtual void Draw(SDL_Renderer * r, content::Manager * content_manager) = 0;
+			virtual void Draw(content::Manager * content_manager) = 0;
 		};
 	};
 };
