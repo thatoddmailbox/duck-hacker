@@ -41,18 +41,11 @@ namespace duckhacker
 			SDL_WINDOWPOS_CENTERED,
 			800,
 			600,
-			SDL_WINDOW_SHOWN
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
 		);
 		if (window_ == nullptr)
 		{
 			HandleFatalError("SDL_CreateWindow failed.");
-			return;
-		}
-
-		renderer_ = SDL_CreateRenderer(window_, 0, SDL_RENDERER_PRESENTVSYNC);
-		if (renderer_ == nullptr)
-		{
-			HandleFatalError("SDL_CreateRenderer failed.");
 			return;
 		}
 
@@ -135,8 +128,8 @@ namespace duckhacker
 				current_screen_->Update(dt);
 			}
 
-			SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
-			SDL_RenderClear(renderer_);
+			glClearColor(1.0, 1.0, 1.0, 1.0);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplSDL2_NewFrame();
@@ -155,13 +148,12 @@ namespace duckhacker
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-			SDL_RenderPresent(renderer_);
+			SDL_GL_SwapWindow(window_);
 
 			// TODO: actual framerate locking
 			SDL_Delay(15);
 		}
 
-		SDL_DestroyRenderer(renderer_);
 		SDL_DestroyWindow(window_);
 	}
 };

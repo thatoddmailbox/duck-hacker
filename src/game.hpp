@@ -17,7 +17,6 @@ namespace duckhacker
 		void HandleFatalError(const char * message);
 
 		SDL_Window * window_;
-		SDL_Renderer * renderer_;
 
 		game::Screen * current_screen_ = nullptr;
 		content::Manager content_manager_;
