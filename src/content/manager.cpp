@@ -72,8 +72,9 @@ namespace duckhacker
 		{
 			PHYSFS_File * file = PHYSFS_openRead(path.c_str());
 			PHYSFS_sint64 file_length = PHYSFS_fileLength(file);
-			char * file_data = (char *) malloc(file_length);
+			char * file_data = (char *) malloc(file_length + 1);
 			PHYSFS_readBytes(file, file_data, file_length);
+			file_data[file_length] = '\0';
 			PHYSFS_close(file);
 			return file_data;
 		}
