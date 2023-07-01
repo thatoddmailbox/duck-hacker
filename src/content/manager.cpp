@@ -67,5 +67,34 @@ namespace duckhacker
 			}
 			return surface_iter->second;
 		}
+
+		static char * read_physfs_file(std::string path)
+		{
+			PHYSFS_File * file = PHYSFS_openRead(path.c_str());
+			PHYSFS_sint64 file_length = PHYSFS_fileLength(file);
+			char * file_data = (char *) malloc(file_length);
+			PHYSFS_readBytes(file, file_data, file_length);
+			PHYSFS_close(file);
+			return file_data;
+		}
+
+		render::Shader * Manager::Shader(const std::string& path)
+		{
+			std::map<std::string, render::Shader *>::iterator shader_iter = shaders_.find(path);
+			if (shader_iter == shaders_.end())
+			{
+				// TODO: don't copy the physfs files into memory
+				char * vertex_source = read_physfs_file(path + ".vert.glsl");
+				char * fragment_source = read_physfs_file(path + ".frag.glsl");
+
+				shaders_[path] = new render::Shader(vertex_source, fragment_source);
+
+				free(fragment_source);
+				free(vertex_source);
+
+				shader_iter = shaders_.find(path);
+			}
+			return shader_iter->second;
+		}
 	};
 };

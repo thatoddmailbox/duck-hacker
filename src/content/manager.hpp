@@ -11,6 +11,8 @@
 
 #include "content/font_type.hpp"
 
+#include "render/shader.hpp"
+
 namespace duckhacker
 {
 	class Game;
@@ -34,12 +36,14 @@ namespace duckhacker
 
 			ImFont * Font(const FontType type);
 			SDL_Surface * Image(const std::string& path);
+			render::Shader * Shader(const std::string& path);
 
 		protected:
 			void LoadFonts();
 			friend class duckhacker::Game;
 
 		private:
+			std::map<std::string, render::Shader *> shaders_;
 			std::map<std::string, SDL_Surface *> surfaces_;
 
 			ImFont * font_regular_;
