@@ -11,6 +11,7 @@ endif()
 project(duck-hacker)
 
 include_directories("src/")
+include_directories("src/external/glad/include")
 include_directories("src/external/imgui")
 file(GLOB SOURCES
 	"src/*.c"
@@ -19,14 +20,20 @@ file(GLOB SOURCES
 	"src/content/*.cpp"
 	"src/external/*.c"
 	"src/external/*.cpp"
+	"src/external/glad/src/glad.c"
 	"src/external/imgui/*.cpp"
 	"src/external/imgui/backends/imgui_impl_sdl2.cpp"
-	"src/external/imgui/backends/imgui_impl_sdlrenderer2.cpp"
+	"src/external/imgui/backends/imgui_impl_opengl3.cpp"
 	"src/game/*.c"
 	"src/game/*.cpp"
 )
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	# glad requires linking against the dynamic linker (dl)
+	target_link_libraries(${PROJECT_NAME} "dl")
+endif()
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 

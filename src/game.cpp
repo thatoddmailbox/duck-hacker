@@ -1,11 +1,15 @@
 #include "game.hpp"
 
+#include <iostream>
+
 #include <SDL_image.h>
 #include <physfs.h>
 
+#include "glad/glad.h"
+
 #include "external/imgui/imgui.h"
 #include "external/imgui/backends/imgui_impl_sdl2.h"
-#include "external/imgui/backends/imgui_impl_sdlrenderer2.h"
+#include "external/imgui/backends/imgui_impl_opengl3.h"
 
 namespace duckhacker
 {
@@ -49,6 +53,24 @@ namespace duckhacker
 			return;
 		}
 
+		//
+		// set up opengl
+		//
+
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+		SDL_GLContext context = SDL_GL_CreateContext(window_);
+
+		if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
+		{
+			HandleFatalError("Failed to start OpenGL.");
+			return;
+		}
+
+		std::cout << glGetString(GL_VERSION) << std::endl;
+
 		// TODO: error checking, read from an archive
 		PHYSFS_mount("data/", nullptr, 0);
 
@@ -63,8 +85,8 @@ namespace duckhacker
 
 		content_manager_.LoadFonts();
 
-		ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
-		ImGui_ImplSDLRenderer2_Init(renderer_);
+		ImGui_ImplOpenGL3_Init();
+		ImGui_ImplSDL2_InitForOpenGL(window_, context);
 
 		bool running = true;
 		bool show_imgui_demo = false;
@@ -108,7 +130,7 @@ namespace duckhacker
 			SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
 			SDL_RenderClear(renderer_);
 
-			ImGui_ImplSDLRenderer2_NewFrame();
+			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplSDL2_NewFrame();
 			ImGui::NewFrame();
 
@@ -123,7 +145,7 @@ namespace duckhacker
 			}
 
 			ImGui::Render();
-			ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 			SDL_RenderPresent(renderer_);
 
