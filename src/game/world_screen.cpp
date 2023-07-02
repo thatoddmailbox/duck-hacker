@@ -4,8 +4,10 @@ namespace duckhacker
 {
 	namespace game
 	{
-		WorldScreen::WorldScreen(content::Manager * content_manager, world::World * world)
+		WorldScreen::WorldScreen(content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world)
 		{
+			editor_thread_ = editor_thread;
+
 			render::Shader * bla = content_manager->Shader("shaders/gray");
 			bot_mesh_ = render::MeshFactory::Box(bla, 1, 1, 1);
 			bot_mesh_->material_properties.Ambient = glm::vec4(0.0215f, 0.1745f, 0.0215f, 1.0f);
@@ -51,6 +53,31 @@ namespace duckhacker
 
 				bot_mesh_->Draw(main_camera_.GetProjection(), main_camera_.GetView(), &model, &normal, &camera_position, &light);
 			}
+
+
+			for (world::Bot * bot : world_->bots)
+			{
+				ImGui::Begin("Bot");
+
+				ImGui::Text("beep bloop");
+				ImGui::Text("position %d %d %d\n", bot->x, bot->y, bot->z);
+				if (ImGui::Button("Edit code"))
+				{
+					editor_thread_->OpenEditor(bot->id, bot->code);
+				}
+
+				ImGui::End();
+			}
+
+			ImGui::Begin("Control");
+
+			if (ImGui::Button("Start"))
+			{
+				std::map<int, std::string> code = editor_thread_->GatherCode();
+				std::cout << "1 = " << code[1] << std::endl;
+			}
+
+			ImGui::End();
 		}
 	}
 }

@@ -13,7 +13,9 @@ namespace duckhacker
 			class Frame : public wxFrame
 			{
 			public:
-				Frame();
+				Frame(int bot_id, wxString& initial_code);
+
+				wxString GetCode();
 
 			private:
 				wxStyledTextCtrl * text_control_ = nullptr;

@@ -3,6 +3,8 @@
 #include "game/editor/frame.hpp"
 
 wxDEFINE_EVENT(EVENT_REQUEST_STOP, wxThreadEvent);
+wxDEFINE_EVENT(EVENT_OPEN_EDITOR, wxThreadEvent);
+wxDEFINE_EVENT(EVENT_GATHER_CODE, wxThreadEvent);
 
 namespace duckhacker
 {
@@ -20,13 +22,43 @@ namespace duckhacker
 				SetExitOnFrameDelete(false);
 
 				Bind(EVENT_REQUEST_STOP, &App::OnRequestStop, this);
+				Bind(EVENT_OPEN_EDITOR, &App::OnOpenEditor, this);
+				Bind(EVENT_GATHER_CODE, &App::OnGatherCode, this);
 
 				// wxMessageBox("Hellooooo this is wxWidgets!!","hi :)", wxOK | wxICON_INFORMATION, nullptr);
 
-				Frame * frame = new Frame();
+				wxString code = "duck";
+				Frame * frame = new Frame(1, code);
 				frame->Show(true);
+				frames_[1] = frame;
 
 				return true;
+			}
+
+			void App::OnOpenEditor(wxThreadEvent& e)
+			{
+				int bot_id = e.GetInt();
+				wxString initial_code = e.GetString();
+
+				Frame * frame = new Frame(bot_id, initial_code);
+				frame->Show(true);
+			}
+
+			void App::OnGatherCode(wxThreadEvent& e)
+			{
+				GatherCodeContext * ctx = e.GetPayload<GatherCodeContext *>();
+
+				std::unique_lock<std::mutex> lock(ctx->result_mutex);
+
+				for (std::pair<int, Frame *> p : frames_)
+				{
+					ctx->result[p.first] = p.second->GetCode();
+				}
+
+				ctx->done = true;
+
+				lock.unlock();
+				ctx->result_notify.notify_one();
 			}
 
 			void App::OnRequestStop(wxThreadEvent& e)

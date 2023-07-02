@@ -81,7 +81,7 @@ namespace duckhacker
 		// TODO: who owns this?
 		world::World * world = new world::World();
 
-		game::WorldScreen world_screen(&content_manager_, world);
+		game::WorldScreen world_screen(&content_manager_, &editor_thread, world);
 
 		current_screen_ = &world_screen;
 

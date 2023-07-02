@@ -7,6 +7,7 @@
 
 #include "content/manager.hpp"
 #include "game/screen.hpp"
+#include "game/editor/editor_thread.hpp"
 #include "render/camera.hpp"
 #include "render/mesh.hpp"
 #include "render/mesh_factory.hpp"
@@ -19,13 +20,14 @@ namespace duckhacker
 		class WorldScreen : public Screen
 		{
 		public:
-			WorldScreen(content::Manager * content_manager, world::World * world);
+			WorldScreen(content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world);
 			~WorldScreen();
 
 			void Update(double dt) override;
 			void Draw(content::Manager * content_manager) override;
 
 		private:
+			game::editor::EditorThread * editor_thread_;
 			world::World * world_;
 
 			// TODO: would be nice to not hardcode this

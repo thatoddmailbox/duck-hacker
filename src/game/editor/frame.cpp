@@ -6,7 +6,7 @@ namespace duckhacker
 	{
 		namespace editor
 		{
-			Frame::Frame() : wxFrame(NULL, wxID_ANY, "Editor")
+			Frame::Frame(int bot_id, wxString& initial_code) : wxFrame(NULL, wxID_ANY, "Editor")
 			{
 				wxSizer * root = new wxBoxSizer(wxVERTICAL);
 
@@ -51,6 +51,11 @@ namespace duckhacker
 				// printf("text %p\n", text);
 
 				SetSizer(root);
+			}
+
+			wxString Frame::GetCode()
+			{
+				return text_control_->GetText();
 			}
 		}
 	}
