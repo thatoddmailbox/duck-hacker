@@ -13,8 +13,9 @@ namespace duckhacker
 		{
 		public:
 			World();
+			~World();
 
-			std::vector<Bot> bots;
+			std::vector<Bot *> bots;
 		};
 	}
 }
