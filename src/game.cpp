@@ -1,6 +1,7 @@
 #include "game.hpp"
 
 #include <iostream>
+#include <thread>
 
 #include <SDL_image.h>
 #include <physfs.h>
@@ -12,6 +13,7 @@
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
 #include "game/world_screen.hpp"
+#include "game/editor/editor_thread.hpp"
 #include "world/world.hpp"
 
 namespace duckhacker
@@ -66,6 +68,12 @@ namespace duckhacker
 		}
 
 		std::cout << glGetString(GL_VERSION) << std::endl;
+
+		//
+		// launch editor thread
+		//
+		game::editor::EditorThread editor_thread;
+		std::thread t(game::editor::EditorThread::Run, &editor_thread);
 
 		// TODO: error checking, read from an archive
 		PHYSFS_mount("data/", nullptr, 0);
@@ -155,6 +163,9 @@ namespace duckhacker
 			// TODO: actual framerate locking
 			SDL_Delay(15);
 		}
+
+		editor_thread.RequestStop();
+		t.join();
 
 		SDL_DestroyWindow(window_);
 	}

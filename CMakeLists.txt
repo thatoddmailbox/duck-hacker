@@ -26,6 +26,8 @@ file(GLOB SOURCES
 	"src/external/imgui/backends/imgui_impl_opengl3.cpp"
 	"src/game/*.c"
 	"src/game/*.cpp"
+	"src/game/editor/*.c"
+	"src/game/editor/*.cpp"
 	"src/render/*.c"
 	"src/render/*.cpp"
 	"src/world/*.c"
@@ -72,3 +74,8 @@ include_directories("${LIBPNG_INCLUDE_DIR}")
 find_package(Lua REQUIRED)
 target_link_libraries(${PROJECT_NAME} "${LUA_LIBRARY}")
 include_directories("${LUA_INCLUDE_DIR}")
+
+find_package(wxWidgets COMPONENTS core base stc REQUIRED)
+target_link_libraries(${PROJECT_NAME} "${wxWidgets_LIBRARIES}")
+include_directories("${wxWidgets_INCLUDE_DIRS}")
+target_compile_definitions(${PROJECT_NAME} PUBLIC ${wxWidgets_DEFINITIONS})
