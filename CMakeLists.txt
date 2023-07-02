@@ -68,3 +68,7 @@ include_directories("${PHYSFS_INCLUDE_DIR}")
 find_package(LibPNG REQUIRED)
 target_link_libraries(${PROJECT_NAME} "${LIBPNG_LIBRARY}")
 include_directories("${LIBPNG_INCLUDE_DIR}")
+
+find_package(Lua REQUIRED)
+target_link_libraries(${PROJECT_NAME} "${LUA_LIBRARY}")
+include_directories("${LUA_INCLUDE_DIR}")
