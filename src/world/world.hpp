@@ -28,6 +28,8 @@ namespace duckhacker
 			void Run();
 			void Stop();
 
+			void Update(float dt);
+
 		private:
 			WorldState state_ = WorldState::READY;
 		};

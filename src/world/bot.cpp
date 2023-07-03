@@ -34,8 +34,8 @@ namespace duckhacker
 			x = y = z = 0;
 			code = "print('duck')\n-- quack";
 
-			action_available = false;
-			action_done = false;
+			action_available_ = false;
+			action_done_ = false;
 
 			lua_state_ = nullptr;
 		}
@@ -64,7 +64,24 @@ namespace duckhacker
 				return lua_error(lua_state_);
 			}
 
+			// set up the action
 			printf("move %d %d %d\n", x, y, z);
+			action_type_ = BotAction::MOVE;
+			action_coords_[0] = x;
+			action_coords_[1] = y;
+			action_coords_[2] = z;
+
+			{
+				std::unique_lock<std::mutex> lock(action_done_mutex_);
+
+				// signal that something's available
+				action_available_ = true;
+
+				// wait for the action to be done
+				action_done_condition_.wait(lock, [this] {
+					return this->action_done_;
+				});
+			}
 
 			return 0;
 		}
@@ -119,21 +136,21 @@ namespace duckhacker
 
 		void Bot::Update(float dt)
 		{
-			if (action_available)
+			if (action_available_)
 			{
-				action_available = false;
+				action_available_ = false;
 
-				if (action_type == BotAction::MOVE)
+				if (action_type_ == BotAction::MOVE)
 				{
-					x += action_coords[0];
-					y += action_coords[1];
-					z += action_coords[2];
+					x += action_coords_[0];
+					y += action_coords_[1];
+					z += action_coords_[2];
 				}
 
-				action_done_mutex.lock();
-				action_done = true;
-				action_done_mutex.unlock();
-				action_done_condition.notify_one();
+				action_done_mutex_.lock();
+				action_done_ = true;
+				action_done_mutex_.unlock();
+				action_done_condition_.notify_one();
 			}
 		}
 

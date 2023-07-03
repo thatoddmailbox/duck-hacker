@@ -53,5 +53,18 @@ namespace duckhacker
 			// TOOD: reset the world or something
 			state_ = WorldState::READY;
 		}
+
+		void World::Update(float dt)
+		{
+			if (state_ != WorldState::RUNNING)
+			{
+				return;
+			}
+
+			for (Bot * bot : bots)
+			{
+				bot->Update(dt);
+			}
+		}
 	}
 }

@@ -51,14 +51,14 @@ namespace duckhacker
 		private:
 			std::thread execute_thread_;
 
-			std::atomic_bool action_available;
+			std::atomic_bool action_available_;
 
-			BotAction action_type;
-			int action_coords[3];
+			BotAction action_type_;
+			int action_coords_[3];
 
-			bool action_done;
-			std::mutex action_done_mutex;
-			std::condition_variable action_done_condition;
+			bool action_done_;
+			std::mutex action_done_mutex_;
+			std::condition_variable action_done_condition_;
 
 			lua_State * lua_state_;
 			std::jmp_buf preexec_state;

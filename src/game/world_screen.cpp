@@ -32,7 +32,7 @@ namespace duckhacker
 
 		void WorldScreen::Update(double dt)
 		{
-
+			world_->Update(dt);
 		}
 
 		void WorldScreen::Draw(content::Manager * content_manager)
