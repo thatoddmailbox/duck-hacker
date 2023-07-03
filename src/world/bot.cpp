@@ -27,26 +27,16 @@ namespace duckhacker
 			action_available = false;
 			action_done = false;
 
-			lua_state_ = luaL_newstate();
-
-			// smuggle a pointer to ourselves into the lua state's extraspace
-			// this way, we can find the c++ class from c function callbacks
-			*((Bot **) lua_getextraspace(lua_state_)) = this;
-
-			lua_atpanic(lua_state_, Bot_HandleError);
-			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
-
-			luaL_openlibs(lua_state_);
+			lua_state_ = nullptr;
 		}
 
 		Bot::~Bot()
 		{
-			lua_close(lua_state_);
+			// lua_close(lua_state_);
 		}
 
 		void Bot::Execute()
 		{
-			luaL_loadstring(lua_state_, code.c_str());
 			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
 		}
 
@@ -67,10 +57,25 @@ namespace duckhacker
 
 		void Bot::Execute_()
 		{
+			lua_state_ = luaL_newstate();
+
+			// smuggle a pointer to ourselves into the lua state's extraspace
+			// this way, we can find the c++ class from c function callbacks
+			*((Bot **) lua_getextraspace(lua_state_)) = this;
+
+			lua_atpanic(lua_state_, Bot_HandleError);
+			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
+
+			luaL_openlibs(lua_state_);
+
+			luaL_loadstring(lua_state_, code.c_str());
+
 			if (setjmp(preexec_state) == 0)
 			{
 				lua_call(lua_state_, 0, 0);
 			}
+
+			lua_close(lua_state_);
 			printf("execute thread terminated :O\n");
 		}
 
