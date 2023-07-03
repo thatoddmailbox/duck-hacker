@@ -40,8 +40,19 @@ namespace duckhacker
 				int bot_id = e.GetInt();
 				wxString initial_code = e.GetString();
 
-				Frame * frame = new Frame(bot_id, initial_code);
-				frame->Show(true);
+				if (frames_.find(bot_id) == frames_.end())
+				{
+					// no existing editor for this bot
+					// open a new one
+					Frame * frame = new Frame(bot_id, initial_code);
+					frame->Show(true);
+					frames_[bot_id] = frame;
+				}
+				else
+				{
+					// there already is an editor, bring it to front
+					frames_[bot_id]->Focus();
+				}
 			}
 
 			void App::OnGatherCode(wxThreadEvent& e)

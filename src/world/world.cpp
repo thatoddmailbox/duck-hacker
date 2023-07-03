@@ -8,6 +8,7 @@ namespace duckhacker
 		{
 			// TODO: should load this from some file or something
 			Bot * bot = new Bot();
+			bot->id = 1;
 			bot->x = 5;
 			bot->y = 0;
 			// bot.z = 4;

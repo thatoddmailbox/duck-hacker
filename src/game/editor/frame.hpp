@@ -16,6 +16,7 @@ namespace duckhacker
 				Frame(int bot_id, wxString& initial_code);
 
 				wxString GetCode();
+				void Focus();
 
 			private:
 				wxStyledTextCtrl * text_control_ = nullptr;

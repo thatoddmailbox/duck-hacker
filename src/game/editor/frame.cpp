@@ -11,16 +11,28 @@ namespace duckhacker
 				wxSizer * root = new wxBoxSizer(wxVERTICAL);
 
 				wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+				sizer->AddSpacer(10);
+
+				wxStaticText * bot_info = new wxStaticText(this, wxID_ANY, "Bot " + std::to_string(bot_id));
+				sizer->Add(bot_info, wxSizerFlags().Center());
+
+				sizer->AddStretchSpacer(1);
 
 				wxButton* aboutBtn = new wxButton(this, wxID_ANY, "About...");
 				// aboutBtn->Bind(wxEVT_BUTTON, &MyFrame::OnAbout, this);
 				sizer->Add(aboutBtn, wxSizerFlags().Center());
 
+				sizer->AddSpacer(4);
+
 				wxButton* quackBtn = new wxButton(this, wxID_ANY, "Quack!");
 				// quackBtn->Bind(wxEVT_BUTTON, &MyFrame::OnQuack, this);
 				sizer->Add(quackBtn, wxSizerFlags().Center());
 
-				root->Add(sizer);
+				sizer->AddSpacer(10);
+
+				root->AddSpacer(2);
+				root->Add(sizer, 0, wxEXPAND);
+				root->AddSpacer(2);
 
 				text_control_ = new wxStyledTextCtrl(this, wxID_ANY);
 
@@ -56,6 +68,14 @@ namespace duckhacker
 			wxString Frame::GetCode()
 			{
 				return text_control_->GetText();
+			}
+
+			void Frame::Focus()
+			{
+				SetFocus();
+
+				// TODO: focus on text control, too
+				// text_control_->SetFocus();
 			}
 		}
 	}

@@ -35,7 +35,6 @@ namespace duckhacker
 
 			luaL_openlibs(lua_state_);
 
-			// lua_load(lua_state_, )
 			luaL_loadstring(lua_state_, "warn('test');print('test2')");
 			if (setjmp(preexec_state) == 0)
 			{
