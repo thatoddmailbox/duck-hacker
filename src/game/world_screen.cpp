@@ -71,10 +71,35 @@ namespace duckhacker
 
 			ImGui::Begin("Control");
 
-			if (ImGui::Button("Start"))
+			if (world_->GetState() == world::WorldState::READY)
 			{
-				std::map<int, std::string> code = editor_thread_->GatherCode();
-				std::cout << "1 = " << code[1] << std::endl;
+				if (ImGui::Button("Start"))
+				{
+					// get code map
+					std::map<int, std::string> code = editor_thread_->GatherCode();
+
+					// update bots that have new code
+					for (world::Bot * bot : world_->bots)
+					{
+						if (code.find(bot->id) == code.end())
+						{
+							// no code change to this bot
+							continue;
+						}
+
+						bot->code = code[bot->id];
+					}
+
+					// run all bots!
+					world_->Run();
+				}
+			}
+			else
+			{
+				if (ImGui::Button("Stop"))
+				{
+					world_->Stop();
+				}
 			}
 
 			ImGui::End();

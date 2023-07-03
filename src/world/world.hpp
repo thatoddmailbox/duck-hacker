@@ -9,6 +9,12 @@ namespace duckhacker
 {
 	namespace world
 	{
+		enum class WorldState
+		{
+			READY,
+			RUNNING
+		};
+
 		class World
 		{
 		public:
@@ -16,6 +22,14 @@ namespace duckhacker
 			~World();
 
 			std::vector<Bot *> bots;
+
+			const WorldState& GetState();
+
+			void Run();
+			void Stop();
+
+		private:
+			WorldState state_ = WorldState::READY;
 		};
 	}
 }

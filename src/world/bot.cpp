@@ -22,7 +22,10 @@ namespace duckhacker
 		{
 			id = 0;
 			x = y = z = 0;
-			code = "hi";
+			code = "print('duck')\n-- quack";
+
+			action_available = false;
+			action_done = false;
 
 			lua_state_ = luaL_newstate();
 
@@ -34,17 +37,61 @@ namespace duckhacker
 			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
 
 			luaL_openlibs(lua_state_);
-
-			luaL_loadstring(lua_state_, "warn('test');print('test2')");
-			if (setjmp(preexec_state) == 0)
-			{
-				lua_call(lua_state_, 0, 0);
-			}
 		}
 
 		Bot::~Bot()
 		{
 			lua_close(lua_state_);
+		}
+
+		void Bot::Execute()
+		{
+			luaL_loadstring(lua_state_, code.c_str());
+			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
+		}
+
+		void Bot::EnterExecuteThread_(Bot * b)
+		{
+			b->Execute_();
+		}
+
+		void Bot::RequestStop()
+		{
+			// TODO: this should uhhh do something
+		}
+
+		void Bot::WaitForStop()
+		{
+			execute_thread_.join();
+		}
+
+		void Bot::Execute_()
+		{
+			if (setjmp(preexec_state) == 0)
+			{
+				lua_call(lua_state_, 0, 0);
+			}
+			printf("execute thread terminated :O\n");
+		}
+
+		void Bot::Update(float dt)
+		{
+			if (action_available)
+			{
+				action_available = false;
+
+				if (action_type == BotAction::MOVE)
+				{
+					x += action_coords[0];
+					y += action_coords[1];
+					z += action_coords[2];
+				}
+
+				action_done_mutex.lock();
+				action_done = true;
+				action_done_mutex.unlock();
+				action_done_condition.notify_one();
+			}
 		}
 
 		void Bot::HandleWarning_(const char * msg)

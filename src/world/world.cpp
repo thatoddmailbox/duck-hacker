@@ -22,5 +22,36 @@ namespace duckhacker
 				delete bot;
 			}
 		}
+
+		const WorldState& World::GetState()
+		{
+			return state_;
+		}
+
+		void World::Run()
+		{
+			state_ = WorldState::RUNNING;
+
+			for (Bot * bot : bots)
+			{
+				bot->Execute();
+			}
+		}
+
+		void World::Stop()
+		{
+			for (Bot * bot : bots)
+			{
+				bot->RequestStop();
+			}
+
+			for (Bot * bot : bots)
+			{
+				bot->WaitForStop();
+			}
+
+			// TOOD: reset the world or something
+			state_ = WorldState::READY;
+		}
 	}
 }
