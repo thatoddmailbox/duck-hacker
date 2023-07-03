@@ -63,7 +63,7 @@ namespace duckhacker
 				ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
 				if (ImGui::Button("Edit code"))
 				{
-					editor_thread_->OpenEditor(bot->id, bot->code);
+					editor_thread_->OpenEditor(bot->GetID(), bot->code);
 				}
 
 				ImGui::End();
@@ -81,13 +81,13 @@ namespace duckhacker
 					// update bots that have new code
 					for (world::Bot * bot : world_->bots)
 					{
-						if (code.find(bot->id) == code.end())
+						if (code.find(bot->GetID()) == code.end())
 						{
 							// no code change to this bot
 							continue;
 						}
 
-						bot->code = code[bot->id];
+						bot->code = code[bot->GetID()];
 					}
 
 					// run all bots!

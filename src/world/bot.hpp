@@ -27,15 +27,16 @@ namespace duckhacker
 			Bot(int id, int x, int y, int z);
 			~Bot();
 
-			int id;
 			std::string code;
 
+			const int& GetID();
 			const int& GetX();
 			const int& GetY();
 			const int& GetZ();
 			const glm::vec3& GetDisplayCoords();
 
 		private:
+			int id_;
 			int x_, y_, z_;
 
 			int target_x_, target_y_, target_z_;

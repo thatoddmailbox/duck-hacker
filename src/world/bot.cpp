@@ -53,13 +53,13 @@ namespace duckhacker
 
 		Bot::Bot(int id, int x, int y, int z)
 		{
-			id = id;
+			id_ = id;
 			x_ = x;
 			y_ = y;
 			z_ = z;
 			display_coords_ = glm::vec3(x_, y_, z_);
 
-			code = "print('duck')\n-- quack";
+			code = "-- Code for DuckBot " + std::to_string(id_) + "\n";
 
 			action_available_ = false;
 			action_done_ = false;
@@ -70,6 +70,11 @@ namespace duckhacker
 		Bot::~Bot()
 		{
 			// lua_close(lua_state_);
+		}
+
+		const int& Bot::GetID()
+		{
+			return id_;
 		}
 
 		const int& Bot::GetX()
