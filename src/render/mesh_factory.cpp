@@ -77,8 +77,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 6) + 3] = 0.00f;
 			vertices[(vertices_stride * 6) + 4] = 0.00f;
 			vertices[(vertices_stride * 6) + 5] = 1.00f;
-			vertices[(vertices_stride * 6) + 6] = 0.42f;
-			vertices[(vertices_stride * 6) + 7] = 0.42f;
+			vertices[(vertices_stride * 6) + 6] = 0.32f;
+			vertices[(vertices_stride * 6) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 7) + 0] = (width / 2);
 			vertices[(vertices_stride * 7) + 1] = -(height / 2);
@@ -86,8 +86,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 7) + 3] = 0.00f;
 			vertices[(vertices_stride * 7) + 4] = 0.00f;
 			vertices[(vertices_stride * 7) + 5] = 1.00f;
-			vertices[(vertices_stride * 7) + 6] = 0.42f;
-			vertices[(vertices_stride * 7) + 7] = 0.42f;
+			vertices[(vertices_stride * 7) + 6] = 0.32f;
+			vertices[(vertices_stride * 7) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 8) + 0] = (width / 2);
 			vertices[(vertices_stride * 8) + 1] = (height / 2);
@@ -95,8 +95,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 8) + 3] = 0.00f;
 			vertices[(vertices_stride * 8) + 4] = 0.00f;
 			vertices[(vertices_stride * 8) + 5] = 1.00f;
-			vertices[(vertices_stride * 8) + 6] = 0.42f;
-			vertices[(vertices_stride * 8) + 7] = 0.42f;
+			vertices[(vertices_stride * 8) + 6] = 0.32f;
+			vertices[(vertices_stride * 8) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 9) + 0] = (width / 2);
 			vertices[(vertices_stride * 9) + 1] = (height / 2);
@@ -104,8 +104,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 9) + 3] = 0.00f;
 			vertices[(vertices_stride * 9) + 4] = 0.00f;
 			vertices[(vertices_stride * 9) + 5] = 1.00f;
-			vertices[(vertices_stride * 9) + 6] = 0.42f;
-			vertices[(vertices_stride * 9) + 7] = 0.42f;
+			vertices[(vertices_stride * 9) + 6] = 0.32f;
+			vertices[(vertices_stride * 9) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 10) + 0] = -(width / 2);
 			vertices[(vertices_stride * 10) + 1] = (height / 2);
@@ -113,8 +113,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 10) + 3] = 0.00f;
 			vertices[(vertices_stride * 10) + 4] = 0.00f;
 			vertices[(vertices_stride * 10) + 5] = 1.00f;
-			vertices[(vertices_stride * 10) + 6] = 0.42f;
-			vertices[(vertices_stride * 10) + 7] = 0.42f;
+			vertices[(vertices_stride * 10) + 6] = 0.32f;
+			vertices[(vertices_stride * 10) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 11) + 0] = -(width / 2);
 			vertices[(vertices_stride * 11) + 1] = -(height / 2);
@@ -122,8 +122,8 @@ namespace duckhacker
 			vertices[(vertices_stride * 11) + 3] = 0.00f;
 			vertices[(vertices_stride * 11) + 4] = 0.00f;
 			vertices[(vertices_stride * 11) + 5] = 1.00f;
-			vertices[(vertices_stride * 11) + 6] = 0.42f;
-			vertices[(vertices_stride * 11) + 7] = 0.42f;
+			vertices[(vertices_stride * 11) + 6] = 0.32f;
+			vertices[(vertices_stride * 11) + 7] = 0.32f;
 
 			/*
 			* left face
