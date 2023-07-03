@@ -28,6 +28,26 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, -1, 0);
 		}
 
+		static int Bot_OnLuaCall_MoveForward(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, 1);
+		}
+
+		static int Bot_OnLuaCall_MoveBackward(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, -1);
+		}
+
+		static int Bot_OnLuaCall_MoveLeft(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(1, 0, 0);
+		}
+
+		static int Bot_OnLuaCall_MoveRight(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
+		}
+
 		Bot::Bot()
 		{
 			id = 0;
@@ -121,6 +141,18 @@ namespace duckhacker
 
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveDown);
 			lua_setfield(lua_state_, 1, "moveDown");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveForward);
+			lua_setfield(lua_state_, 1, "moveForward");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveBackward);
+			lua_setfield(lua_state_, 1, "moveBackward");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveLeft);
+			lua_setfield(lua_state_, 1, "moveLeft");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveRight);
+			lua_setfield(lua_state_, 1, "moveRight");
 
 			lua_setglobal(lua_state_, "duckbot");
 
