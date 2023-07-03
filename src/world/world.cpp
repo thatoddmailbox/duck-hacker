@@ -7,11 +7,7 @@ namespace duckhacker
 		World::World()
 		{
 			// TODO: should load this from some file or something
-			Bot * bot = new Bot();
-			bot->id = 1;
-			bot->x = 5;
-			bot->y = 0;
-			// bot.z = 4;
+			Bot * bot = new Bot(1, 5, 0, 0);
 			bots.push_back(bot);
 		}
 

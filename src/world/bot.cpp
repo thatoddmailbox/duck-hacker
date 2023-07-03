@@ -1,5 +1,8 @@
 #include "world/bot.hpp"
 
+const float BOT_ANIMATION_TIME = 1;
+const float BOT_PAUSE_TIME = 0.1;
+
 namespace duckhacker
 {
 	namespace world
@@ -48,10 +51,14 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
 		}
 
-		Bot::Bot()
+		Bot::Bot(int id, int x, int y, int z)
 		{
-			id = 0;
-			x = y = z = 0;
+			id = id;
+			x_ = x;
+			y_ = y;
+			z_ = z;
+			display_coords_ = glm::vec3(x_, y_, z_);
+
 			code = "print('duck')\n-- quack";
 
 			action_available_ = false;
@@ -65,6 +72,26 @@ namespace duckhacker
 			// lua_close(lua_state_);
 		}
 
+		const int& Bot::GetX()
+		{
+			return x_;
+		}
+
+		const int& Bot::GetY()
+		{
+			return y_;
+		}
+
+		const int& Bot::GetZ()
+		{
+			return z_;
+		}
+
+		const glm::vec3& Bot::GetDisplayCoords()
+		{
+			return display_coords_;
+		}
+
 		void Bot::Execute()
 		{
 			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
@@ -75,7 +102,7 @@ namespace duckhacker
 			b->Execute_();
 		}
 
-		int Bot::OnLuaCall_Move_(int x, int y, int z)
+		int Bot::OnLuaCall_Move_(int dx, int dy, int dz)
 		{
 			int n = lua_gettop(lua_state_);
 			if (n != 0)
@@ -85,12 +112,12 @@ namespace duckhacker
 			}
 
 			// set up the action
-			printf("move %d %d %d\n", x, y, z);
+			printf("move %d %d %d\n", dx, dy, dz);
 			action_done_ = false;
 			action_type_ = BotAction::MOVE;
-			action_coords_[0] = x;
-			action_coords_[1] = y;
-			action_coords_[2] = z;
+			action_coords_[0] = dx;
+			action_coords_[1] = dy;
+			action_coords_[2] = dz;
 
 			{
 				std::unique_lock<std::mutex> lock(action_done_mutex_);
@@ -175,15 +202,44 @@ namespace duckhacker
 
 				if (action_type_ == BotAction::MOVE)
 				{
-					x += action_coords_[0];
-					y += action_coords_[1];
-					z += action_coords_[2];
+					target_x_ = x_ + action_coords_[0];
+					target_y_ = y_ + action_coords_[1];
+					target_z_ = z_ + action_coords_[2];
+					anim_counter_ = 0;
+					anim_happening_ = true;
+				}
+			}
+
+			if (anim_happening_)
+			{
+				anim_counter_ += dt;
+
+				float fraction = anim_counter_ / (BOT_ANIMATION_TIME - BOT_PAUSE_TIME);
+				if (fraction > 1)
+				{
+					fraction = 1;
 				}
 
-				action_done_mutex_.lock();
-				action_done_ = true;
-				action_done_mutex_.unlock();
-				action_done_condition_.notify_one();
+				display_coords_ = glm::mix(
+					glm::vec3(x_, y_, z_),
+					glm::vec3(target_x_, target_y_, target_z_),
+					fraction
+				);
+
+				if (anim_counter_ > BOT_ANIMATION_TIME)
+				{
+					// we're done!
+					x_ = target_x_;
+					y_ = target_y_;
+					z_ = target_z_;
+					display_coords_ = glm::vec3(x_, y_, z_);
+
+					// notify execute thread
+					action_done_mutex_.lock();
+					action_done_ = true;
+					action_done_mutex_.unlock();
+					action_done_condition_.notify_one();
+				}
 			}
 		}
 

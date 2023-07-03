@@ -48,7 +48,7 @@ namespace duckhacker
 
 			for (world::Bot * bot : world_->bots)
 			{
-				glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(bot->x, bot->y, bot->z));
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), bot->GetDisplayCoords());
 				glm::mat3 normal = glm::mat3(glm::transpose(glm::inverse(model)));
 
 				bot_mesh_->Draw(main_camera_.GetProjection(), main_camera_.GetView(), &model, &normal, &camera_position, &light);
@@ -60,7 +60,7 @@ namespace duckhacker
 				ImGui::Begin("Bot");
 
 				ImGui::Text("beep bloop");
-				ImGui::Text("position %d %d %d\n", bot->x, bot->y, bot->z);
+				ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
 				if (ImGui::Button("Edit code"))
 				{
 					editor_thread_->OpenEditor(bot->id, bot->code);

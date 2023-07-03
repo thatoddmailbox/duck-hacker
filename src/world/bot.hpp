@@ -8,6 +8,8 @@
 #include <string>
 #include <thread>
 
+#include <glm/glm.hpp>
+
 #include <lua.hpp>
 
 namespace duckhacker
@@ -22,13 +24,26 @@ namespace duckhacker
 		class Bot
 		{
 		public:
-			Bot();
+			Bot(int id, int x, int y, int z);
 			~Bot();
 
 			int id;
-			int x, y, z;
 			std::string code;
 
+			const int& GetX();
+			const int& GetY();
+			const int& GetZ();
+			const glm::vec3& GetDisplayCoords();
+
+		private:
+			int x_, y_, z_;
+
+			int target_x_, target_y_, target_z_;
+			float anim_counter_ = 0;
+			bool anim_happening_ = false;
+			glm::vec3 display_coords_;
+
+		public:
 			void Execute();
 
 			void Update(float dt);
@@ -42,7 +57,7 @@ namespace duckhacker
 			void Execute_();
 
 		public:
-			int OnLuaCall_Move_(int x, int y, int z);
+			int OnLuaCall_Move_(int dx, int dy, int dz);
 
 		public:
 			void HandleWarning_(const char * msg);
