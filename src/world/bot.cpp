@@ -51,13 +51,25 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
 		}
 
-		Bot::Bot(int id, int x, int y, int z)
+		static int Bot_OnLuaCall_TurnLeft(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(-90);
+		}
+
+		static int Bot_OnLuaCall_TurnRight(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
+		}
+
+		Bot::Bot(int id, int x, int y, int z, int rotation)
 		{
 			id_ = id;
 			x_ = x;
 			y_ = y;
 			z_ = z;
+			rotation_ = rotation;
 			display_coords_ = glm::vec3(x_, y_, z_);
+			display_rotation_ = rotation;
 
 			code = "-- Code for DuckBot " + std::to_string(id_) + "\n";
 
@@ -92,9 +104,19 @@ namespace duckhacker
 			return z_;
 		}
 
+		const int& Bot::GetRotation()
+		{
+			return rotation_;
+		}
+
 		const glm::vec3& Bot::GetDisplayCoords()
 		{
 			return display_coords_;
+		}
+
+		const float& Bot::GetDisplayRotation()
+		{
+			return display_rotation_;
 		}
 
 		void Bot::Execute()
@@ -123,6 +145,36 @@ namespace duckhacker
 			action_coords_[0] = dx;
 			action_coords_[1] = dy;
 			action_coords_[2] = dz;
+
+			{
+				std::unique_lock<std::mutex> lock(action_done_mutex_);
+
+				// signal that something's available
+				action_available_ = true;
+
+				// wait for the action to be done
+				action_done_condition_.wait(lock, [this] {
+					return this->action_done_;
+				});
+			}
+
+			return 0;
+		}
+
+		int Bot::OnLuaCall_Turn_(int da)
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			// set up the action
+			printf("turn %d\n", da);
+			action_done_ = false;
+			action_type_ = BotAction::TURN;
+			action_angle_ = da;
 
 			{
 				std::unique_lock<std::mutex> lock(action_done_mutex_);
@@ -186,6 +238,12 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveRight);
 			lua_setfield(lua_state_, 1, "moveRight");
 
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_TurnLeft);
+			lua_setfield(lua_state_, 1, "turnLeft");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_TurnRight);
+			lua_setfield(lua_state_, 1, "turnRight");
+
 			lua_setglobal(lua_state_, "duckbot");
 
 			luaL_loadstring(lua_state_, code.c_str());
@@ -210,6 +268,28 @@ namespace duckhacker
 					target_x_ = x_ + action_coords_[0];
 					target_y_ = y_ + action_coords_[1];
 					target_z_ = z_ + action_coords_[2];
+					target_rotation_ = rotation_;
+					target_rotation_display_ = rotation_;
+					anim_counter_ = 0;
+					anim_happening_ = true;
+				}
+				else if (action_type_ == BotAction::TURN)
+				{
+					target_x_ = x_;
+					target_y_ = y_;
+					target_z_ = z_;
+
+					target_rotation_ = rotation_ + action_angle_;
+					target_rotation_display_ = target_rotation_;
+					if (target_rotation_ < 0)
+					{
+						target_rotation_ += 360;
+					}
+					if (target_rotation_ >= 360)
+					{
+						target_rotation_ -= 360;
+					}
+
 					anim_counter_ = 0;
 					anim_happening_ = true;
 				}
@@ -230,6 +310,11 @@ namespace duckhacker
 					glm::vec3(target_x_, target_y_, target_z_),
 					fraction
 				);
+				display_rotation_ = glm::mix(
+					rotation_,
+					target_rotation_display_,
+					fraction
+				);
 
 				if (anim_counter_ > BOT_ANIMATION_TIME)
 				{
@@ -238,6 +323,9 @@ namespace duckhacker
 					y_ = target_y_;
 					z_ = target_z_;
 					display_coords_ = glm::vec3(x_, y_, z_);
+
+					rotation_ = target_rotation_;
+					display_rotation_ = rotation_;
 
 					// notify execute thread
 					action_done_mutex_.lock();

@@ -18,13 +18,14 @@ namespace duckhacker
 	{
 		enum class BotAction
 		{
-			MOVE
+			MOVE,
+			TURN
 		};
 
 		class Bot
 		{
 		public:
-			Bot(int id, int x, int y, int z);
+			Bot(int id, int x, int y, int z, int rotation);
 			~Bot();
 
 			std::string code;
@@ -33,16 +34,23 @@ namespace duckhacker
 			const int& GetX();
 			const int& GetY();
 			const int& GetZ();
+			const int& GetRotation();
+
 			const glm::vec3& GetDisplayCoords();
+			const float& GetDisplayRotation();
 
 		private:
 			int id_;
 			int x_, y_, z_;
+			int rotation_;
 
 			int target_x_, target_y_, target_z_;
+			int target_rotation_;
+			int target_rotation_display_;
 			float anim_counter_ = 0;
 			bool anim_happening_ = false;
 			glm::vec3 display_coords_;
+			float display_rotation_;
 
 		public:
 			void Execute();
@@ -59,6 +67,7 @@ namespace duckhacker
 
 		public:
 			int OnLuaCall_Move_(int dx, int dy, int dz);
+			int OnLuaCall_Turn_(int da);
 
 		public:
 			void HandleWarning_(const char * msg);
@@ -71,6 +80,7 @@ namespace duckhacker
 
 			BotAction action_type_;
 			int action_coords_[3];
+			int action_angle_;
 
 			bool action_done_;
 			std::mutex action_done_mutex_;
