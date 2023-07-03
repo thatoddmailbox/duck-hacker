@@ -42,6 +42,9 @@ namespace duckhacker
 			void Execute_();
 
 		public:
+			int OnLuaCall_Move_(int x, int y, int z);
+
+		public:
 			void HandleWarning_(const char * msg);
 			void HandleError_();
 

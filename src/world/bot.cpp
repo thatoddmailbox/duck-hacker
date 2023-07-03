@@ -18,6 +18,16 @@ namespace duckhacker
 			return 0;
 		}
 
+		static int Bot_OnLuaCall_MoveUp(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 1, 0);
+		}
+
+		static int Bot_OnLuaCall_MoveDown(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, -1, 0);
+		}
+
 		Bot::Bot()
 		{
 			id = 0;
@@ -45,6 +55,20 @@ namespace duckhacker
 			b->Execute_();
 		}
 
+		int Bot::OnLuaCall_Move_(int x, int y, int z)
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			printf("move %d %d %d\n", x, y, z);
+
+			return 0;
+		}
+
 		void Bot::RequestStop()
 		{
 			// TODO: this should uhhh do something
@@ -67,6 +91,20 @@ namespace duckhacker
 			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
 
 			luaL_openlibs(lua_state_);
+
+			//
+			// set up native functions
+			//
+
+			lua_newtable(lua_state_);
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveUp);
+			lua_setfield(lua_state_, 1, "moveUp");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveDown);
+			lua_setfield(lua_state_, 1, "moveDown");
+
+			lua_setglobal(lua_state_, "duckbot");
 
 			luaL_loadstring(lua_state_, code.c_str());
 
