@@ -76,10 +76,6 @@ namespace duckhacker
 			{
 				ExitMainLoop();
 			}
-
-			// wxBEGIN_EVENT_TABLE(App, wxApp))
-			// 	EVT_COMMAND(wxID_ANY, MY_NEW_TYPE, App::OnMyEvent)
-			// wxEND_EVENT_TABLE()
 		}
 	}
 }
