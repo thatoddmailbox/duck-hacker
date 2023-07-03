@@ -43,7 +43,7 @@ namespace duckhacker
 
 				text_control_->SetWrapMode(wxSTC_WRAP_WORD);
 
-				text_control_->SetText("print('duck')\n-- quack");
+				text_control_->SetText(initial_code);
 
 				wxFont monospace = wxFontInfo().Family(wxFONTFAMILY_TELETYPE);
 				text_control_->StyleSetFont(wxSTC_STYLE_DEFAULT, monospace);
@@ -68,6 +68,11 @@ namespace duckhacker
 			wxString Frame::GetCode()
 			{
 				return text_control_->GetText();
+			}
+
+			void Frame::SetCode(wxString code)
+			{
+				text_control_->SetText(code);
 			}
 
 			void Frame::Focus()

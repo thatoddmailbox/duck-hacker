@@ -16,6 +16,8 @@ namespace duckhacker
 				Frame(int bot_id, wxString& initial_code);
 
 				wxString GetCode();
+				void SetCode(wxString code);
+
 				void Focus();
 
 			private:
