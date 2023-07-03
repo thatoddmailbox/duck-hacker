@@ -66,6 +66,7 @@ namespace duckhacker
 
 			// set up the action
 			printf("move %d %d %d\n", x, y, z);
+			action_done_ = false;
 			action_type_ = BotAction::MOVE;
 			action_coords_[0] = x;
 			action_coords_[1] = y;
