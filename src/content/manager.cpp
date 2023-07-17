@@ -25,7 +25,7 @@ namespace duckhacker
 
 			ImFontConfig config;
 			config.FontDataOwnedByAtlas = false;
-			PHYSFS_file * font_file = PHYSFS_openRead("Lato-Regular.ttf");
+			PHYSFS_file * font_file = PHYSFS_openRead("fonts/Lato-Regular.ttf");
 			int64_t font_file_length = PHYSFS_fileLength(font_file);
 			char * font_file_data = (char *) malloc(font_file_length + 1);
 			PHYSFS_readBytes(font_file, font_file_data, font_file_length);
