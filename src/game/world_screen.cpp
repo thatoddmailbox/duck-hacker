@@ -58,7 +58,7 @@ namespace duckhacker
 
 			for (world::Bot * bot : world_->bots)
 			{
-				ImGui::Begin("Bot");
+				ImGui::Begin("DuckBot");
 
 				ImGui::Text("beep bloop");
 				ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
