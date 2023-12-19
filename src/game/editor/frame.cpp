@@ -6,15 +6,17 @@ namespace duckhacker
 	{
 		namespace editor
 		{
-			Frame::Frame(int bot_id, wxString& initial_code) : wxFrame(NULL, wxID_ANY, "Editor")
+			Frame::Frame(int bot_id, wxString& initial_code) : wxFrame(NULL, wxID_ANY, "Code Editor")
 			{
+				SetTitle("Code Editor (DuckBot " + std::to_string(bot_id) + ")");
+
 				wxSizer * root = new wxBoxSizer(wxVERTICAL);
 
 				wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 				sizer->AddSpacer(10);
 
-				wxStaticText * bot_info = new wxStaticText(this, wxID_ANY, "Bot " + std::to_string(bot_id));
-				sizer->Add(bot_info, wxSizerFlags().Center());
+				// wxStaticText * bot_info = new wxStaticText(this, wxID_ANY, "DuckBot " + std::to_string(bot_id));
+				// sizer->Add(bot_info, wxSizerFlags().Center());
 
 				sizer->AddStretchSpacer(1);
 
