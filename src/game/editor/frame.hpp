@@ -21,6 +21,8 @@ namespace duckhacker
 				void Focus();
 
 			private:
+				void OnOpenHelp(wxCommandEvent& e);
+
 				wxStyledTextCtrl * text_control_ = nullptr;
 			};
 		}

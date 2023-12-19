@@ -26,11 +26,14 @@ namespace duckhacker
 			};
 
 			class Frame;
+			class HelpFrame;
 
 			class App : public wxApp
 			{
 			public:
 				virtual bool OnInit() wxOVERRIDE;
+
+				void OpenHelp();
 
 			private:
 				void OnOpenEditor(wxThreadEvent& e);
@@ -38,6 +41,7 @@ namespace duckhacker
 				void OnGatherCode(wxThreadEvent& e);
 
 				std::map<int, Frame *> frames_;
+				HelpFrame * help_frame_;
 			};
 		}
 	}

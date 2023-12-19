@@ -1,5 +1,9 @@
 #include "game/editor/frame.hpp"
 
+#include "game/editor/app.hpp"
+
+wxDECLARE_APP(duckhacker::game::editor::App);
+
 namespace duckhacker
 {
 	namespace game
@@ -26,9 +30,9 @@ namespace duckhacker
 
 				sizer->AddSpacer(4);
 
-				wxButton* quackBtn = new wxButton(this, wxID_ANY, "Quack!");
-				// quackBtn->Bind(wxEVT_BUTTON, &MyFrame::OnQuack, this);
-				sizer->Add(quackBtn, wxSizerFlags().Center());
+				wxButton* helpBtn = new wxButton(this, wxID_ANY, "Help");
+				helpBtn->Bind(wxEVT_BUTTON, &Frame::OnOpenHelp, this);
+				sizer->Add(helpBtn, wxSizerFlags().Center());
 
 				sizer->AddSpacer(10);
 
@@ -75,6 +79,11 @@ namespace duckhacker
 			void Frame::SetCode(wxString code)
 			{
 				text_control_->SetText(code);
+			}
+
+			void Frame::OnOpenHelp(wxCommandEvent& e)
+			{
+				wxGetApp().OpenHelp();
 			}
 
 			void Frame::Focus()

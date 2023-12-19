@@ -1,6 +1,7 @@
 #include "game/editor/app.hpp"
 
 #include "game/editor/frame.hpp"
+#include "game/editor/help_frame.hpp"
 
 wxDEFINE_EVENT(EVENT_REQUEST_STOP, wxThreadEvent);
 wxDEFINE_EVENT(EVENT_OPEN_EDITOR, wxThreadEvent);
@@ -27,12 +28,25 @@ namespace duckhacker
 
 				// wxMessageBox("Hellooooo this is wxWidgets!!","hi :)", wxOK | wxICON_INFORMATION, nullptr);
 
-				wxString code = "duck";
-				Frame * frame = new Frame(1, code);
-				frame->Show(true);
-				frames_[1] = frame;
+				// wxString code = "duck";
+				// Frame * frame = new Frame(1, code);
+				// frame->Show(true);
+				// frames_[1] = frame;
 
 				return true;
+			}
+
+			void App::OpenHelp()
+			{
+				if (help_frame_ == nullptr)
+				{
+					help_frame_ = new HelpFrame();
+					help_frame_->Show(true);
+				}
+				else
+				{
+					help_frame_->SetFocus();
+				}
 			}
 
 			void App::OnOpenEditor(wxThreadEvent& e)
