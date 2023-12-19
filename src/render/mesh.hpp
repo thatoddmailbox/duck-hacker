@@ -9,6 +9,7 @@
 #include "glm/glm.hpp"
 
 #include "shader.hpp"
+#include "texture.hpp"
 
 namespace duckhacker
 {
@@ -39,6 +40,7 @@ namespace duckhacker
 			Mesh(Shader * shader, float * vertices, size_t vertices_size, size_t vertices_count);
 			~Mesh();
 
+			void SetTexture(Texture * texture);
 			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light);
 
 			MaterialProperties material_properties;
@@ -50,7 +52,7 @@ namespace duckhacker
 			size_t vertices_size_;
 			size_t vertices_count_;
 
-			// Texture * texture_;
+			Texture * texture_;
 
 			GLuint buffer_id_;
 			GLuint vertex_array_id_;

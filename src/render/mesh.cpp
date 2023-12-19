@@ -8,7 +8,7 @@ namespace duckhacker
 		Mesh::Mesh(Shader * shader, float * vertices, size_t vertices_size, size_t vertices_count) :
 			shader_(shader), vertices_(vertices), vertices_size_(vertices_size), vertices_count_(vertices_count)
 		{
-			// texture_ = nullptr;
+			texture_ = nullptr;
 
 			glGenBuffers(1, &buffer_id_);
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
@@ -55,6 +55,11 @@ namespace duckhacker
 			glDeleteBuffers(1, &buffer_id_);
 		}
 
+		void Mesh::SetTexture(Texture * texture)
+		{
+			texture_ = texture;
+		}
+
 		void Mesh::Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light)
 		{
 			shader_->Activate();
@@ -76,10 +81,10 @@ namespace duckhacker
 			shader_->SetUniformVector4("light.diffuse", &light->Diffuse);
 			shader_->SetUniformVector4("light.specular", &light->Specular);
 
-			// if (texture_)
-			// {
-			// 	shader_->SetUniformTexture("tex", texture_);
-			// }
+			if (texture_)
+			{
+				shader_->SetUniformTexture("tex", texture_);
+			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
 			glBindVertexArray(vertex_array_id_);
