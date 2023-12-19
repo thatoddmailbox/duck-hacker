@@ -70,10 +70,10 @@ namespace duckhacker
 
 			shader_->SetUniformVector3("camera_pos", camera_position);
 
-			shader_->SetUniformVector4("material.ambient", &material_properties.Ambient);
-			shader_->SetUniformVector4("material.diffuse", &material_properties.Diffuse);
-			shader_->SetUniformVector4("material.specular", &material_properties.Specular);
-			shader_->SetUniformFloat("material.shininess", material_properties.Shininess);
+			shader_->SetUniformVector4("material.ambient", &material.GetAmbient());
+			shader_->SetUniformVector4("material.diffuse", &material.GetDiffuse());
+			shader_->SetUniformVector4("material.specular", &material.GetSpecular());
+			shader_->SetUniformFloat("material.shininess", material.GetShininess());
 
 			shader_->SetUniformVector3("light.position", &light->Position);
 			shader_->SetUniformVector4("light.color", &light->Color);

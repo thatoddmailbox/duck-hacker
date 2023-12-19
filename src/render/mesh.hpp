@@ -8,6 +8,7 @@
 
 #include "glm/glm.hpp"
 
+#include "material.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
 
@@ -15,15 +16,6 @@ namespace duckhacker
 {
 	namespace render
 	{
-		struct MaterialProperties
-		{
-			glm::vec4 Ambient;
-			glm::vec4 Diffuse;
-			glm::vec4 Specular;
-
-			float Shininess;
-		};
-
 		struct Light
 		{
 			glm::vec3 Position;
@@ -43,7 +35,7 @@ namespace duckhacker
 			void SetTexture(Texture * texture);
 			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light);
 
-			MaterialProperties material_properties;
+			Material material;
 
 		private:
 			Shader * shader_;
