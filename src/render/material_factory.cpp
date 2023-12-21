@@ -107,8 +107,6 @@ namespace duckhacker
 					color.b = std::stof(tokens[3]);
 					color.a = 1.0f;
 
-					std::cout << first_token << " COLOR: " << color.r << " " << color.g << " " << color.b << std::endl;
-
 					if (first_token == "Ka")
 					{
 						m.SetAmbient(color);
