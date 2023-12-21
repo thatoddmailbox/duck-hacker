@@ -1,5 +1,7 @@
 #include "render/mesh_factory.hpp"
 
+#include "render/material_factory.hpp"
+
 namespace duckhacker
 {
 	namespace render
@@ -396,6 +398,10 @@ namespace duckhacker
 
 			std::vector<vertex> vertices;
 
+			std::vector<std::tuple<size_t, Material>> material_changes;
+
+			std::map<std::string, Material> materials;
+
 			char * file_position = file_data;
 			while (true)
 			{
@@ -544,9 +550,21 @@ namespace duckhacker
 					// no object or group support
 					continue;
 				}
-				else if (first_token == "mtllib" || first_token == "usemtl")
+				else if (first_token == "mtllib")
 				{
-					// no material support
+					// load mtl file
+
+					// TODO: relative path support
+					std::string mtlpath = "models/" + tokens[1];
+
+					materials = render::MaterialFactory::MTL(mtlpath.c_str());
+				}
+				else if (first_token == "usemtl")
+				{
+					// change active material
+					std::string material_name = tokens[1];
+					Material& material = materials[material_name];
+					material_changes.push_back(std::make_tuple(vertices.size(), material));
 					continue;
 				}
 				else if (first_token == "s")
@@ -569,10 +587,46 @@ namespace duckhacker
 			free(file_data);
 			PHYSFS_close(file);
 
+			std::vector<std::tuple<size_t, Material>> material_groups;
+
+			// std::cout << material_changes.size() << " material changes" << std::endl;
+			Material active_material;
+			size_t last_change = 0;
+			for (auto material_change : material_changes)
+			{
+				size_t index = std::get<0>(material_change);
+				Material& material = std::get<1>(material_change);
+
+				// std::cout << "  index " << std::get<0>(material_change) << " starts material " << std::get<1>(material_change).GetAmbient().r << std::endl;
+
+				if (index == 0)
+				{
+					// skip the first one
+					active_material = material;
+					continue;
+				}
+
+				size_t count = index - last_change;
+				material_groups.push_back(std::make_tuple(count, active_material));
+				last_change = index;
+
+				active_material = material;
+			}
+
+			// add the last one
+			size_t count = vertices.size() - last_change;
+			if (count > 0)
+			{
+				material_groups.push_back(std::make_tuple(count, active_material));
+			}
+
 			// convert vertices vector into float array
 			size_t vertices_stride = 8;
 			size_t vertices_size = vertices.size() * vertices_stride;
 			float * vertices_data = (float *) malloc(vertices_size * sizeof(float));
+
+			auto material_change = material_changes.begin();
+			size_t count_in_this_material = 0;
 
 			for (size_t i = 0; i < vertices.size(); i++)
 			{
@@ -585,9 +639,18 @@ namespace duckhacker
 				vertices_data[(i * vertices_stride) + 5] = vertices[i].nz;
 				vertices_data[(i * vertices_stride) + 6] = vertices[i].u;
 				vertices_data[(i * vertices_stride) + 7] = vertices[i].v;
+
+				count_in_this_material++;
 			}
 
+			// std::cout << material_groups.size() << " material groups" << std::endl;
+			// for (auto material_group : material_groups)
+			// {
+			// 	std::cout << "  " << std::get<0>(material_group) << " vertices in material " << std::get<1>(material_group).GetAmbient().x << std::endl;
+			// }
+
 			Mesh * object = new Mesh(shader, vertices_data, vertices_size * sizeof(float), vertices.size());
+			object->SetMaterials(material_groups);
 			return object;
 		}
 	}
