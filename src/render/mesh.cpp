@@ -10,6 +10,8 @@ namespace duckhacker
 		{
 			texture_ = nullptr;
 
+			SetMaterial(Material());
+
 			glGenBuffers(1, &buffer_id_);
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
 			glBufferData(GL_ARRAY_BUFFER, vertices_size_, vertices, GL_STATIC_DRAW);
@@ -55,6 +57,17 @@ namespace duckhacker
 			glDeleteBuffers(1, &buffer_id_);
 		}
 
+		void Mesh::SetMaterial(const Material& material)
+		{
+			materials_.clear();
+			materials_.push_back(std::make_tuple(0, material));
+		}
+
+		void Mesh::SetMaterials(const std::vector<std::tuple<size_t, Material>>& materials)
+		{
+			materials_ = materials;
+		}
+
 		void Mesh::SetTexture(Texture * texture)
 		{
 			texture_ = texture;
@@ -70,11 +83,6 @@ namespace duckhacker
 
 			shader_->SetUniformVector3("camera_pos", camera_position);
 
-			shader_->SetUniformVector4("material.ambient", &material.GetAmbient());
-			shader_->SetUniformVector4("material.diffuse", &material.GetDiffuse());
-			shader_->SetUniformVector4("material.specular", &material.GetSpecular());
-			shader_->SetUniformFloat("material.shininess", material.GetShininess());
-
 			shader_->SetUniformVector3("light.position", &light->Position);
 			shader_->SetUniformVector4("light.color", &light->Color);
 			shader_->SetUniformVector4("light.ambient", &light->Ambient);
@@ -88,7 +96,28 @@ namespace duckhacker
 
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
 			glBindVertexArray(vertex_array_id_);
-			glDrawArrays(GL_TRIANGLES, 0, vertices_count_);
+
+			size_t remaining_vertices = vertices_count_;
+			size_t offset = 0;
+			for (auto& material_pair : materials_)
+			{
+				size_t count = std::get<0>(material_pair);
+				if (count == 0)
+				{
+					count = remaining_vertices;
+				}
+
+				Material& m = std::get<1>(material_pair);
+				shader_->SetUniformVector4("material.ambient", &m.GetAmbient());
+				shader_->SetUniformVector4("material.diffuse", &m.GetDiffuse());
+				shader_->SetUniformVector4("material.specular", &m.GetSpecular());
+				shader_->SetUniformFloat("material.shininess", m.GetShininess());
+
+				glDrawArrays(GL_TRIANGLES, offset, count);
+
+				remaining_vertices -= count;
+				offset += count;
+			}
 		}
 	}
 }

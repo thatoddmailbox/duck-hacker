@@ -4,6 +4,9 @@
 #include <cstddef>
 #include <cstdlib>
 
+#include <tuple>
+#include <vector>
+
 #include "glad/glad.h"
 
 #include "glm/glm.hpp"
@@ -32,12 +35,15 @@ namespace duckhacker
 			Mesh(Shader * shader, float * vertices, size_t vertices_size, size_t vertices_count);
 			~Mesh();
 
+			void SetMaterial(const Material& material);
+			void SetMaterials(const std::vector<std::tuple<size_t, Material>>& materials);
+
 			void SetTexture(Texture * texture);
 			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light);
 
-			Material material;
-
 		private:
+			std::vector<std::tuple<size_t, Material>> materials_;
+
 			Shader * shader_;
 
 			float * vertices_;
