@@ -85,6 +85,7 @@ namespace duckhacker
 		void WorldScreen::Draw(content::Manager * content_manager)
 		{
 			glm::vec3 camera_position = main_camera_.GetPosition();
+			lights_[0].Direction = -glm::normalize(camera_position);
 
 			for (world::Bot * bot : world_->bots)
 			{
@@ -144,6 +145,23 @@ namespace duckhacker
 				{
 					world_->Stop();
 				}
+			}
+
+			ImGui::End();
+
+			if (ImGui::Begin("Lights"))
+			{
+				ImGui::SeparatorText("Light 1");
+				ImGui::SliderFloat3("Direction##Light1Direction", &lights_[0].Direction.x, -1, 1);
+				ImGui::SliderFloat4("Diffuse##Light1Diffuse", &lights_[0].Diffuse.x, 0, 1);
+				ImGui::SliderFloat4("Ambient##Light1Ambient", &lights_[0].Ambient.x, 0, 1);
+				ImGui::SliderFloat4("Specular##Light1Specular", &lights_[0].Specular.x, 0, 1);
+
+				ImGui::SeparatorText("Light 2");
+				ImGui::SliderFloat3("Direction##Light2Direction", &lights_[1].Direction.x, -1, 1);
+				ImGui::SliderFloat4("Diffuse##Light2Diffuse", &lights_[1].Diffuse.x, 0, 1);
+				ImGui::SliderFloat4("Ambient##Light2Ambient", &lights_[1].Ambient.x, 0, 1);
+				ImGui::SliderFloat4("Specular##Light2Specular", &lights_[1].Specular.x, 0, 1);
 			}
 
 			ImGui::End();
