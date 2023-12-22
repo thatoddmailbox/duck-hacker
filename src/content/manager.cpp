@@ -13,9 +13,9 @@ namespace duckhacker
 
 		Manager::~Manager()
 		{
-			for (const std::pair<std::string, SDL_Surface *>& surface : surfaces_)
+			for (const std::pair<std::string, render::Texture *>& texture : textures_)
 			{
-				SDL_FreeSurface(surface.second);
+				delete texture.second;
 			}
 		}
 
@@ -57,17 +57,6 @@ namespace duckhacker
 			return font_regular_;
 		}
 
-		SDL_Surface * Manager::Image(const std::string& path)
-		{
-			std::map<std::string, SDL_Surface *>::iterator surface_iter = surfaces_.find(path);
-			if (surface_iter == surfaces_.end())
-			{
-				surfaces_[path] = IMG_Load_RW(PHYSFSRWOPS_openRead(path.c_str()), 1);
-				surface_iter = surfaces_.find(path);
-			}
-			return surface_iter->second;
-		}
-
 		static char * read_physfs_file(std::string path)
 		{
 			PHYSFS_File * file = PHYSFS_openRead(path.c_str());
@@ -96,6 +85,17 @@ namespace duckhacker
 				shader_iter = shaders_.find(path);
 			}
 			return shader_iter->second;
+		}
+
+		render::Texture * Manager::Texture(const std::string& path)
+		{
+			std::map<std::string, render::Texture *>::iterator texture_iter = textures_.find(path);
+			if (texture_iter == textures_.end())
+			{
+				textures_[path] = new render::Texture(path.c_str());
+				texture_iter = textures_.find(path);
+			}
+			return texture_iter->second;
 		}
 	};
 };

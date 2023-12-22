@@ -35,8 +35,8 @@ namespace duckhacker
 			};
 
 			ImFont * Font(const FontType type);
-			SDL_Surface * Image(const std::string& path);
 			render::Shader * Shader(const std::string& path);
+			render::Texture * Texture(const std::string& path);
 
 		protected:
 			void LoadFonts();
@@ -44,7 +44,7 @@ namespace duckhacker
 
 		private:
 			std::map<std::string, render::Shader *> shaders_;
-			std::map<std::string, SDL_Surface *> surfaces_;
+			std::map<std::string, render::Texture *> textures_;
 
 			ImFont * font_regular_;
 			ImFont * font_large_;
