@@ -84,6 +84,7 @@ namespace duckhacker
 					}
 
 					current_material = tokens[1];
+					m = Material();
 					have_material = true;
 				}
 				else if (first_token == "illum")
