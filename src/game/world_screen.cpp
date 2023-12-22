@@ -10,16 +10,7 @@ namespace duckhacker
 
 			render::Shader * bla = content_manager->Shader("shaders/gray");
 			bot_mesh_ = render::MeshFactory::OBJ(bla, "models/duckbot.obj");
-			render::Material m;
-			m.SetAmbient(glm::vec4(0.0215f, 0.1745f, 0.0215f, 1.0f));
-			m.SetDiffuse(glm::vec4(0.07568f, 0.61424f, 0.07568f, 1.0f));
-			m.SetSpecular(glm::vec4(0.633f, 0.727811, 0.633f, 1.0f));
-			m.SetShininess(0.6f);
-			m.SetAmbient(glm::vec4(0.19225, 0.19225, 0.19225, 1.0f));
-			m.SetDiffuse(glm::vec4(0.50754, 0.50754, 0.50754, 1.0f));
-			m.SetSpecular(glm::vec4(0.508273, 0.508273, 0.508273, 1.0f));
-			m.SetShininess(0.4f);
-			bot_mesh_->SetMaterial(m);
+			bot_mesh_->SetTexture(content_manager->Texture("models/duckbot.png"));
 
 			world_ = world;
 
