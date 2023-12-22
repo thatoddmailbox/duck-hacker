@@ -95,9 +95,7 @@ namespace duckhacker
 				}
 				else if (first_token == "Ns")
 				{
-					std::cout << "Currently, shininess is not supported." << std::endl;
-					// float shininess = std::stof(tokens[1]);
-					// m.SetShininess(shininess);
+					m.SetShininess(std::stof(tokens[1]));
 				}
 				else if (first_token == "Ka" || first_token == "Kd" || first_token == "Ks" || first_token == "Ke")
 				{
