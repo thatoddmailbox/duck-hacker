@@ -76,11 +76,20 @@ namespace duckhacker
 
 			shader_->SetUniformVector3("camera_pos", camera_position);
 
-			shader_->SetUniformVector3("light.direction", &lights[0].Direction);
-			shader_->SetUniformVector4("light.color", &lights[0].Color);
-			shader_->SetUniformVector4("light.ambient", &lights[0].Ambient);
-			shader_->SetUniformVector4("light.diffuse", &lights[0].Diffuse);
-			shader_->SetUniformVector4("light.specular", &lights[0].Specular);
+			shader_->SetUniformVector3("lights[0].direction", &lights[0].Direction);
+			shader_->SetUniformVector4("lights[0].color", &lights[0].Color);
+			shader_->SetUniformVector4("lights[0].ambient", &lights[0].Ambient);
+			shader_->SetUniformVector4("lights[0].diffuse", &lights[0].Diffuse);
+			shader_->SetUniformVector4("lights[0].specular", &lights[0].Specular);
+
+			if (lights.size() > 1)
+			{
+				shader_->SetUniformVector3("lights[1].direction", &lights[1].Direction);
+				shader_->SetUniformVector4("lights[1].color", &lights[1].Color);
+				shader_->SetUniformVector4("lights[1].ambient", &lights[1].Ambient);
+				shader_->SetUniformVector4("lights[1].diffuse", &lights[1].Diffuse);
+				shader_->SetUniformVector4("lights[1].specular", &lights[1].Specular);
+			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
 			glBindVertexArray(vertex_array_id_);

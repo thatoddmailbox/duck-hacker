@@ -11,6 +11,22 @@ namespace duckhacker
 			editor_thread_ = editor_thread;
 
 			world_ = world;
+
+			render::Light light;
+			light.Direction = glm::vec3(-1, -0.75, -1);
+			light.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			light.Ambient = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
+			light.Diffuse = glm::vec4(0.5f, 0.5f, 0.5f, 0.5f);
+			light.Specular = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+			lights_.push_back(light);
+
+			render::Light light2;
+			light2.Direction = glm::vec3(1, -0.75, 1);
+			light2.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			light2.Ambient = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
+			light2.Diffuse = glm::vec4(0.5f, 0.5f, 0.5f, 0.5f);
+			light2.Specular = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+			lights_.push_back(light2);
 		}
 
 		WorldScreen::~WorldScreen()
@@ -70,25 +86,16 @@ namespace duckhacker
 
 		void WorldScreen::Draw(content::Manager * content_manager)
 		{
-			std::vector<render::Light> lights;
-			render::Light light;
-			light.Direction = glm::vec3(-1, -0.75, -1);
-			light.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			light.Ambient = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
-			light.Diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			light.Specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-			lights.push_back(light);
-
 			glm::vec3 camera_position = main_camera_.GetPosition();
 
 			for (world::Bot * bot : world_->bots)
 			{
-				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights);
+				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
 			for (render::Object& object : world_->objects)
 			{
-				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights);
+				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
 			for (world::Bot * bot : world_->bots)
