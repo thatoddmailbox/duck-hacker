@@ -50,6 +50,7 @@ namespace duckhacker
 
 			for (world::Bot * bot : world_->bots)
 			{
+				ImGui::SetNextWindowPos(ImVec2(50, 125), ImGuiCond_Appearing);
 				ImGui::Begin("DuckBot");
 
 				ImGui::Text("beep bloop");
@@ -63,6 +64,7 @@ namespace duckhacker
 				ImGui::End();
 			}
 
+			ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Appearing);
 			ImGui::Begin("Control");
 
 			if (world_->GetState() == world::WorldState::READY)
