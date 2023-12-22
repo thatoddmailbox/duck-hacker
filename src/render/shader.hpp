@@ -22,10 +22,10 @@ namespace duckhacker
 			~Shader();
 
 			void SetUniformFloat(const std::string& name, float value);
-			void SetUniformVector3(const std::string& name, glm::vec3 * value);
-			void SetUniformVector4(const std::string& name, glm::vec4 * value);
-			void SetUniformMatrix3x3(const std::string& name, glm::mat3 * value);
-			void SetUniformMatrix4x4(const std::string& name, glm::mat4 * value);
+			void SetUniformVector3(const std::string& name, const glm::vec3 * value);
+			void SetUniformVector4(const std::string& name, const glm::vec4 * value);
+			void SetUniformMatrix3x3(const std::string& name, const glm::mat3 * value);
+			void SetUniformMatrix4x4(const std::string& name, const glm::mat4 * value);
 			void SetUniformTexture(const std::string& name, Texture * value);
 
 			void Activate();
