@@ -76,7 +76,7 @@ namespace duckhacker
 
 			shader_->SetUniformVector3("camera_pos", camera_position);
 
-			shader_->SetUniformVector3("light.position", &lights[0].Position);
+			shader_->SetUniformVector3("light.direction", &lights[0].Direction);
 			shader_->SetUniformVector4("light.color", &lights[0].Color);
 			shader_->SetUniformVector4("light.ambient", &lights[0].Ambient);
 			shader_->SetUniformVector4("light.diffuse", &lights[0].Diffuse);

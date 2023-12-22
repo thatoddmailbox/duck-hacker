@@ -10,7 +10,7 @@ struct Material {
 };
 
 struct Light {
-	vec3 position;
+	vec3 direction;
 	vec4 color;
 	vec4 ambient;
 	vec4 diffuse;
@@ -36,7 +36,7 @@ void main()
 	vec4 ambient = light.ambient * material.ambient * light.color;
 
 	vec3 camera_direction = normalize(camera_pos - frag_pos);
-	vec3 light_direction = normalize(light.position - frag_pos);
+	vec3 light_direction = normalize(-light.direction);
 
 	vec3 norm = normal_matrix * normalize(normal);
 	float diffuse_strength = max(dot(norm, light_direction), 0.0);

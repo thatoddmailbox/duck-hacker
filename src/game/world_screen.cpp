@@ -72,7 +72,7 @@ namespace duckhacker
 		{
 			std::vector<render::Light> lights;
 			render::Light light;
-			light.Position = glm::vec3(-1, -0.75, -1);
+			light.Direction = glm::vec3(-1, -0.75, -1);
 			light.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 			light.Ambient = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
 			light.Diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);

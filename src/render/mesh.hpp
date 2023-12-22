@@ -21,7 +21,7 @@ namespace duckhacker
 	{
 		struct Light
 		{
-			glm::vec3 Position;
+			glm::vec3 Direction;
 			glm::vec4 Color;
 
 			glm::vec4 Ambient;
