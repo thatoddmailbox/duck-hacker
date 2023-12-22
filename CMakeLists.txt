@@ -10,20 +10,21 @@ endif()
 
 project(duck-hacker)
 
+include_directories("external/glad/include")
+include_directories("external/imgui")
+include_directories("./")
 include_directories("src/")
-include_directories("src/external/glad/include")
-include_directories("src/external/imgui")
 file(GLOB SOURCES
+	"external/*.c"
+	"external/*.cpp"
+	"external/glad/src/glad.c"
+	"external/imgui/*.cpp"
+	"external/imgui/backends/imgui_impl_sdl2.cpp"
+	"external/imgui/backends/imgui_impl_opengl3.cpp"
 	"src/*.c"
 	"src/*.cpp"
 	"src/content/*.c"
 	"src/content/*.cpp"
-	"src/external/*.c"
-	"src/external/*.cpp"
-	"src/external/glad/src/glad.c"
-	"src/external/imgui/*.cpp"
-	"src/external/imgui/backends/imgui_impl_sdl2.cpp"
-	"src/external/imgui/backends/imgui_impl_opengl3.cpp"
 	"src/game/*.c"
 	"src/game/*.cpp"
 	"src/game/editor/*.c"
