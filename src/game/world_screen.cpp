@@ -149,8 +149,13 @@ namespace duckhacker
 
 			ImGui::End();
 
-			if (ImGui::Begin("Lights"))
+			if (ImGui::Begin("Scene settings"))
 			{
+				ImGui::SeparatorText("Camera");
+				ImGui::SliderFloat("Radius##CameraRadius", &target_radius_, 1, 100);
+				ImGui::SliderFloat("Yaw##CameraYaw", &yaw_, 0, 360);
+				ImGui::SliderFloat("Pitch##CameraPitch", &pitch_, -89, 89);
+
 				ImGui::SeparatorText("Light 1");
 				ImGui::SliderFloat3("Direction##Light1Direction", &lights_[0].Direction.x, -1, 1);
 				ImGui::SliderFloat4("Diffuse##Light1Diffuse", &lights_[0].Diffuse.x, 0, 1);
