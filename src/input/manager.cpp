@@ -52,30 +52,27 @@ namespace duckhacker
 		{
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-			if (io.WantCaptureMouse)
+			if (!io.WantCaptureMouse)
 			{
-				// we're just doing mouse stuff here, so get out
-				return;
-			}
+				int mouse_x, mouse_y;
+				uint32_t mouse_state = SDL_GetMouseState(&mouse_x, &mouse_y);
+				bool mouse_left_down = (mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) != 0);
 
-			int mouse_x, mouse_y;
-			uint32_t mouse_state = SDL_GetMouseState(&mouse_x, &mouse_y);
-			bool mouse_left_down = (mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) != 0);
+				if (mouse_left_down && mouse_left_down_last_)
+				{
+					horizontal_ = (mouse_x - mouse_x_last_);
+					vertical_ = (mouse_y - mouse_y_last_);
+				}
+				else
+				{
+					horizontal_ = 0;
+					vertical_ = 0;
+				}
 
-			if (mouse_left_down && mouse_left_down_last_)
-			{
-				horizontal_ = (mouse_x - mouse_x_last_);
-				vertical_ = (mouse_y - mouse_y_last_);
+				mouse_x_last_ = mouse_x;
+				mouse_y_last_ = mouse_y;
+				mouse_left_down_last_ = mouse_left_down;
 			}
-			else
-			{
-				horizontal_ = 0;
-				vertical_ = 0;
-			}
-
-			mouse_x_last_ = mouse_x;
-			mouse_y_last_ = mouse_y;
-			mouse_left_down_last_ = mouse_left_down;
 		}
 	}
 }
