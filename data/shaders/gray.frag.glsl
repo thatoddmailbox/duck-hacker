@@ -3,6 +3,8 @@
 struct Material {
 	vec4 ambient;
 	vec4 diffuse;
+	sampler2D diffuse_map;
+	float diffuse_map_enabled;
 	vec4 specular;
 	float shininess;
 };
@@ -26,31 +28,21 @@ uniform vec3 camera_pos;
 uniform Material material;
 uniform Light light;
 
-uniform sampler2D tex;
-
 void main()
 {
-	// TODO: this is a BIG hack!!! pls remove me :)
-	vec4 material_vary = vec4(1.0, 1.0, 1.0, 1.0);
-	if (uv.x == 0.32) {
-		material_vary = vec4(0.0, 0.0, 1.0, 1.0);
-	}
-
-	vec4 ambient = light.ambient * (material.ambient * material_vary) * light.color;
+	vec4 ambient = light.ambient * material.ambient * light.color;
 
 	vec3 camera_direction = normalize(camera_pos - frag_pos);
 	vec3 light_direction = normalize(light.position - frag_pos);
 
 	vec3 norm = normal_matrix * normalize(normal);
 	float diffuse_strength = max(dot(norm, light_direction), 0.0);
-	vec4 diffuse = light.diffuse * diffuse_strength * (material.diffuse * material_vary) * light.color;
+	vec4 material_diffuse = (material.diffuse_map_enabled == 1.0 ? texture(material.diffuse_map, uv) : material.diffuse);
+	vec4 diffuse = light.diffuse * diffuse_strength * material_diffuse * light.color;
 
 	vec3 reflectDir = reflect(-light_direction, norm);
 	float specular_strength = pow(max(dot(camera_direction, reflectDir), 0.0), material.shininess);
-	vec4 specular = light.specular * specular_strength * (material.specular * material_vary) * light.color;
-
-	// TODO: this is a hack lol
-	specular = vec4(0.15, 0.15, 0.15, 0);
+	vec4 specular = light.specular * specular_strength * material.specular * light.color;
 
 	frag_color = (ambient + diffuse + specular);
 }

@@ -89,11 +89,6 @@ namespace duckhacker
 			shader_->SetUniformVector4("light.diffuse", &light->Diffuse);
 			shader_->SetUniformVector4("light.specular", &light->Specular);
 
-			if (texture_)
-			{
-				shader_->SetUniformTexture("tex", texture_);
-			}
-
 			glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
 			glBindVertexArray(vertex_array_id_);
 
@@ -110,6 +105,15 @@ namespace duckhacker
 				Material& m = std::get<1>(material_pair);
 				shader_->SetUniformVector4("material.ambient", &m.GetAmbient());
 				shader_->SetUniformVector4("material.diffuse", &m.GetDiffuse());
+				if (texture_)
+				{
+					shader_->SetUniformTexture("material.diffuse_map", texture_);
+					shader_->SetUniformFloat("material.diffuse_map_enabled", 1.0f);
+				}
+				else
+				{
+					shader_->SetUniformFloat("material.diffuse_map_enabled", 0.0f);
+				}
 				shader_->SetUniformVector4("material.specular", &m.GetSpecular());
 				shader_->SetUniformFloat("material.shininess", m.GetShininess());
 
