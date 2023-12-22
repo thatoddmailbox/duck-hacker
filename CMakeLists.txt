@@ -22,7 +22,7 @@ file(GLOB SOURCES
 	"external/imgui/*.cpp"
 	"external/imgui/backends/imgui_impl_sdl2.cpp"
 	"external/imgui/backends/imgui_impl_opengl3.cpp"
-	"external/pugixml/pugixml.cpp"
+	"external/pugixml/src/pugixml.cpp"
 	"src/*.c"
 	"src/*.cpp"
 	"src/content/*.c"
