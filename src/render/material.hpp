@@ -1,6 +1,8 @@
 #ifndef _RENDER_MATERIAL_HPP
 #define _RENDER_MATERIAL_HPP
 
+#include <ostream>
+
 #include "glm/glm.hpp"
 
 namespace duckhacker
@@ -21,6 +23,8 @@ namespace duckhacker
 			void SetDiffuse(glm::vec4 value);
 			void SetSpecular(glm::vec4 value);
 			void SetShininess(float shininess);
+
+			friend std::ostream& operator<<(std::ostream& out, const Material& obj);
 
 		private:
 			glm::vec4 ambient_;

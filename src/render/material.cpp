@@ -51,5 +51,30 @@ namespace duckhacker
 		{
 			shininess_ = shininess;
 		}
+
+		static void output_vec4(std::ostream& out, const glm::vec4& v)
+		{
+			out << "(";
+			out << v.r << ", ";
+			out << v.g << ", ";
+			out << v.b << ", ";
+			out << v.a;
+			out << ")";
+		}
+
+		std::ostream& operator<<(std::ostream& out, const Material& obj)
+		{
+			out << "Material(";
+			out << "ambient=";
+			output_vec4(out, obj.ambient_);
+			out << ", diffuse=";
+			output_vec4(out, obj.diffuse_);
+			out << ", specular=";
+			output_vec4(out, obj.specular_);
+			out << ", shininess=";
+			out << obj.shininess_;
+			out << ")";
+			return out;
+		}
 	}
 }
