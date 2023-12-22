@@ -30,6 +30,9 @@ uniform Light light;
 
 void main()
 {
+	// convert to OpenGL's coordinate system
+	vec2 uv_corrected = vec2(uv.x, 1.0 - uv.y);
+
 	vec4 ambient = light.ambient * material.ambient * light.color;
 
 	vec3 camera_direction = normalize(camera_pos - frag_pos);
@@ -37,7 +40,7 @@ void main()
 
 	vec3 norm = normal_matrix * normalize(normal);
 	float diffuse_strength = max(dot(norm, light_direction), 0.0);
-	vec4 material_diffuse = (material.diffuse_map_enabled == 1.0 ? texture(material.diffuse_map, uv) : material.diffuse);
+	vec4 material_diffuse = (material.diffuse_map_enabled == 1.0 ? texture(material.diffuse_map, uv_corrected) : material.diffuse);
 	vec4 diffuse = light.diffuse * diffuse_strength * material_diffuse * light.color;
 
 	vec3 reflectDir = reflect(-light_direction, norm);
