@@ -5,6 +5,8 @@
 
 #include "glm/glm.hpp"
 
+#include "render/texture.hpp"
+
 namespace duckhacker
 {
 	namespace render
@@ -18,11 +20,13 @@ namespace duckhacker
 			glm::vec4& GetDiffuse();
 			glm::vec4& GetSpecular();
 			float GetShininess();
+			Texture * GetTexture();
 
 			void SetAmbient(glm::vec4 value);
 			void SetDiffuse(glm::vec4 value);
 			void SetSpecular(glm::vec4 value);
 			void SetShininess(float shininess);
+			void SetTexture(Texture * texture);
 
 			friend std::ostream& operator<<(std::ostream& out, const Material& obj);
 
@@ -31,6 +35,7 @@ namespace duckhacker
 			glm::vec4 diffuse_;
 			glm::vec4 specular_;
 			float shininess_;
+			Texture * texture_;
 		};
 	}
 }

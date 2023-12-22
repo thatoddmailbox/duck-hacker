@@ -8,8 +8,6 @@ namespace duckhacker
 		Mesh::Mesh(Shader * shader, float * vertices, size_t vertices_size, size_t vertices_count) :
 			shader_(shader), vertices_(vertices), vertices_size_(vertices_size), vertices_count_(vertices_count)
 		{
-			texture_ = nullptr;
-
 			SetMaterial(Material());
 
 			glGenBuffers(1, &buffer_id_);
@@ -68,11 +66,6 @@ namespace duckhacker
 			materials_ = materials;
 		}
 
-		void Mesh::SetTexture(Texture * texture)
-		{
-			texture_ = texture;
-		}
-
 		void Mesh::Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light)
 		{
 			shader_->Activate();
@@ -105,9 +98,9 @@ namespace duckhacker
 				Material& m = std::get<1>(material_pair);
 				shader_->SetUniformVector4("material.ambient", &m.GetAmbient());
 				shader_->SetUniformVector4("material.diffuse", &m.GetDiffuse());
-				if (texture_)
+				if (m.GetTexture())
 				{
-					shader_->SetUniformTexture("material.diffuse_map", texture_);
+					shader_->SetUniformTexture("material.diffuse_map", m.GetTexture());
 					shader_->SetUniformFloat("material.diffuse_map_enabled", 1.0f);
 				}
 				else

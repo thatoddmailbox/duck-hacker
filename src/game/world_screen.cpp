@@ -9,8 +9,7 @@ namespace duckhacker
 			editor_thread_ = editor_thread;
 
 			render::Shader * bla = content_manager->Shader("shaders/gray");
-			bot_mesh_ = render::MeshFactory::OBJ(bla, "models/duckbot.obj");
-			bot_mesh_->SetTexture(content_manager->Texture("models/duckbot.png"));
+			bot_mesh_ = render::MeshFactory::OBJ(content_manager, bla, "models/duckbot.obj");
 
 			world_ = world;
 

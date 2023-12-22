@@ -10,6 +10,7 @@ namespace duckhacker
 			diffuse_ = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 			specular_ = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 			shininess_ = 32.0f;
+			texture_ = nullptr;
 		}
 
 		glm::vec4& Material::GetAmbient()
@@ -32,6 +33,11 @@ namespace duckhacker
 			return shininess_;
 		}
 
+		Texture * Material::GetTexture()
+		{
+			return texture_;
+		}
+
 		void Material::SetAmbient(glm::vec4 value)
 		{
 			ambient_ = value;
@@ -50,6 +56,11 @@ namespace duckhacker
 		void Material::SetShininess(float shininess)
 		{
 			shininess_ = shininess;
+		}
+
+		void Material::SetTexture(Texture * texture)
+		{
+			texture_ = texture;
 		}
 
 		static void output_vec4(std::ostream& out, const glm::vec4& v)

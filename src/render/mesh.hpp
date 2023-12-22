@@ -38,7 +38,6 @@ namespace duckhacker
 			void SetMaterial(const Material& material);
 			void SetMaterials(const std::vector<std::tuple<size_t, Material>>& materials);
 
-			void SetTexture(Texture * texture);
 			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::mat4 * model, glm::mat3 * normal, glm::vec3 * camera_position, Light * light);
 
 		private:
@@ -49,8 +48,6 @@ namespace duckhacker
 			float * vertices_;
 			size_t vertices_size_;
 			size_t vertices_count_;
-
-			Texture * texture_;
 
 			GLuint buffer_id_;
 			GLuint vertex_array_id_;
