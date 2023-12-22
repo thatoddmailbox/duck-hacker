@@ -6,10 +6,10 @@ namespace duckhacker
 	{
 		Material::Material()
 		{
-			ambient_ = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-			diffuse_ = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-			specular_ = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-			shininess_ = 0.0f;
+			ambient_ = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			diffuse_ = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			specular_ = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			shininess_ = 32.0f;
 		}
 
 		glm::vec4& Material::GetAmbient()
