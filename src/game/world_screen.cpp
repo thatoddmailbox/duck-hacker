@@ -34,8 +34,6 @@ namespace duckhacker
 
 		}
 
-		static float duck = 0;
-
 		void WorldScreen::Update(double dt, input::Manager * input_manager)
 		{
 			world_->Update(dt);
