@@ -50,7 +50,7 @@ namespace duckhacker
 			ImFont * font_large_;
 			ImFont * font_title_;
 		};
-	};
-};
+	}
+}
 
 #endif
