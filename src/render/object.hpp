@@ -26,7 +26,7 @@ namespace duckhacker
 			void SetRotation(const glm::vec3& rotation);
 			void SetScale(const glm::vec3& scale);
 
-			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::vec3 * camera_position, Light * light);
+			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::vec3 * camera_position, const std::vector<Light>& lights);
 
 		private:
 			void UpdateMatrices_();

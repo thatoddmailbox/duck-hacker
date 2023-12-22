@@ -69,7 +69,7 @@ namespace duckhacker
 			location_dirty_ = false;
 		}
 
-		void Object::Draw(glm::mat4 * projection, glm::mat4 * view, glm::vec3 * camera_position, Light * light)
+		void Object::Draw(glm::mat4 * projection, glm::mat4 * view, glm::vec3 * camera_position, const std::vector<Light>& lights)
 		{
 			if (location_dirty_)
 			{
@@ -81,7 +81,7 @@ namespace duckhacker
 				return;
 			}
 
-			mesh_->Draw(projection, view, &model_, &normal_, camera_position, light);
+			mesh_->Draw(projection, view, &model_, &normal_, camera_position, lights);
 		}
 	}
 }

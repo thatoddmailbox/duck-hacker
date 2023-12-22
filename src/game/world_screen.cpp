@@ -70,18 +70,25 @@ namespace duckhacker
 
 		void WorldScreen::Draw(content::Manager * content_manager)
 		{
+			std::vector<render::Light> lights;
 			render::Light light;
-			light.Position = glm::vec3(-4, 2, 8);
+			light.Position = glm::vec3(-1, -0.75, -1);
 			light.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			light.Ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+			light.Ambient = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
 			light.Diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			light.Specular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			light.Specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+			lights.push_back(light);
 
 			glm::vec3 camera_position = main_camera_.GetPosition();
 
 			for (world::Bot * bot : world_->bots)
 			{
-				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, &light);
+				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights);
+			}
+
+			for (render::Object& object : world_->objects)
+			{
+				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights);
 			}
 
 			for (world::Bot * bot : world_->bots)
