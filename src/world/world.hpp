@@ -22,7 +22,7 @@ namespace duckhacker
 		class World
 		{
 		public:
-			World(content::Manager * content_manager);
+			World(content::Manager * content_manager, std::string file_path);
 			~World();
 
 			std::vector<Bot *> bots;
