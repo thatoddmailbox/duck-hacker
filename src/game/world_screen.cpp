@@ -47,7 +47,17 @@ namespace duckhacker
 			double scroll = input_manager->GetAxis(input::Axis::MouseScrollY);
 			if (scroll != 0)
 			{
-				radius_ -= scroll;
+				target_radius_ -= scroll;
+			}
+
+			if (target_radius_ != radius_)
+			{
+				radius_ += (target_radius_ - radius_) * 0.1f;
+
+				if (abs(target_radius_ - radius_) < 0.001f)
+				{
+					radius_ = target_radius_;
+				}
 			}
 
 			main_camera_.SetPosition(glm::vec3(
