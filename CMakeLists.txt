@@ -12,6 +12,7 @@ project(duck-hacker)
 
 include_directories("external/glad/include")
 include_directories("external/imgui")
+include_directories("external/pugixml/src")
 include_directories("./")
 include_directories("src/")
 file(GLOB SOURCES
@@ -21,6 +22,7 @@ file(GLOB SOURCES
 	"external/imgui/*.cpp"
 	"external/imgui/backends/imgui_impl_sdl2.cpp"
 	"external/imgui/backends/imgui_impl_opengl3.cpp"
+	"external/pugixml/pugixml.cpp"
 	"src/*.c"
 	"src/*.cpp"
 	"src/content/*.c"
