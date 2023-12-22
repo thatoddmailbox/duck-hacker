@@ -11,9 +11,6 @@ namespace duckhacker
 			editor_thread_ = editor_thread;
 
 			world_ = world;
-
-			main_camera_.SetPosition(glm::vec3(-4, 2, 8));
-			main_camera_.SetRotation(glm::vec3(0, -25, 0));
 		}
 
 		WorldScreen::~WorldScreen()
@@ -21,9 +18,44 @@ namespace duckhacker
 
 		}
 
+		static float duck = 0;
+
 		void WorldScreen::Update(double dt, input::Manager * input_manager)
 		{
 			world_->Update(dt);
+
+			/*
+			 * orbit controls
+			 */
+			double horizontal = input_manager->GetAxis(input::Axis::Horizontal);
+			double vertical = input_manager->GetAxis(input::Axis::Vertical);
+
+			if (horizontal != 0 || vertical != 0)
+			{
+				yaw_ += horizontal * 0.5f;
+				pitch_ += vertical * 0.5f;
+				if (pitch_ > 89.0f)
+				{
+					pitch_ = 89.0f;
+				}
+				if (pitch_ < -89.0f)
+				{
+					pitch_ = -89.0f;
+				}
+			}
+
+			double scroll = input_manager->GetAxis(input::Axis::MouseScrollY);
+			if (scroll != 0)
+			{
+				radius_ -= scroll;
+			}
+
+			main_camera_.SetPosition(glm::vec3(
+				radius_ * cos(glm::radians(yaw_)) * cos(glm::radians(pitch_)),
+				radius_ * sin(glm::radians(pitch_)),
+				radius_ * sin(glm::radians(yaw_)) * cos(glm::radians(pitch_))
+			));
+			main_camera_.LookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 		}
 
 		void WorldScreen::Draw(content::Manager * content_manager)

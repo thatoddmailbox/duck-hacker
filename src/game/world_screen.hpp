@@ -31,6 +31,10 @@ namespace duckhacker
 			game::editor::EditorThread * editor_thread_;
 			world::World * world_;
 
+			float yaw_ = 0.0f;
+			float pitch_ = 0.0f;
+			float radius_ = 8.0f;
+
 			// TODO: would be nice to not hardcode this
 			render::Camera main_camera_ = render::Camera(800, 600);
 		};
