@@ -1,4 +1,5 @@
 # duck-hacker
+Game where you hack things with DuckBots.
 
 ## Building
 ### On Linux
