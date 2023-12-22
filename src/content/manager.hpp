@@ -11,6 +11,7 @@
 
 #include "content/font_type.hpp"
 
+#include "render/mesh.hpp"
 #include "render/shader.hpp"
 
 namespace duckhacker
@@ -35,6 +36,7 @@ namespace duckhacker
 			};
 
 			ImFont * Font(const FontType type);
+			render::Mesh * Mesh(const std::string& path, render::Shader * shader);
 			render::Shader * Shader(const std::string& path);
 			render::Texture * Texture(const std::string& path);
 
@@ -43,6 +45,7 @@ namespace duckhacker
 			friend class duckhacker::Game;
 
 		private:
+			std::map<std::string, render::Mesh *> meshes_;
 			std::map<std::string, render::Shader *> shaders_;
 			std::map<std::string, render::Texture *> textures_;
 

@@ -2,6 +2,8 @@
 
 #include "external/physfsrwops.h"
 
+#include "render/mesh_factory.hpp"
+
 namespace duckhacker
 {
 	namespace content
@@ -66,6 +68,18 @@ namespace duckhacker
 			file_data[file_length] = '\0';
 			PHYSFS_close(file);
 			return file_data;
+		}
+
+		render::Mesh * Manager::Mesh(const std::string& path, render::Shader * shader)
+		{
+			std::map<std::string, render::Mesh *>::iterator mesh_iter = meshes_.find(path);
+			if (mesh_iter == meshes_.end())
+			{
+				meshes_[path] = render::MeshFactory::OBJ(this, shader, path.c_str());
+
+				mesh_iter = meshes_.find(path);
+			}
+			return mesh_iter->second;
 		}
 
 		render::Shader * Manager::Shader(const std::string& path)
