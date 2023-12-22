@@ -21,6 +21,8 @@ namespace duckhacker
 			void SetPosition(const glm::vec3& position);
 			void SetRotation(const glm::vec3& rotation);
 
+			void LookAt(glm::vec3 target, glm::vec3 up);
+
 			glm::mat4 * GetProjection();
 			glm::mat4 * GetView();
 

@@ -1,5 +1,7 @@
 #include "render/camera.hpp"
 
+#include "glm/gtc/matrix_access.hpp"
+
 namespace duckhacker
 {
 	namespace render
@@ -24,6 +26,38 @@ namespace duckhacker
 		void Camera::SetRotation(const glm::vec3& rotation)
 		{
 			rotation_ = rotation;
+			UpdateMatrices_();
+		}
+
+		void Camera::LookAt(glm::vec3 target, glm::vec3 up)
+		{
+			glm::mat4 look_at_matrix = glm::lookAt(position_, target, up);
+
+			// based on https://github.com/mrdoob/three.js/blob/ab1bac16e8d82c1d5c1dacb22d552a8fdced3add/src/math/Euler.js#L136
+
+			float m11 = glm::row(look_at_matrix, 0)[0];
+			float m12 = glm::row(look_at_matrix, 0)[1];
+			float m13 = glm::row(look_at_matrix, 0)[2];
+			float m22 = glm::row(look_at_matrix, 1)[1];
+			float m23 = glm::row(look_at_matrix, 1)[2];
+			float m32 = glm::row(look_at_matrix, 2)[1];
+			float m33 = glm::row(look_at_matrix, 2)[2];
+
+			float clampedm13 = (m13 < -1 ? -1 : (m13 > 1 ? 1 : m13));
+
+			rotation_.y = glm::degrees(-asinf(clampedm13));
+
+			if (abs(m13) < 0.9999999)
+			{
+				rotation_.x = glm::degrees(-atan2f(-m23, m33));
+				rotation_.z = glm::degrees(atan2f(-m12, m11));
+			}
+			else
+			{
+				rotation_.x = glm::degrees(-atan2f(m32, m22));
+				rotation_.z = 0;
+			}
+
 			UpdateMatrices_();
 		}
 
