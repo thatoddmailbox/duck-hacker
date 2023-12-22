@@ -33,8 +33,8 @@ namespace duckhacker
 			render::Light light;
 			light.Position = glm::vec3(-4, 2, 8);
 			light.Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			light.Ambient = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-			light.Diffuse = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+			light.Ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+			light.Diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 			light.Specular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 			glm::vec3 camera_position = main_camera_.GetPosition();
