@@ -1,5 +1,7 @@
 # duck-hacker
 
+## Building
+### On Linux
 ```bash
 # path is for wx-config for wxWidgets
 export PATH=$PATH:/home/alex/Documents/duck-stuff/root/bin
