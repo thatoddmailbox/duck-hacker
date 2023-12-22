@@ -597,7 +597,7 @@ namespace duckhacker
 				size_t index = std::get<0>(material_change);
 				Material& material = std::get<1>(material_change);
 
-				// std::cout << "  index " << std::get<0>(material_change) << " starts material " << std::get<1>(material_change).GetAmbient().r << std::endl;
+				// std::cout << "  index " << std::get<0>(material_change) << " starts material " << std::get<1>(material_change) << std::endl;
 
 				if (index == 0)
 				{
@@ -646,7 +646,7 @@ namespace duckhacker
 			// std::cout << material_groups.size() << " material groups" << std::endl;
 			// for (auto material_group : material_groups)
 			// {
-			// 	std::cout << "  " << std::get<0>(material_group) << " vertices in material " << std::get<1>(material_group).GetAmbient().x << std::endl;
+			// 	std::cout << "  " << std::get<0>(material_group) << " vertices in material " << std::get<1>(material_group) << std::endl;
 			// }
 
 			Mesh * object = new Mesh(shader, vertices_data, vertices_size * sizeof(float), vertices.size());
