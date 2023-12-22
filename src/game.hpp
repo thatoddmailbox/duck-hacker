@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 
-#include "content/manager.hpp"
 #include "game/screen.hpp"
 
 namespace duckhacker
@@ -20,6 +19,7 @@ namespace duckhacker
 
 		game::Screen * current_screen_ = nullptr;
 		content::Manager content_manager_;
+		input::Manager input_manager_;
 	};
 };
 

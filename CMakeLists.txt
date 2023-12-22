@@ -28,6 +28,8 @@ file(GLOB SOURCES
 	"src/game/*.cpp"
 	"src/game/editor/*.c"
 	"src/game/editor/*.cpp"
+	"src/input/*.c"
+	"src/input/*.cpp"
 	"src/render/*.c"
 	"src/render/*.cpp"
 	"src/world/*.c"

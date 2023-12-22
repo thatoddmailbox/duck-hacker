@@ -8,6 +8,7 @@
 #include "content/manager.hpp"
 #include "game/screen.hpp"
 #include "game/editor/editor_thread.hpp"
+#include "input/manager.hpp"
 #include "render/camera.hpp"
 #include "render/mesh.hpp"
 #include "render/mesh_factory.hpp"
@@ -23,7 +24,7 @@ namespace duckhacker
 			WorldScreen(content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world);
 			~WorldScreen();
 
-			void Update(double dt) override;
+			void Update(double dt, input::Manager * input_manager) override;
 			void Draw(content::Manager * content_manager) override;
 
 		private:

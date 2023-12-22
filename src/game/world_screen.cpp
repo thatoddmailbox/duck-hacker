@@ -22,7 +22,7 @@ namespace duckhacker
 
 		}
 
-		void WorldScreen::Update(double dt)
+		void WorldScreen::Update(double dt, input::Manager * input_manager)
 		{
 			world_->Update(dt);
 		}

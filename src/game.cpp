@@ -114,8 +114,11 @@ namespace duckhacker
 			now = SDL_GetPerformanceCounter();
 			dt = (now - last) / perf_freq;
 
+			input_manager_.EarlyUpdate();
+
 			while (SDL_PollEvent(&e))
 			{
+				input_manager_.ProcessEvent(&e);
 				ImGui_ImplSDL2_ProcessEvent(&e);
 
 				if (e.type == SDL_QUIT)
@@ -133,9 +136,10 @@ namespace duckhacker
 				}
 			}
 
+			input_manager_.Update();
 			if (current_screen_ != nullptr)
 			{
-				current_screen_->Update(dt);
+				current_screen_->Update(dt, &input_manager_);
 			}
 
 			glClearColor(1.0, 1.0, 1.0, 1.0);
