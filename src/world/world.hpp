@@ -5,6 +5,8 @@
 
 #include "content/manager.hpp"
 
+#include "render/object.hpp"
+
 #include "world/bot.hpp"
 
 namespace duckhacker
@@ -24,6 +26,7 @@ namespace duckhacker
 			~World();
 
 			std::vector<Bot *> bots;
+			std::vector<render::Object> objects;
 
 			const WorldState& GetState();
 

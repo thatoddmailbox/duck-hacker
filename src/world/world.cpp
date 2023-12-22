@@ -1,5 +1,7 @@
 #include "world/world.hpp"
 
+#include "render/mesh_factory.hpp"
+
 namespace duckhacker
 {
 	namespace world
@@ -9,6 +11,11 @@ namespace duckhacker
 			// TODO: should load this from some file or something
 			Bot * bot = new Bot(content_manager, 1, -2, 1, 4, 90);
 			bots.push_back(bot);
+
+			render::Object floor = render::Object();
+			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/gray"), 10, 1, 10));
+			floor.SetPosition(glm::vec3(0, -1, 0));
+			objects.push_back(floor);
 		}
 
 		World::~World()
