@@ -10,6 +10,8 @@
 
 #include "physfs.h"
 
+#include "content/manager.hpp"
+
 #include "render/mesh.hpp"
 
 namespace duckhacker
@@ -25,7 +27,7 @@ namespace duckhacker
 		{
 		public:
 			static Mesh * Box(Shader * shader, float width, float length, float depth);
-			static Mesh * OBJ(Shader * shader, const char * path);
+			static Mesh * OBJ(content::Manager * content_manager, Shader * shader, const char * path);
 
 		private:
 			MeshFactory() {}

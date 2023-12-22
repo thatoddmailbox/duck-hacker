@@ -18,7 +18,7 @@ namespace duckhacker
 			return (c == '\n' || c == '\r' || c == '\t' || c == '\v' || c == '\f');
 		}
 
-		std::map<std::string, Material> MaterialFactory::MTL(const char * path)
+		std::map<std::string, Material> MaterialFactory::MTL(content::Manager * content_manager, const char * path)
 		{
 			PHYSFS_File * file = PHYSFS_openRead(path);
 
@@ -133,6 +133,13 @@ namespace duckhacker
 				else if (first_token == "d")
 				{
 					std::cout << "Currently, transparency is not supported." << std::endl;
+				}
+				else if (first_token == "map_Kd")
+				{
+					// TODO: relative path support
+					std::string texture_path = "models/" + tokens[1];
+
+					m.SetTexture(content_manager->Texture(texture_path));
 				}
 				else if (first_token == "")
 				{

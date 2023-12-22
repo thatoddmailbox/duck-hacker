@@ -382,7 +382,7 @@ namespace duckhacker
 			float v;
 		} vertex;
 
-		Mesh * MeshFactory::OBJ(Shader * shader, const char * path)
+		Mesh * MeshFactory::OBJ(content::Manager * content_manager, Shader * shader, const char * path)
 		{
 			PHYSFS_File * file = PHYSFS_openRead(path);
 
@@ -557,7 +557,7 @@ namespace duckhacker
 					// TODO: relative path support
 					std::string mtlpath = "models/" + tokens[1];
 
-					materials = render::MaterialFactory::MTL(mtlpath.c_str());
+					materials = render::MaterialFactory::MTL(content_manager, mtlpath.c_str());
 				}
 				else if (first_token == "usemtl")
 				{
