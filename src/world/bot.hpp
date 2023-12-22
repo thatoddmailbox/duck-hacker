@@ -12,6 +12,10 @@
 
 #include <lua.hpp>
 
+#include "content/manager.hpp"
+
+#include "render/object.hpp"
+
 namespace duckhacker
 {
 	namespace world
@@ -25,10 +29,12 @@ namespace duckhacker
 		class Bot
 		{
 		public:
-			Bot(int id, int x, int y, int z, int rotation);
+			Bot(content::Manager * content_manager, int id, int x, int y, int z, int rotation);
 			~Bot();
 
 			std::string code;
+
+			render::Object object;
 
 			const int& GetID();
 			const int& GetX();

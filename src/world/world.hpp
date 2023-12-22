@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "content/manager.hpp"
+
 #include "world/bot.hpp"
 
 namespace duckhacker
@@ -18,7 +20,7 @@ namespace duckhacker
 		class World
 		{
 		public:
-			World();
+			World(content::Manager * content_manager);
 			~World();
 
 			std::vector<Bot *> bots;

@@ -4,10 +4,10 @@ namespace duckhacker
 {
 	namespace world
 	{
-		World::World()
+		World::World(content::Manager * content_manager)
 		{
 			// TODO: should load this from some file or something
-			Bot * bot = new Bot(1, -2, 1, 4, 90);
+			Bot * bot = new Bot(content_manager, 1, -2, 1, 4, 90);
 			bots.push_back(bot);
 		}
 

@@ -61,7 +61,7 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
 		}
 
-		Bot::Bot(int id, int x, int y, int z, int rotation)
+		Bot::Bot(content::Manager * content_manager, int id, int x, int y, int z, int rotation)
 		{
 			id_ = id;
 			x_ = x;
@@ -77,6 +77,10 @@ namespace duckhacker
 			action_done_ = false;
 
 			lua_state_ = nullptr;
+
+			object.SetMesh(content_manager->Mesh("models/duckbot.obj", content_manager->Shader("shaders/gray")));
+			object.SetPosition(glm::vec3(x_, y_, z_));
+			object.SetRotation(glm::vec3(0, -rotation, 0));
 		}
 
 		Bot::~Bot()
@@ -315,6 +319,9 @@ namespace duckhacker
 					target_rotation_display_,
 					fraction
 				);
+
+				object.SetPosition(display_coords_);
+				object.SetRotation(glm::vec3(0, -display_rotation_, 0));
 
 				if (anim_counter_ > BOT_ANIMATION_TIME)
 				{
