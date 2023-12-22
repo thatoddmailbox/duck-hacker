@@ -25,6 +25,8 @@ namespace duckhacker
 			int field_width = field_node.attribute("width").as_int();
 			int field_height = field_node.attribute("height").as_int();
 
+			center_point_ = glm::vec3(field_width / 2, 0, field_height / 2);
+
 			render::Object floor = render::Object();
 			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/gray"), field_width, 1, field_height));
 			floor.SetPosition(glm::vec3(field_width / 2, -1, field_height / 2));
@@ -51,6 +53,11 @@ namespace duckhacker
 			{
 				delete bot;
 			}
+		}
+
+		const glm::vec3& World::GetCenterPoint()
+		{
+			return center_point_;
 		}
 
 		const WorldState& World::GetState()

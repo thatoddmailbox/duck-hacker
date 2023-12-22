@@ -74,18 +74,19 @@ namespace duckhacker
 				}
 			}
 
-			main_camera_.SetPosition(glm::vec3(
+			const glm::vec3& center_point = world_->GetCenterPoint();
+			main_camera_.SetPosition(center_point + glm::vec3(
 				radius_ * cos(glm::radians(yaw_)) * cos(glm::radians(pitch_)),
 				radius_ * sin(glm::radians(pitch_)),
 				radius_ * sin(glm::radians(yaw_)) * cos(glm::radians(pitch_))
 			));
-			main_camera_.LookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+			main_camera_.LookAt(center_point, glm::vec3(0, 1, 0));
 		}
 
 		void WorldScreen::Draw(content::Manager * content_manager)
 		{
 			glm::vec3 camera_position = main_camera_.GetPosition();
-			lights_[0].Direction = -glm::normalize(camera_position);
+			lights_[0].Direction = -glm::normalize(camera_position - world_->GetCenterPoint());
 
 			for (world::Bot * bot : world_->bots)
 			{

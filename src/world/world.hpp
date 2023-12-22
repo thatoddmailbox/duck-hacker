@@ -28,6 +28,8 @@ namespace duckhacker
 			std::vector<Bot *> bots;
 			std::vector<render::Object> objects;
 
+			const glm::vec3& GetCenterPoint();
+
 			const WorldState& GetState();
 
 			void Run();
@@ -36,6 +38,7 @@ namespace duckhacker
 			void Update(float dt);
 
 		private:
+			glm::vec3 center_point_;
 			WorldState state_ = WorldState::READY;
 		};
 	}
