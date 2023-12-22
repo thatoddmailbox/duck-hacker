@@ -132,7 +132,10 @@ namespace duckhacker
 				}
 				else if (first_token == "d")
 				{
-					std::cout << "Currently, transparency is not supported." << std::endl;
+					if (std::stof(tokens[1]) != 1.0f)
+					{
+						std::cout << "Currently, transparency is not supported." << std::endl;
+					}
 				}
 				else if (first_token == "map_Kd")
 				{
