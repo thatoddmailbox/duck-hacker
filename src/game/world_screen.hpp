@@ -33,7 +33,6 @@ namespace duckhacker
 
 			// TODO: would be nice to not hardcode this
 			render::Camera main_camera_ = render::Camera(800, 600);
-			render::Mesh * bot_mesh_;
 		};
 	}
 }

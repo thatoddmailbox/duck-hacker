@@ -10,9 +10,6 @@ namespace duckhacker
 		{
 			editor_thread_ = editor_thread;
 
-			render::Shader * bla = content_manager->Shader("shaders/gray");
-			bot_mesh_ = content_manager->Mesh("models/duckbot.obj", bla);
-
 			world_ = world;
 
 			main_camera_.SetPosition(glm::vec3(-4, 2, 8));
@@ -40,23 +37,10 @@ namespace duckhacker
 
 			glm::vec3 camera_position = main_camera_.GetPosition();
 
-			// render::Object bot_obj = render::Object();
-			// bot_obj.SetMesh(bot_mesh_);
-
 			for (world::Bot * bot : world_->bots)
 			{
-				// bot_obj.SetPosition(bot->GetX(), bot->GetY(), bot->GetZ());
-				// bot_obj.SetRotation(0, -bot->GetDisplayRotation(), 0);
-				// bot_obj.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, &light);
 				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, &light);
-
-				// glm::mat4 model = glm::translate(glm::mat4(1.0f), bot->GetDisplayCoords());
-				// model = glm::rotate(model, glm::radians(-bot->GetDisplayRotation()), glm::vec3(0, 1, 0));
-				// glm::mat3 normal = glm::mat3(glm::transpose(glm::inverse(model)));
-
-				// bot_mesh_->Draw(main_camera_.GetProjection(), main_camera_.GetView(), &model, &normal, &camera_position, &light);
 			}
-
 
 			for (world::Bot * bot : world_->bots)
 			{
