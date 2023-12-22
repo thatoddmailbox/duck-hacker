@@ -14,6 +14,7 @@ namespace duckhacker
 			{
 			public:
 				Frame(int bot_id, wxString& initial_code);
+				~Frame();
 
 				wxString GetCode();
 				void SetCode(wxString code);

@@ -49,6 +49,18 @@ namespace duckhacker
 				}
 			}
 
+			void App::NotifyFrameClosed(Frame * frame)
+			{
+				for (std::pair<int, Frame *> p : frames_)
+				{
+					if (p.second == frame)
+					{
+						frames_.erase(p.first);
+						break;
+					}
+				}
+			}
+
 			void App::OnOpenEditor(wxThreadEvent& e)
 			{
 				int bot_id = e.GetInt();

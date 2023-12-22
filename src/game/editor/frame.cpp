@@ -71,6 +71,11 @@ namespace duckhacker
 				SetSizer(root);
 			}
 
+			Frame::~Frame()
+			{
+				wxGetApp().NotifyFrameClosed(this);
+			}
+
 			wxString Frame::GetCode()
 			{
 				return text_control_->GetText();
