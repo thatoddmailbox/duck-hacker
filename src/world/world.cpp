@@ -84,6 +84,57 @@ namespace duckhacker
 				int z = object_node.attribute("z").as_int();
 				int rotation = object_node.attribute("rotation").as_int();
 
+				std::vector<render::Material> materials;
+				for (pugi::xml_node material_node : mesh_node.children("material"))
+				{
+					render::Material m;
+
+					pugi::xml_node ambient_node = material_node.child("ambient");
+					if (!ambient_node.empty())
+					{
+						m.SetAmbient(glm::vec4(ambient_node.attribute("r").as_float(), ambient_node.attribute("g").as_float(), ambient_node.attribute("b").as_float(), 1.0f));
+					}
+
+					pugi::xml_node diffuse_node = material_node.child("diffuse");
+					if (!diffuse_node.empty())
+					{
+						m.SetDiffuse(glm::vec4(diffuse_node.attribute("r").as_float(), diffuse_node.attribute("g").as_float(), diffuse_node.attribute("b").as_float(), 1.0f));
+					}
+
+					pugi::xml_node specular_node = material_node.child("specular");
+					if (!specular_node.empty())
+					{
+						m.SetSpecular(glm::vec4(specular_node.attribute("r").as_float(), specular_node.attribute("g").as_float(), specular_node.attribute("b").as_float(), 1.0f));
+					}
+
+					pugi::xml_node shininess_node = material_node.child("shininess");
+					if (!shininess_node.empty())
+					{
+						m.SetShininess(shininess_node.attribute("value").as_float());
+					}
+
+					pugi::xml_node texture_node = material_node.child("texture");
+					if (!texture_node.empty())
+					{
+						m.SetTexture(content_manager->Texture(texture_node.attribute("path").as_string()));
+					}
+
+					materials.push_back(m);
+				}
+
+				if (materials.size() > 0)
+				{
+					if (mesh_type == "cube")
+					{
+						if (materials.size() != 1)
+						{
+							std::cout << "Cube mesh can only have one material." << std::endl;
+						}
+
+						mesh->SetMaterial(materials[0]);
+					}
+				}
+
 				render::Object object = render::Object();
 				object.SetMesh(mesh);
 				object.SetPosition(glm::vec3(x, y, z));
