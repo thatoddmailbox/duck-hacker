@@ -269,9 +269,35 @@ namespace duckhacker
 
 				if (action_type_ == BotAction::MOVE)
 				{
-					target_x_ = x_ + action_coords_[0];
-					target_y_ = y_ + action_coords_[1];
-					target_z_ = z_ + action_coords_[2];
+					int dx_rotated = action_coords_[0];
+					int dy_rotated = action_coords_[1];
+					int dz_rotated = action_coords_[2];
+
+					if (rotation_ == 0)
+					{
+						// do nothing
+					}
+					else if (rotation_ == 90)
+					{
+						int temp = dx_rotated;
+						dx_rotated = -dz_rotated;
+						dz_rotated = temp;
+					}
+					else if (rotation_ == 180)
+					{
+						dx_rotated = -dx_rotated;
+						dz_rotated = -dz_rotated;
+					}
+					else if (rotation_ == 270)
+					{
+						int temp = dx_rotated;
+						dx_rotated = dz_rotated;
+						dz_rotated = -temp;
+					}
+
+					target_x_ = x_ + dx_rotated;
+					target_y_ = y_ + dy_rotated;
+					target_z_ = z_ + dz_rotated;
 					target_rotation_ = rotation_;
 					target_rotation_display_ = rotation_;
 					anim_counter_ = 0;
