@@ -42,6 +42,8 @@ namespace duckhacker
 			const int& GetZ();
 			const int& GetRotation();
 
+			void ResetTo(int x, int y, int z, int rotation);
+
 			const glm::vec3& GetDisplayCoords();
 			const float& GetDisplayRotation();
 
@@ -49,6 +51,8 @@ namespace duckhacker
 			int id_;
 			int x_, y_, z_;
 			int rotation_;
+
+			bool running_ = false;
 
 			int target_x_, target_y_, target_z_;
 			int target_rotation_;

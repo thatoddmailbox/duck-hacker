@@ -113,6 +113,25 @@ namespace duckhacker
 			return rotation_;
 		}
 
+		void Bot::ResetTo(int x, int y, int z, int rotation)
+		{
+			if (running_)
+			{
+				std::cout << "Cannot reset a bot while it is running." << std::endl;
+				return;
+			}
+
+			x_ = x;
+			y_ = y;
+			z_ = z;
+			rotation_ = rotation;
+			display_coords_ = glm::vec3(x_, y_, z_);
+			display_rotation_ = rotation;
+
+			object.SetPosition(glm::vec3(x_, y_, z_));
+			object.SetRotation(glm::vec3(0, -rotation, 0));
+		}
+
 		const glm::vec3& Bot::GetDisplayCoords()
 		{
 			return display_coords_;
@@ -126,6 +145,7 @@ namespace duckhacker
 		void Bot::Execute()
 		{
 			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
+			running_ = true;
 		}
 
 		void Bot::EnterExecuteThread_(Bot * b)
@@ -203,6 +223,7 @@ namespace duckhacker
 		void Bot::WaitForStop()
 		{
 			execute_thread_.join();
+			running_  = false;
 		}
 
 		void Bot::Execute_()
