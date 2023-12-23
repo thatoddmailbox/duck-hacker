@@ -12,7 +12,7 @@ namespace duckhacker
 			z_ = z;
 			rotation_ = rotation;
 
-			object.SetMesh(content_manager->Mesh("models/npc.obj", content_manager->Shader("shaders/gray")));
+			object.SetMesh(content_manager->Mesh("models/npc.obj", content_manager->Shader("shaders/basic")));
 			object.SetPosition(glm::vec3(x_, y_, z_));
 			object.SetRotation(glm::vec3(0, -rotation, 0));
 		}

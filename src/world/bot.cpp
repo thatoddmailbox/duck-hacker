@@ -78,7 +78,7 @@ namespace duckhacker
 
 			lua_state_ = nullptr;
 
-			object.SetMesh(content_manager->Mesh("models/duckbot.obj", content_manager->Shader("shaders/gray")));
+			object.SetMesh(content_manager->Mesh("models/duckbot.obj", content_manager->Shader("shaders/basic")));
 			object.SetPosition(glm::vec3(x_, y_, z_));
 			object.SetRotation(glm::vec3(0, -rotation, 0));
 		}

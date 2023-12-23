@@ -28,7 +28,7 @@ namespace duckhacker
 			center_point_ = glm::vec3(field_width / 2, 0, field_height / 2);
 
 			render::Object floor = render::Object();
-			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/gray"), field_width, 1, field_height));
+			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_height));
 			floor.SetPosition(glm::vec3(field_width / 2, -1, field_height / 2));
 			objects.push_back(floor);
 
