@@ -116,7 +116,7 @@ namespace duckhacker
 					pugi::xml_node texture_node = material_node.child("texture");
 					if (!texture_node.empty())
 					{
-						m.SetTexture(content_manager->Texture(texture_node.attribute("path").as_string()));
+						m.SetTexture(content_manager->Texture(texture_node.attribute("src").as_string()));
 					}
 
 					materials.push_back(m);
