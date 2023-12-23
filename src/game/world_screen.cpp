@@ -93,6 +93,11 @@ namespace duckhacker
 				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
+			for (world::NPC * npc : world_->npcs)
+			{
+				npc->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
+			}
+
 			for (render::Object& object : world_->objects)
 			{
 				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
