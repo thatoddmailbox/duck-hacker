@@ -14,7 +14,7 @@ namespace duckhacker
 {
 	namespace world
 	{
-		enum class WorldState
+		enum class State
 		{
 			READY,
 			RUNNING
@@ -32,7 +32,7 @@ namespace duckhacker
 
 			const glm::vec3& GetCenterPoint();
 
-			const WorldState& GetState();
+			const State& GetState();
 
 			void Run();
 			void Stop();
@@ -41,7 +41,7 @@ namespace duckhacker
 
 		private:
 			glm::vec3 center_point_;
-			WorldState state_ = WorldState::READY;
+			State state_ = State::READY;
 		};
 	}
 }

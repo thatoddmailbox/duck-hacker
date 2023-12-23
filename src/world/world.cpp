@@ -74,14 +74,14 @@ namespace duckhacker
 			return center_point_;
 		}
 
-		const WorldState& World::GetState()
+		const State& World::GetState()
 		{
 			return state_;
 		}
 
 		void World::Run()
 		{
-			state_ = WorldState::RUNNING;
+			state_ = State::RUNNING;
 
 			for (Bot * bot : bots)
 			{
@@ -102,12 +102,12 @@ namespace duckhacker
 			}
 
 			// TOOD: reset the world or something
-			state_ = WorldState::READY;
+			state_ = State::READY;
 		}
 
 		void World::Update(float dt)
 		{
-			if (state_ != WorldState::RUNNING)
+			if (state_ != State::RUNNING)
 			{
 				return;
 			}

@@ -122,7 +122,7 @@ namespace duckhacker
 			ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Appearing);
 			ImGui::Begin("Control");
 
-			if (world_->GetState() == world::WorldState::READY)
+			if (world_->GetState() == world::State::READY)
 			{
 				if (ImGui::Button("Start"))
 				{
