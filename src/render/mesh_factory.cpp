@@ -14,116 +14,116 @@ namespace duckhacker
 			float * vertices = (float *) malloc(vertices_size * sizeof(float));
 
 			/*
-			* back face
+			* front face
 			*/
 			vertices[(vertices_stride * 0) + 0] = (width / 2);
 			vertices[(vertices_stride * 0) + 1] = (height / 2);
-			vertices[(vertices_stride * 0) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 0) + 2] = (depth / 2);
 			vertices[(vertices_stride * 0) + 3] = 0.00f;
 			vertices[(vertices_stride * 0) + 4] = 0.00f;
-			vertices[(vertices_stride * 0) + 5] = -1.00f;
-			vertices[(vertices_stride * 0) + 6] = 0.00f;
+			vertices[(vertices_stride * 0) + 5] = 1.00f;
+			vertices[(vertices_stride * 0) + 6] = 1.00f;
 			vertices[(vertices_stride * 0) + 7] = 1.00f;
 
 			vertices[(vertices_stride * 1) + 0] = (width / 2);
 			vertices[(vertices_stride * 1) + 1] = -(height / 2);
-			vertices[(vertices_stride * 1) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 1) + 2] = (depth / 2);
 			vertices[(vertices_stride * 1) + 3] = 0.00f;
 			vertices[(vertices_stride * 1) + 4] = 0.00f;
-			vertices[(vertices_stride * 1) + 5] = -1.00f;
-			vertices[(vertices_stride * 1) + 6] = 0.00f;
+			vertices[(vertices_stride * 1) + 5] = 1.00f;
+			vertices[(vertices_stride * 1) + 6] = 1.00f;
 			vertices[(vertices_stride * 1) + 7] = 0.00f;
 
 			vertices[(vertices_stride * 2) + 0] = -(width / 2);
 			vertices[(vertices_stride * 2) + 1] = -(height / 2);
-			vertices[(vertices_stride * 2) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 2) + 2] = (depth / 2);
 			vertices[(vertices_stride * 2) + 3] = 0.00f;
 			vertices[(vertices_stride * 2) + 4] = 0.00f;
-			vertices[(vertices_stride * 2) + 5] = -1.00f;
-			vertices[(vertices_stride * 2) + 6] = 1.00f;
+			vertices[(vertices_stride * 2) + 5] = 1.00f;
+			vertices[(vertices_stride * 2) + 6] = 0.00f;
 			vertices[(vertices_stride * 2) + 7] = 0.00f;
 
 			vertices[(vertices_stride * 3) + 0] = -(width / 2);
 			vertices[(vertices_stride * 3) + 1] = (height / 2);
-			vertices[(vertices_stride * 3) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 3) + 2] = (depth / 2);
 			vertices[(vertices_stride * 3) + 3] = 0.00f;
 			vertices[(vertices_stride * 3) + 4] = 0.00f;
-			vertices[(vertices_stride * 3) + 5] = -1.00f;
-			vertices[(vertices_stride * 3) + 6] = 1.00f;
+			vertices[(vertices_stride * 3) + 5] = 1.00f;
+			vertices[(vertices_stride * 3) + 6] = 0.00f;
 			vertices[(vertices_stride * 3) + 7] = 1.00f;
 
 			vertices[(vertices_stride * 4) + 0] = (width / 2);
 			vertices[(vertices_stride * 4) + 1] = (height / 2);
-			vertices[(vertices_stride * 4) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 4) + 2] = (depth / 2);
 			vertices[(vertices_stride * 4) + 3] = 0.00f;
 			vertices[(vertices_stride * 4) + 4] = 0.00f;
-			vertices[(vertices_stride * 4) + 5] = -1.00f;
-			vertices[(vertices_stride * 4) + 6] = 0.00f;
+			vertices[(vertices_stride * 4) + 5] = 1.00f;
+			vertices[(vertices_stride * 4) + 6] = 1.00f;
 			vertices[(vertices_stride * 4) + 7] = 1.00f;
 
 			vertices[(vertices_stride * 5) + 0] = -(width / 2);
 			vertices[(vertices_stride * 5) + 1] = -(height / 2);
-			vertices[(vertices_stride * 5) + 2] = -(depth / 2);
+			vertices[(vertices_stride * 5) + 2] = (depth / 2);
 			vertices[(vertices_stride * 5) + 3] = 0.00f;
 			vertices[(vertices_stride * 5) + 4] = 0.00f;
-			vertices[(vertices_stride * 5) + 5] = -1.00f;
-			vertices[(vertices_stride * 5) + 6] = 1.00f;
+			vertices[(vertices_stride * 5) + 5] = 1.00f;
+			vertices[(vertices_stride * 5) + 6] = 0.00f;
 			vertices[(vertices_stride * 5) + 7] = 0.00f;
 
 			/*
-			* front face
+			* back face
 			*/
 			vertices[(vertices_stride * 6) + 0] = -(width / 2);
 			vertices[(vertices_stride * 6) + 1] = -(height / 2);
-			vertices[(vertices_stride * 6) + 2] = (depth / 2);
+			vertices[(vertices_stride * 6) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 6) + 3] = 0.00f;
 			vertices[(vertices_stride * 6) + 4] = 0.00f;
-			vertices[(vertices_stride * 6) + 5] = 1.00f;
+			vertices[(vertices_stride * 6) + 5] = -1.00f;
 			vertices[(vertices_stride * 6) + 6] = 0.32f;
 			vertices[(vertices_stride * 6) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 7) + 0] = (width / 2);
 			vertices[(vertices_stride * 7) + 1] = -(height / 2);
-			vertices[(vertices_stride * 7) + 2] = (depth / 2);
+			vertices[(vertices_stride * 7) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 7) + 3] = 0.00f;
 			vertices[(vertices_stride * 7) + 4] = 0.00f;
-			vertices[(vertices_stride * 7) + 5] = 1.00f;
+			vertices[(vertices_stride * 7) + 5] = -1.00f;
 			vertices[(vertices_stride * 7) + 6] = 0.32f;
 			vertices[(vertices_stride * 7) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 8) + 0] = (width / 2);
 			vertices[(vertices_stride * 8) + 1] = (height / 2);
-			vertices[(vertices_stride * 8) + 2] = (depth / 2);
+			vertices[(vertices_stride * 8) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 8) + 3] = 0.00f;
 			vertices[(vertices_stride * 8) + 4] = 0.00f;
-			vertices[(vertices_stride * 8) + 5] = 1.00f;
+			vertices[(vertices_stride * 8) + 5] = -1.00f;
 			vertices[(vertices_stride * 8) + 6] = 0.32f;
 			vertices[(vertices_stride * 8) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 9) + 0] = (width / 2);
 			vertices[(vertices_stride * 9) + 1] = (height / 2);
-			vertices[(vertices_stride * 9) + 2] = (depth / 2);
+			vertices[(vertices_stride * 9) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 9) + 3] = 0.00f;
 			vertices[(vertices_stride * 9) + 4] = 0.00f;
-			vertices[(vertices_stride * 9) + 5] = 1.00f;
+			vertices[(vertices_stride * 9) + 5] = -1.00f;
 			vertices[(vertices_stride * 9) + 6] = 0.32f;
 			vertices[(vertices_stride * 9) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 10) + 0] = -(width / 2);
 			vertices[(vertices_stride * 10) + 1] = (height / 2);
-			vertices[(vertices_stride * 10) + 2] = (depth / 2);
+			vertices[(vertices_stride * 10) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 10) + 3] = 0.00f;
 			vertices[(vertices_stride * 10) + 4] = 0.00f;
-			vertices[(vertices_stride * 10) + 5] = 1.00f;
+			vertices[(vertices_stride * 10) + 5] = -1.00f;
 			vertices[(vertices_stride * 10) + 6] = 0.32f;
 			vertices[(vertices_stride * 10) + 7] = 0.32f;
 
 			vertices[(vertices_stride * 11) + 0] = -(width / 2);
 			vertices[(vertices_stride * 11) + 1] = -(height / 2);
-			vertices[(vertices_stride * 11) + 2] = (depth / 2);
+			vertices[(vertices_stride * 11) + 2] = -(depth / 2);
 			vertices[(vertices_stride * 11) + 3] = 0.00f;
 			vertices[(vertices_stride * 11) + 4] = 0.00f;
-			vertices[(vertices_stride * 11) + 5] = 1.00f;
+			vertices[(vertices_stride * 11) + 5] = -1.00f;
 			vertices[(vertices_stride * 11) + 6] = 0.32f;
 			vertices[(vertices_stride * 11) + 7] = 0.32f;
 
