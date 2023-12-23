@@ -33,22 +33,22 @@ namespace duckhacker
 
 		static int Bot_OnLuaCall_MoveForward(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, 1);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(1, 0, 0);
 		}
 
 		static int Bot_OnLuaCall_MoveBackward(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, -1);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
 		}
 
 		static int Bot_OnLuaCall_MoveLeft(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(1, 0, 0);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, -1);
 		}
 
 		static int Bot_OnLuaCall_MoveRight(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, 1);
 		}
 
 		static int Bot_OnLuaCall_TurnLeft(lua_State * L)
