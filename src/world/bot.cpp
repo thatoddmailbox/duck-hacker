@@ -76,6 +76,8 @@ namespace duckhacker
 			action_available_ = false;
 			action_done_ = false;
 
+			stop_requested_ = false;
+
 			lua_state_ = nullptr;
 
 			object.SetMesh(content_manager->Mesh("models/duckbot.obj", content_manager->Shader("shaders/basic")));
@@ -178,8 +180,13 @@ namespace duckhacker
 
 				// wait for the action to be done
 				action_done_condition_.wait(lock, [this] {
-					return this->action_done_;
+					return this->action_done_ || this->stop_requested_;
 				});
+			}
+
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
 			}
 
 			return 0;
@@ -208,8 +215,13 @@ namespace duckhacker
 
 				// wait for the action to be done
 				action_done_condition_.wait(lock, [this] {
-					return this->action_done_;
+					return this->action_done_ || this->stop_requested_;
 				});
+			}
+
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
 			}
 
 			return 0;
@@ -217,13 +229,21 @@ namespace duckhacker
 
 		void Bot::RequestStop()
 		{
-			// TODO: this should uhhh do something
+			stop_requested_ = true;
+			action_done_condition_.notify_all();
 		}
 
 		void Bot::WaitForStop()
 		{
 			execute_thread_.join();
 			running_  = false;
+
+			// reset internal state
+			action_available_ = false;
+			action_done_ = false;
+			anim_counter_ = 0;
+			anim_happening_ = false;
+			stop_requested_ = false;
 		}
 
 		void Bot::Execute_()
@@ -279,6 +299,7 @@ namespace duckhacker
 			}
 
 			lua_close(lua_state_);
+			lua_state_ = nullptr;
 			printf("execute thread terminated :O\n");
 		}
 
@@ -402,7 +423,7 @@ namespace duckhacker
 			if (msg == NULL) msg = "error object is not a string";
 			printf("ERROR: unprotected error in call to Lua API (%s)\n", msg);
 
-			longjmp(preexec_state, 0);
+			longjmp(preexec_state, 1);
 		}
 	}
 }

@@ -88,6 +88,8 @@ namespace duckhacker
 
 			std::atomic_bool action_available_;
 
+			std::atomic_bool stop_requested_;
+
 			BotAction action_type_;
 			int action_coords_[3];
 			int action_angle_;
