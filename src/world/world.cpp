@@ -45,6 +45,20 @@ namespace duckhacker
 				Bot * bot = new Bot(content_manager, id, x, y, z, rotation);
 				bots.push_back(bot);
 			}
+
+			pugi::xml_node npcs_node = world_node.child("npcs");
+
+			for (pugi::xml_node npc_node : npcs_node.children("npc"))
+			{
+				int id = npc_node.attribute("id").as_int();
+				int x = npc_node.attribute("x").as_int();
+				int y = npc_node.attribute("y").as_int();
+				int z = npc_node.attribute("z").as_int();
+				int rotation = npc_node.attribute("rotation").as_int();
+
+				NPC * npc = new NPC(content_manager, id, x, y, z, rotation);
+				npcs.push_back(npc);
+			}
 		}
 
 		World::~World()

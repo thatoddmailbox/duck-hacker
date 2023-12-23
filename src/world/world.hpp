@@ -8,6 +8,7 @@
 #include "render/object.hpp"
 
 #include "world/bot.hpp"
+#include "world/npc.hpp"
 
 namespace duckhacker
 {
@@ -26,6 +27,7 @@ namespace duckhacker
 			~World();
 
 			std::vector<Bot *> bots;
+			std::vector<NPC *> npcs;
 			std::vector<render::Object> objects;
 
 			const glm::vec3& GetCenterPoint();
