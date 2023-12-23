@@ -26,6 +26,8 @@ namespace duckhacker
 			void SetRotation(const glm::vec3& rotation);
 			void SetScale(const glm::vec3& scale);
 
+			glm::vec2 ObjectPositionToScreenPosition(const glm::vec3& object_position, glm::mat4 * projection, glm::mat4 * view);
+
 			void Draw(glm::mat4 * projection, glm::mat4 * view, glm::vec3 * camera_position, const std::vector<Light>& lights);
 
 		private:

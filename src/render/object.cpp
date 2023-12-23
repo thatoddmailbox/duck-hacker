@@ -55,6 +55,16 @@ namespace duckhacker
 			location_dirty_ = true;
 		}
 
+		glm::vec2 Object::ObjectPositionToScreenPosition(const glm::vec3& object_position, glm::mat4 * projection, glm::mat4 * view)
+		{
+			glm::vec4 clip_position = *projection * *view * glm::translate(glm::mat4(1.0f), position_) * glm::vec4(object_position, 1.0f);
+			glm::vec3 ndc_position = glm::vec3(clip_position) / clip_position.w;
+			glm::vec2 screen_position = glm::vec2(ndc_position.x, ndc_position.y);
+			screen_position.x = (screen_position.x + 1.0f) / 2.0f;
+			screen_position.y = (-screen_position.y + 1.0f) / 2.0f;
+			return screen_position;
+		}
+
 		void Object::UpdateMatrices_()
 		{
 			model_ = glm::mat4(1.0f);
