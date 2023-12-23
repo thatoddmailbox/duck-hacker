@@ -70,7 +70,7 @@ namespace duckhacker
 				render::Shader * shader = content_manager->Shader("shaders/basic");
 				render::Mesh * mesh = nullptr;
 
-				if (mesh_type == "cube")
+				if (mesh_type == "cube" || mesh_type == "sign")
 				{
 					float width = mesh_node.attribute("w").as_float();
 					float height = mesh_node.attribute("h").as_float();
@@ -132,6 +132,18 @@ namespace duckhacker
 						}
 
 						mesh->SetMaterial(materials[0]);
+					}
+					else if (mesh_type == "sign")
+					{
+						render::Material sign_material = materials[0];
+						render::Material back_material = (materials.size() >= 2 ? materials[1] : render::Material());
+
+						std::vector<std::tuple<size_t, render::Material>> material_map;
+
+						material_map.push_back(std::make_tuple(6, sign_material));
+						material_map.push_back(std::make_tuple(30, back_material));
+
+						mesh->SetMaterials(material_map);
 					}
 				}
 
