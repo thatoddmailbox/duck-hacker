@@ -79,9 +79,9 @@ namespace duckhacker
 					mesh = render::MeshFactory::Box(shader, width, height, depth);
 				}
 
-				int x = object_node.attribute("x").as_int();
-				int y = object_node.attribute("y").as_int();
-				int z = object_node.attribute("z").as_int();
+				float x = object_node.attribute("x").as_float();
+				float y = object_node.attribute("y").as_float();
+				float z = object_node.attribute("z").as_float();
 				int rotation = object_node.attribute("rotation").as_int();
 
 				std::vector<render::Material> materials;
