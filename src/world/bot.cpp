@@ -251,6 +251,22 @@ namespace duckhacker
 			(*((Bot **) lua_getextraspace(L)))->HandleInstructionCount_();
 		}
 
+		static int build_traceback(lua_State * L)
+		{
+			// from lua source code
+			const char *msg = lua_tostring(L, 1);
+			if (msg == NULL) {  /* is error object not a string? */
+				if (luaL_callmeta(L, 1, "__tostring") &&  /* does it have a metamethod */
+					lua_type(L, -1) == LUA_TSTRING)  /* that produces a string? */
+				return 1;  /* that is the message */
+				else
+				msg = lua_pushfstring(L, "(error object is a %s value)",
+										luaL_typename(L, 1));
+			}
+			luaL_traceback(L, L, msg, 2);  /* append a standard traceback */
+			return 1;  /* return the traceback */
+		}
+
 		void Bot::Execute_()
 		{
 			lua_state_ = luaL_newstate();
@@ -298,11 +314,18 @@ namespace duckhacker
 
 			lua_setglobal(lua_state_, "duckbot");
 
-			luaL_loadstring(lua_state_, code.c_str());
+			lua_pushcfunction(lua_state_, build_traceback);
+			int traceback_idx = lua_gettop(lua_state_);
+
+			luaL_loadbuffer(lua_state_, code.c_str(), code.length(), "=code");
 
 			if (setjmp(preexec_state) == 0)
 			{
-				lua_call(lua_state_, 0, 0);
+				int status = lua_pcall(lua_state_, 0, 0, traceback_idx);
+				if (status != LUA_OK)
+				{
+					HandleError_();
+				}
 			}
 
 			lua_close(lua_state_);
@@ -425,10 +448,13 @@ namespace duckhacker
 
 		void Bot::HandleError_()
 		{
-			const char *msg = lua_tostring(lua_state_, -1);
+			const char * msg = lua_tostring(lua_state_, -1);
+			if (msg == NULL)
+			{
+				msg = "error object is not a string";
+			}
 
-			if (msg == NULL) msg = "error object is not a string";
-			printf("ERROR: unprotected error in call to Lua API (%s)\n", msg);
+			printf("ERROR: %s\n", msg);
 
 			longjmp(preexec_state, 1);
 		}
