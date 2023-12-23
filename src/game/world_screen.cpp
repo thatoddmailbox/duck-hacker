@@ -62,6 +62,14 @@ namespace duckhacker
 			if (scroll != 0)
 			{
 				target_radius_ -= scroll;
+				if (target_radius_ < 1)
+				{
+					target_radius_ = 1;
+				}
+				if (target_radius_ > 20)
+				{
+					target_radius_ = 20;
+				}
 			}
 
 			if (target_radius_ != radius_)
