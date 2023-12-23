@@ -25,6 +25,8 @@ namespace duckhacker
 			const int& GetZ();
 			const int& GetRotation();
 
+			void ResetTo(int x, int y, int z, int rotation);
+
 		private:
 			int id_;
 			int x_, y_, z_;

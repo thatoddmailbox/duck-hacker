@@ -46,5 +46,16 @@ namespace duckhacker
 		{
 			return rotation_;
 		}
+
+		void NPC::ResetTo(int x, int y, int z, int rotation)
+		{
+			x_ = x;
+			y_ = y;
+			z_ = z;
+			rotation_ = rotation;
+
+			object.SetPosition(glm::vec3(x_, y_, z_));
+			object.SetRotation(glm::vec3(0, -rotation, 0));
+		}
 	}
 }
