@@ -83,6 +83,8 @@ namespace duckhacker
 			void HandleWarning_(const char * msg);
 			void HandleError_();
 
+			void HandleInstructionCount_();
+
 		private:
 			std::thread execute_thread_;
 

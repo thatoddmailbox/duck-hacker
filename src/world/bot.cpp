@@ -246,6 +246,11 @@ namespace duckhacker
 			stop_requested_ = false;
 		}
 
+		static void Bot_HandleInstructionCount(lua_State * L, lua_Debug * ar)
+		{
+			(*((Bot **) lua_getextraspace(L)))->HandleInstructionCount_();
+		}
+
 		void Bot::Execute_()
 		{
 			lua_state_ = luaL_newstate();
@@ -258,6 +263,8 @@ namespace duckhacker
 			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
 
 			luaL_openlibs(lua_state_);
+
+			lua_sethook(lua_state_, Bot_HandleInstructionCount, LUA_MASKCOUNT, 100);
 
 			//
 			// set up native functions
@@ -424,6 +431,14 @@ namespace duckhacker
 			printf("ERROR: unprotected error in call to Lua API (%s)\n", msg);
 
 			longjmp(preexec_state, 1);
+		}
+
+		void Bot::HandleInstructionCount_()
+		{
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
+			}
 		}
 	}
 }
