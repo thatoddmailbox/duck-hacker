@@ -72,9 +72,9 @@ namespace duckhacker
 
 				if (mesh_type == "cube")
 				{
-					int width = mesh_node.attribute("w").as_int();
-					int height = mesh_node.attribute("h").as_int();
-					int depth = mesh_node.attribute("d").as_int();
+					float width = mesh_node.attribute("w").as_float();
+					float height = mesh_node.attribute("h").as_float();
+					float depth = mesh_node.attribute("d").as_float();
 
 					mesh = render::MeshFactory::Box(shader, width, height, depth);
 				}
