@@ -59,6 +59,37 @@ namespace duckhacker
 				NPC * npc = new NPC(content_manager, id, x, y, z, rotation);
 				npcs.push_back(npc);
 			}
+
+			pugi::xml_node objects_node = world_node.child("objects");
+
+			for (pugi::xml_node object_node : objects_node.children("object"))
+			{
+				pugi::xml_node mesh_node = object_node.child("mesh");
+				std::string mesh_type = mesh_node.attribute("type").as_string();
+
+				render::Shader * shader = content_manager->Shader("shaders/basic");
+				render::Mesh * mesh = nullptr;
+
+				if (mesh_type == "cube")
+				{
+					int width = mesh_node.attribute("w").as_int();
+					int height = mesh_node.attribute("h").as_int();
+					int depth = mesh_node.attribute("d").as_int();
+
+					mesh = render::MeshFactory::Box(shader, width, height, depth);
+				}
+
+				int x = object_node.attribute("x").as_int();
+				int y = object_node.attribute("y").as_int();
+				int z = object_node.attribute("z").as_int();
+				int rotation = object_node.attribute("rotation").as_int();
+
+				render::Object object = render::Object();
+				object.SetMesh(mesh);
+				object.SetPosition(glm::vec3(x, y, z));
+				object.SetRotation(glm::vec3(0, -rotation, 0));
+				objects.push_back(object);
+			}
 		}
 
 		World::~World()
