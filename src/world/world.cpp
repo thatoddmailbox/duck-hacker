@@ -44,6 +44,8 @@ namespace duckhacker
 
 				Bot * bot = new Bot(content_manager, id, x, y, z, rotation);
 				bots.push_back(bot);
+
+				bot_reset_positions_.push_back(glm::vec4(x, y, z, rotation));
 			}
 
 			pugi::xml_node npcs_node = world_node.child("npcs");
@@ -58,6 +60,8 @@ namespace duckhacker
 
 				NPC * npc = new NPC(content_manager, id, x, y, z, rotation);
 				npcs.push_back(npc);
+
+				npc_reset_positions_.push_back(glm::vec4(x, y, z, rotation));
 			}
 
 			pugi::xml_node objects_node = world_node.child("objects");
@@ -195,7 +199,19 @@ namespace duckhacker
 				bot->WaitForStop();
 			}
 
-			// TOOD: reset the world or something
+			// reset world
+			for (size_t i = 0; i < bots.size(); i++)
+			{
+				Bot * bot = bots[i];
+				bot->ResetTo(bot_reset_positions_[i].x, bot_reset_positions_[i].y, bot_reset_positions_[i].z, bot_reset_positions_[i].w);
+			}
+
+			for (size_t i = 0; i < npcs.size(); i++)
+			{
+				NPC * npc = npcs[i];
+				npc->ResetTo(npc_reset_positions_[i].x, npc_reset_positions_[i].y, npc_reset_positions_[i].z, npc_reset_positions_[i].w);
+			}
+
 			state_ = State::READY;
 		}
 

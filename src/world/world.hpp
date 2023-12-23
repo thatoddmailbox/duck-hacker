@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "glm/glm.hpp"
+
 #include "content/manager.hpp"
 
 #include "render/object.hpp"
@@ -40,6 +42,9 @@ namespace duckhacker
 			void Update(float dt);
 
 		private:
+			std::vector<glm::vec4> bot_reset_positions_;
+			std::vector<glm::vec4> npc_reset_positions_;
+
 			glm::vec3 center_point_;
 			State state_ = State::READY;
 		};
