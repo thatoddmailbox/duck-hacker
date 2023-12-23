@@ -317,10 +317,15 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, build_traceback);
 			int traceback_idx = lua_gettop(lua_state_);
 
-			luaL_loadbuffer(lua_state_, code.c_str(), code.length(), "=code");
+			int status = luaL_loadbuffer(lua_state_, code.c_str(), code.length(), "=code");
 
 			if (setjmp(preexec_state) == 0)
 			{
+				if (status != LUA_OK)
+				{
+					HandleError_();
+				}
+
 				int status = lua_pcall(lua_state_, 0, 0, traceback_idx);
 				if (status != LUA_OK)
 				{
