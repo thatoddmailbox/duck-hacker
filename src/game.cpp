@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 
-#include <SDL_image.h>
 #include <physfs.h>
 
 #include "glad/glad.h"
