@@ -1,4 +1,4 @@
-<world>
+<world coins="100">
 	<field width="5" height="5" />
 	<bots>
 		<!-- Player bots -->

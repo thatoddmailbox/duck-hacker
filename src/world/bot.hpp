@@ -108,8 +108,11 @@ namespace duckhacker
 			int OnLuaCall_Move_(int dx, int dy, int dz);
 			int OnLuaCall_CanMove_(int dx, int dy, int dz);
 			int OnLuaCall_Turn_(int da);
+			int OnLuaCall_GetCoins_();
 			int OnLuaCall_GetTime_();
 			int OnLuaCall_Sleep_();
+
+			int OnLuaCall_NPC_AddCoins_();
 
 		public:
 			void HandleWarning_(const char * msg);

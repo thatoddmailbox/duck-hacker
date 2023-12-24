@@ -75,6 +75,11 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
 		}
 
+		static int Bot_OnLuaCall_GetCoins(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_GetCoins_();
+		}
+
 		static int Bot_OnLuaCall_GetTime(lua_State * L)
 		{
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_GetTime_();
@@ -83,6 +88,11 @@ namespace duckhacker
 		static int Bot_OnLuaCall_Sleep(lua_State * L)
 		{
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Sleep_();
+		}
+
+		static int Bot_OnLuaCall_NPC_AddCoins(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_AddCoins_();
 		}
 
 		Bot::Bot(world::World * world, content::Manager * content_manager, BotType t, int id, std::string name, int x, int y, int z, int rotation, std::string mesh, std::string c)
@@ -342,6 +352,19 @@ namespace duckhacker
 			return 0;
 		}
 
+		int Bot::OnLuaCall_GetCoins_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			lua_pushinteger(lua_state_, world_->GetCoins());
+			return 1;
+		}
+
 		int Bot::OnLuaCall_GetTime_()
 		{
 			int n = lua_gettop(lua_state_);
@@ -389,6 +412,28 @@ namespace duckhacker
 					longjmp(preexec_state, 1);
 				}
 			}
+
+			return 0;
+		}
+
+		int Bot::OnLuaCall_NPC_AddCoins_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 1)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			int is_num = 0;
+			int amount = lua_tointegerx(lua_state_, 1, &is_num);
+			if (!is_num)
+			{
+				lua_pushliteral(lua_state_, "amount must be an integer");
+				return lua_error(lua_state_);
+			}
+
+			world_->AddCoins(amount);
 
 			return 0;
 		}
@@ -539,6 +584,9 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_TurnRight);
 			lua_setfield(lua_state_, 1, "turnRight");
 
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_GetCoins);
+			lua_setfield(lua_state_, 1, "getCoins");
+
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_GetTime);
 			lua_setfield(lua_state_, 1, "getTime");
 
@@ -546,6 +594,18 @@ namespace duckhacker
 			lua_setfield(lua_state_, 1, "sleep");
 
 			lua_setglobal(lua_state_, "duckbot");
+
+			// for npcs, we have some special secret functions
+			if (type == BotType::NPC)
+			{
+				std::cout << "npc bot" << std::endl;
+				lua_newtable(lua_state_);
+
+				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_AddCoins);
+				lua_setfield(lua_state_, 1, "addCoins");
+
+				lua_setglobal(lua_state_, "npc");
+			}
 
 			lua_pushcfunction(lua_state_, build_traceback);
 			int traceback_idx = lua_gettop(lua_state_);

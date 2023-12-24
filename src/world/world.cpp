@@ -21,6 +21,9 @@ namespace duckhacker
 
 			pugi::xml_node world_node = doc.child("world");
 
+			initial_coins_ = world_node.attribute("coins").as_int();
+			coins_ = initial_coins_;
+
 			pugi::xml_node field_node = world_node.child("field");
 			int field_width = field_node.attribute("width").as_int();
 			int field_height = field_node.attribute("height").as_int();
@@ -45,8 +48,9 @@ namespace duckhacker
 				std::string mesh = bot_node.attribute("mesh").as_string();
 				std::string src = bot_node.attribute("src").as_string();
 
+				std::string type_string = bot_node.attribute("type").as_string();
 				BotType type = BotType::PLAYER;
-				if (bot_node.attribute("type").as_string() == "npc")
+				if (type_string == "npc")
 				{
 					type = BotType::NPC;
 				}
@@ -213,9 +217,19 @@ namespace duckhacker
 			return state_;
 		}
 
+		const std::atomic_int& World::GetCoins()
+		{
+			return coins_;
+		}
+
 		const std::atomic_int& World::GetTicks()
 		{
 			return ticks_;
+		}
+
+		void World::AddCoins(int amount)
+		{
+			coins_ += amount;
 		}
 
 		bool World::IsOccupied(int x, int y, int z)
@@ -270,6 +284,8 @@ namespace duckhacker
 			}
 
 			state_ = State::READY;
+
+			coins_ = initial_coins_;
 			ticks_ = 0;
 			ticks_accum_ = 0;
 		}

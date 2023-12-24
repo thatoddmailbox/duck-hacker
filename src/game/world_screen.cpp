@@ -142,6 +142,10 @@ namespace duckhacker
 			ImGui::SetNextWindowPos(ImVec2(50, 100), ImGuiCond_Appearing);
 			if (ImGui::Begin("World"))
 			{
+				ImGui::Text("Time: %d", world_->GetTicks().load());
+				ImGui::Text("Coins: %d", world_->GetCoins().load());
+
+				ImGui::SeparatorText("Bots");
 				for (world::Bot * bot : world_->bots)
 				{
 					std::string label = bot->GetName();

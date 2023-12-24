@@ -41,7 +41,10 @@ namespace duckhacker
 
 			const State& GetState();
 
+			const std::atomic_int& GetCoins();
 			const std::atomic_int& GetTicks();
+
+			void AddCoins(int amount);
 
 			bool IsOccupied(int x, int y, int z);
 
@@ -52,6 +55,9 @@ namespace duckhacker
 
 		private:
 			world::Console console_;
+
+			std::atomic_int coins_ = ATOMIC_VAR_INIT(0);
+			int initial_coins_ = 0;
 
 			std::atomic_int ticks_ = ATOMIC_VAR_INIT(0);
 			float ticks_accum_ = 0;
