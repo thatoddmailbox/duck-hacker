@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required(VERSION 3.19)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -10,6 +10,7 @@ endif()
 
 project(duck-hacker)
 
+include_directories("external/")
 include_directories("external/glad/include")
 include_directories("external/imgui")
 include_directories("external/pugixml/src")
@@ -41,6 +42,12 @@ file(GLOB SOURCES
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
+if(MSVC)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+	add_definitions(-DUNICODE)
+	add_definitions(-D_UNICODE)
+endif()
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 	# glad requires linking against the dynamic linker (dl)
 	target_link_libraries(${PROJECT_NAME} "dl")
@@ -64,7 +71,7 @@ find_package(Lua REQUIRED)
 target_link_libraries(${PROJECT_NAME} "${LUA_LIBRARY}")
 include_directories("${LUA_INCLUDE_DIR}")
 
-find_package(wxWidgets COMPONENTS core base stc REQUIRED)
-target_link_libraries(${PROJECT_NAME} "${wxWidgets_LIBRARIES}")
+find_package(wxWidgets REQUIRED core base stc)
+target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
 include_directories("${wxWidgets_INCLUDE_DIRS}")
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${wxWidgets_DEFINITIONS})
