@@ -4,7 +4,7 @@
 		<bot id="1" x="2" y="0" z="3" rotation="270" />
 	</bots>
 	<npcs>
-		<npc id="1" x="3" y="0" z="1" rotation="180"></npc>
+		<npc id="1" name="Bob" x="3" y="0" z="1" rotation="180"></npc>
 	</npcs>
 	<objects>
 		<object x="2" y="1" z="4.5" rotation="180">
