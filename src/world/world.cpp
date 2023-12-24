@@ -37,12 +37,36 @@ namespace duckhacker
 			for (pugi::xml_node bot_node : bots_node.children("bot"))
 			{
 				int id = bot_node.attribute("id").as_int();
+				std::string name = bot_node.attribute("name").as_string();
 				int x = bot_node.attribute("x").as_int();
 				int y = bot_node.attribute("y").as_int();
 				int z = bot_node.attribute("z").as_int();
 				int rotation = bot_node.attribute("rotation").as_int();
+				std::string mesh = bot_node.attribute("mesh").as_string();
+				std::string src = bot_node.attribute("src").as_string();
 
-				Bot * bot = new Bot(this, content_manager, id, x, y, z, rotation);
+				BotType type = BotType::PLAYER;
+				if (bot_node.attribute("type").as_string() == "npc")
+				{
+					type = BotType::NPC;
+				}
+
+				std::string code;
+				if (!src.empty())
+				{
+					PHYSFS_file * code_file = PHYSFS_openRead(src.c_str());
+					int64_t code_file_length = PHYSFS_fileLength(code_file);
+					char * code_file_data = (char *) malloc(code_file_length + 1);
+					PHYSFS_readBytes(code_file, code_file_data, code_file_length);
+					PHYSFS_close(code_file);
+
+					code_file_data[code_file_length] = '\0';
+
+					code = std::string(code_file_data);
+					free(code_file_data);
+				}
+
+				Bot * bot = new Bot(this, content_manager, type, id, name, x, y, z, rotation, mesh, code);
 				bots.push_back(bot);
 
 				bot_reset_positions_.push_back(glm::vec4(x, y, z, rotation));

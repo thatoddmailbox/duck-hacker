@@ -75,7 +75,7 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
 		}
 
-		Bot::Bot(world::World * world, content::Manager * content_manager, int id, int x, int y, int z, int rotation)
+		Bot::Bot(world::World * world, content::Manager * content_manager, BotType t, int id, std::string name, int x, int y, int z, int rotation, std::string mesh, std::string c)
 		{
 			world_ = world;
 
@@ -87,9 +87,10 @@ namespace duckhacker
 			display_coords_ = glm::vec3(x_, y_, z_);
 			display_rotation_ = rotation;
 
-			name_ = "DuckBot " + std::to_string(id_);
+			type = t;
+			name_ = name.empty() ? "DuckBot " + std::to_string(id_) : name;
 
-			code = "-- Code for DuckBot " + std::to_string(id_) + "\n";
+			code = c.empty() ? "-- Code for " + name_ + "\n" : c;
 
 			action_available_ = false;
 			action_done_ = false;
@@ -98,7 +99,9 @@ namespace duckhacker
 
 			lua_state_ = nullptr;
 
-			object.SetMesh(content_manager->Mesh("models/duckbot.obj", content_manager->Shader("shaders/basic")));
+			std::string mesh_path = mesh.empty() ? "models/duckbot.obj" : mesh;
+
+			object.SetMesh(content_manager->Mesh(mesh_path, content_manager->Shader("shaders/basic")));
 			object.SetPosition(glm::vec3(x_, y_, z_));
 			object.SetRotation(glm::vec3(0, -rotation, 0));
 		}

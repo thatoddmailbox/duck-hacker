@@ -1,10 +1,30 @@
 <world>
 	<field width="5" height="5" />
 	<bots>
-		<bot id="1" x="2" y="0" z="3" rotation="270" />
+		<!-- Player bots -->
+		<bot
+			id="1"
+			x="2"
+			y="0"
+			z="3"
+			rotation="270"
+		/>
+
+		<!-- NPCs -->
+		<bot
+			id="100"
+			type="npc"
+			name="Waddleton"
+			x="3"
+			y="0"
+			z="1"
+			rotation="180"
+			mesh="models/npc.obj"
+			src="worlds/level1_waddleton.lua"
+		/>
 	</bots>
 	<npcs>
-		<npc id="1" name="Waddleton" x="3" y="0" z="1" rotation="180"></npc>
+		<npc id="1" name="Waddleton" x="3" y="4" z="1" rotation="180"></npc>
 	</npcs>
 	<objects>
 		<object x="2" y="1" z="4.5" rotation="180">

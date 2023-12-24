@@ -29,14 +29,22 @@ namespace duckhacker
 			TURN
 		};
 
+		enum class BotType
+		{
+			PLAYER,
+			NPC
+		};
+
 		class Console;
 		class World;
 
 		class Bot
 		{
 		public:
-			Bot(world::World * world, content::Manager * content_manager, int id, int x, int y, int z, int rotation);
+			Bot(world::World * world, content::Manager * content_manager, BotType t, int id, std::string name, int x, int y, int z, int rotation, std::string mesh, std::string c);
 			~Bot();
+
+			BotType type;
 
 			std::string code;
 
