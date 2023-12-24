@@ -71,6 +71,8 @@ namespace duckhacker
 			display_coords_ = glm::vec3(x_, y_, z_);
 			display_rotation_ = rotation;
 
+			name_ = "DuckBot " + std::to_string(id_);
+
 			code = "-- Code for DuckBot " + std::to_string(id_) + "\n";
 
 			action_available_ = false;
@@ -93,6 +95,11 @@ namespace duckhacker
 		const int& Bot::GetID()
 		{
 			return id_;
+		}
+
+		const std::string& Bot::GetName()
+		{
+			return name_;
 		}
 
 		const int& Bot::GetX()

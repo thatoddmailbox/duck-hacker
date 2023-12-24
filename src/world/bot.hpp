@@ -37,6 +37,7 @@ namespace duckhacker
 			render::Object object;
 
 			const int& GetID();
+			const std::string& GetName();
 			const int& GetX();
 			const int& GetY();
 			const int& GetZ();
@@ -49,6 +50,7 @@ namespace duckhacker
 
 		private:
 			int id_;
+			std::string name_;
 			int x_, y_, z_;
 			int rotation_;
 
