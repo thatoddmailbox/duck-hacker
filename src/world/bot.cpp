@@ -90,6 +90,16 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Sleep_();
 		}
 
+		static int Bot_OnLuaCall_Listen(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Listen_();
+		}
+
+		static int Bot_OnLuaCall_Say(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Say_();
+		}
+
 		static int Bot_OnLuaCall_NPC_AddCoins(lua_State * L)
 		{
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_AddCoins_();
@@ -200,6 +210,27 @@ namespace duckhacker
 			return crashed_;
 		}
 
+		const bool& Bot::IsListening()
+		{
+			return listening_;
+		}
+
+		void Bot::Heard(std::string text)
+		{
+			heard_ = true;
+			speech_ = text;
+		}
+
+		const bool& Bot::IsSpeaking()
+		{
+			return speaking_;
+		}
+
+		const std::string& Bot::GetSpeech()
+		{
+			return speech_;
+		}
+
 		void Bot::Log(ConsoleLineType line_type, std::string line)
 		{
 			std::unique_lock<std::mutex> lock(lines_mutex_);
@@ -224,6 +255,10 @@ namespace duckhacker
 			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
 			running_ = true;
 			crashed_ = false;
+			listening_ = false;
+			heard_ = false;
+			speaking_ = false;
+			speech_ = "";
 		}
 
 		void Bot::EnterExecuteThread_(Bot * b)
@@ -421,6 +456,86 @@ namespace duckhacker
 			return 0;
 		}
 
+		int Bot::OnLuaCall_Listen_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			action_done_ = false;
+			action_type_ = BotAction::LISTEN;
+			action_text_ = "";
+
+			{
+				std::unique_lock<std::mutex> lock(action_done_mutex_);
+
+				// signal that something's available
+				action_available_ = true;
+
+				// wait for the action to be done
+				action_done_condition_.wait(lock, [this] {
+					return this->action_done_ || this->stop_requested_;
+				});
+			}
+
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
+			}
+
+			lua_pushstring(lua_state_, action_text_.c_str());
+			return 1;
+		}
+
+		int Bot::OnLuaCall_Say_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 1)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			const char * msg = lua_tostring(lua_state_, 1);
+			if (msg == NULL)
+			{
+				lua_pushliteral(lua_state_, "message must be a string");
+				return lua_error(lua_state_);
+			}
+
+			if (strlen(msg) > 75)
+			{
+				lua_pushliteral(lua_state_, "message can't be longer than 75 characters");
+				return lua_error(lua_state_);
+			}
+
+			action_done_ = false;
+			action_type_ = BotAction::SAY;
+			action_text_ = std::string(msg);
+
+			{
+				std::unique_lock<std::mutex> lock(action_done_mutex_);
+
+				// signal that something's available
+				action_available_ = true;
+
+				// wait for the action to be done
+				action_done_condition_.wait(lock, [this] {
+					return this->action_done_ || this->stop_requested_;
+				});
+			}
+
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
+			}
+
+			return 0;
+		}
+
 		int Bot::OnLuaCall_NPC_AddCoins_()
 		{
 			int n = lua_gettop(lua_state_);
@@ -484,8 +599,13 @@ namespace duckhacker
 		void Bot::WaitForStop()
 		{
 			execute_thread_.join();
+
 			running_ = false;
 			crashed_ = false;
+			listening_ = false;
+			heard_ = false;
+			speaking_ = false;
+			speech_ = "";
 
 			// reset internal state
 			action_available_ = false;
@@ -630,6 +750,12 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_Sleep);
 			lua_setfield(lua_state_, 1, "sleep");
 
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_Listen);
+			lua_setfield(lua_state_, 1, "listen");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_Say);
+			lua_setfield(lua_state_, 1, "say");
+
 			lua_setglobal(lua_state_, "duckbot");
 
 			// for npcs, we have some special secret functions
@@ -732,6 +858,33 @@ namespace duckhacker
 					anim_counter_ = 0;
 					anim_happening_ = true;
 				}
+				else if (action_type_ == BotAction::LISTEN)
+				{
+					listening_ = true;
+					heard_ = false;
+
+					target_x_ = x_;
+					target_y_ = y_;
+					target_z_ = z_;
+					target_rotation_ = rotation_;
+					target_rotation_display_ = rotation_;
+				}
+				else if (action_type_ == BotAction::SAY)
+				{
+					Log(ConsoleLineType::SPOKEN, action_text_);
+
+					speaking_ = true;
+					speech_ = action_text_;
+
+					target_x_ = x_;
+					target_y_ = y_;
+					target_z_ = z_;
+					target_rotation_ = rotation_;
+					target_rotation_display_ = rotation_;
+
+					anim_counter_ = -2;
+					anim_happening_ = true;
+				}
 				else if (action_type_ == BotAction::WIN)
 				{
 					world_->Stop();
@@ -767,24 +920,77 @@ namespace duckhacker
 
 				object.SetPosition(display_coords_);
 				object.SetRotation(glm::vec3(0, -display_rotation_, 0));
+			}
 
-				if (anim_counter_ > BOT_ANIMATION_TIME)
+			bool anim_done = (anim_happening_ && anim_counter_ > BOT_ANIMATION_TIME);
+
+			if (
+				(!listening_ && action_type_ != BotAction::SAY && anim_done) ||
+				(action_type_ == BotAction::SAY && speaking_ && anim_done) ||
+				(listening_ && heard_)
+			)
+			{
+				// we're done!
+				x_ = target_x_;
+				y_ = target_y_;
+				z_ = target_z_;
+				display_coords_ = glm::vec3(x_, y_, z_);
+
+				rotation_ = target_rotation_;
+				display_rotation_ = rotation_;
+
+				anim_happening_ = false;
+
+				// ok now we actually inform everyone
+				if (action_type_ == BotAction::SAY)
 				{
-					// we're done!
-					x_ = target_x_;
-					y_ = target_y_;
-					z_ = target_z_;
-					display_coords_ = glm::vec3(x_, y_, z_);
+					int dx_rotated = 1;
+					int dy_rotated = 0;
+					int dz_rotated = 0;
 
-					rotation_ = target_rotation_;
-					display_rotation_ = rotation_;
+					if (rotation_ == 0)
+					{
+						// do nothing
+					}
+					else if (rotation_ == 90)
+					{
+						int temp = dx_rotated;
+						dx_rotated = -dz_rotated;
+						dz_rotated = temp;
+					}
+					else if (rotation_ == 180)
+					{
+						dx_rotated = -dx_rotated;
+						dz_rotated = -dz_rotated;
+					}
+					else if (rotation_ == 270)
+					{
+						int temp = dx_rotated;
+						dx_rotated = dz_rotated;
+						dz_rotated = -temp;
+					}
 
-					// notify execute thread
-					action_done_mutex_.lock();
-					action_done_ = true;
-					action_done_mutex_.unlock();
-					action_done_condition_.notify_one();
+					int x = x_ + dx_rotated;
+					int y = y_ + dy_rotated;
+					int z = z_ + dz_rotated;
+
+					world_->Heard(x, y, z, speech_);
+
+					speaking_ = false;
+					speech_ = "";
 				}
+				else if (action_type_ == BotAction::LISTEN)
+				{
+					listening_ = false;
+					heard_ = false;
+					action_text_ = speech_;
+				}
+
+				// notify execute thread
+				action_done_mutex_.lock();
+				action_done_ = true;
+				action_done_mutex_.unlock();
+				action_done_condition_.notify_one();
 			}
 		}
 

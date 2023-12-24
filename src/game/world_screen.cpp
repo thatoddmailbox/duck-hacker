@@ -134,6 +134,18 @@ namespace duckhacker
 					screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
 					ShowTooltip(bot->GetName() + " crash", screen_position, "Crashed!");
 				}
+				else if (bot->IsListening())
+				{
+					glm::vec2 screen_position = bot->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
+					screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+					ShowTooltip(bot->GetName() + " listen", screen_position, "Listening...");
+				}
+				else if (bot->IsSpeaking())
+				{
+					glm::vec2 screen_position = bot->object.ObjectPositionToScreenPosition(glm::vec3(0, 0.5, 0), main_camera_.GetProjection(), main_camera_.GetView());
+					screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+					ShowTooltip(bot->GetName() + " speak", screen_position, bot->GetSpeech().c_str());
+				}
 			}
 
 			for (render::Object& object : world_->objects)
@@ -156,6 +168,14 @@ namespace duckhacker
 					if (bot->IsCrashed())
 					{
 						label += " (crashed)";
+					}
+					else if (bot->IsListening())
+					{
+						label += " (listening)";
+					}
+					else if (bot->IsSpeaking())
+					{
+						label += " (speaking)";
 					}
 
 					if (ImGui::Selectable(label.c_str()))

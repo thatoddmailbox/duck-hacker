@@ -48,6 +48,8 @@ namespace duckhacker
 			void AddCoins(int amount);
 			void Win();
 
+			void Heard(int x, int y, int z, std::string message);
+
 			bool IsOccupied(int x, int y, int z);
 
 			void Run();

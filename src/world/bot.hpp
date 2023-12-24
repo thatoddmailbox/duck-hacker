@@ -27,6 +27,8 @@ namespace duckhacker
 		{
 			MOVE,
 			TURN,
+			LISTEN,
+			SAY,
 			WIN
 		};
 
@@ -65,6 +67,12 @@ namespace duckhacker
 
 			const std::atomic_bool& IsCrashed();
 
+			const bool& IsListening();
+			void Heard(std::string text);
+
+			const bool& IsSpeaking();
+			const std::string& GetSpeech();
+
 			void Log(ConsoleLineType line_type, std::string line);
 
 		protected:
@@ -80,6 +88,12 @@ namespace duckhacker
 			int rotation_;
 
 			world::World * world_;
+
+			bool listening_ = false;
+			bool heard_ = false;
+
+			bool speaking_ = false;
+			std::string speech_ = "";
 
 			bool running_ = false;
 			std::atomic_bool crashed_ = ATOMIC_VAR_INIT(false);
@@ -113,6 +127,9 @@ namespace duckhacker
 			int OnLuaCall_GetTime_();
 			int OnLuaCall_Sleep_();
 
+			int OnLuaCall_Listen_();
+			int OnLuaCall_Say_();
+
 			int OnLuaCall_NPC_AddCoins_();
 			int OnLuaCall_NPC_Win_();
 
@@ -132,6 +149,7 @@ namespace duckhacker
 			BotAction action_type_;
 			int action_coords_[3];
 			int action_angle_;
+			std::string action_text_;
 
 			bool action_done_;
 			std::mutex action_done_mutex_;

@@ -9,6 +9,7 @@ namespace duckhacker
 	{
 		enum class ConsoleLineType
 		{
+			SPOKEN,
 			INFO,
 			WARNING,
 			ERROR
@@ -16,6 +17,7 @@ namespace duckhacker
 
 		constexpr const char * ConsoleLineTypeToString[] =
 		{
+			"S",
 			"I",
 			"W",
 			"E"

@@ -237,6 +237,18 @@ namespace duckhacker
 			state_ = State::VICTORY;
 		}
 
+		void World::Heard(int x, int y, int z, std::string message)
+		{
+			for (Bot * bot : bots)
+			{
+				if (bot->GetX() == x && bot->GetY() == y && bot->GetZ() == z)
+				{
+					bot->Heard(message);
+					return;
+				}
+			}
+		}
+
 		bool World::IsOccupied(int x, int y, int z)
 		{
 			// TODO: should check objects, edge of field
