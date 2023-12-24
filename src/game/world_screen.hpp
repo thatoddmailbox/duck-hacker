@@ -35,8 +35,8 @@ namespace duckhacker
 
 			std::vector<render::Light> lights_;
 
-			float yaw_ = 270.0f;
-			float pitch_ = 18.0f;
+			float yaw_ = 240.0f;
+			float pitch_ = 22.0f;
 			float radius_ = 8.0f;
 			float target_radius_ = 8.0f;
 
