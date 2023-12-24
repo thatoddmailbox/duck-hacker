@@ -132,7 +132,7 @@ namespace duckhacker
 			world::Bot * hovered_bot = nullptr;
 			world::NPC * hovered_npc = nullptr;
 
-			ImGui::SetNextWindowPos(ImVec2(50, 125), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(50, 100), ImGuiCond_Appearing);
 			if (ImGui::Begin("World"))
 			{
 				for (world::Bot * bot : world_->bots)
@@ -178,12 +178,25 @@ namespace duckhacker
 				ShowTooltip(screen_position, hovered_npc->GetName().c_str());
 			}
 
-			ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Appearing);
-			ImGui::Begin("Control");
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
 
+			ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(240, 240, 240, 200));
+			ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(147, 193, 247, 255));
+
+			ImGuiStyle& style = ImGui::GetStyle();
+			ImVec2 text_size = ImGui::CalcTextSize(ICON_PLAY);
+
+			int button_width = text_size.x + style.FramePadding.x * 2;
+			int button_height = text_size.y + style.FramePadding.y * 2;
+
+			ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, button_height + style.WindowPadding.y * 2), ImGuiCond_Always);
+			ImGui::Begin("Controls", nullptr,  ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration);
+
+			ImGui::SetCursorPosX((SCREEN_WIDTH - button_width) / 2);
 			if (world_->GetState() == world::State::READY)
 			{
-				if (ImGui::Button("Start"))
+				if (ImGui::Button(ICON_PLAY))
 				{
 					// get code map
 					std::map<int, std::string> code = editor_thread_->GatherCode();
@@ -206,7 +219,7 @@ namespace duckhacker
 			}
 			else
 			{
-				if (ImGui::Button("Stop"))
+				if (ImGui::Button(ICON_STOP))
 				{
 					world_->Stop();
 				}
@@ -214,6 +227,12 @@ namespace duckhacker
 
 			ImGui::End();
 
+			ImGui::PopStyleColor(2);
+
+			ImGui::PopStyleVar(1);
+
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 200 - 50, 100), ImGuiCond_Appearing);
+			ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Appearing);
 			if (ImGui::Begin("Scene settings"))
 			{
 				ImGui::SeparatorText("Camera");
