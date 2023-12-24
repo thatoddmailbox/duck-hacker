@@ -158,6 +158,19 @@ namespace duckhacker
 				object.SetRotation(glm::vec3(0, -rotation, 0));
 				objects.push_back(object);
 			}
+
+			pugi::xml_node mission_node = world_node.child("mission");
+
+			mission_ = mission_node.text().as_string();
+			mission_goal_ = mission_node.attribute("goal").as_string();
+
+			// remove tab characters
+			mission_.erase(std::remove(mission_.begin(), mission_.end(), '\t'), mission_.end());
+
+			// trim leading whitespace
+			mission_.erase(mission_.begin(), std::find_if(mission_.begin(), mission_.end(), [](int ch) {
+				return !std::isspace(ch);
+			}));
 		}
 
 		World::~World()
@@ -171,6 +184,16 @@ namespace duckhacker
 		const glm::vec3& World::GetCenterPoint()
 		{
 			return center_point_;
+		}
+
+		const std::string& World::GetMission()
+		{
+			return mission_;
+		}
+
+		const std::string& World::GetMissionGoal()
+		{
+			return mission_goal_;
 		}
 
 		const State& World::GetState()

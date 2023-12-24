@@ -4,7 +4,7 @@
 		<bot id="1" x="2" y="0" z="3" rotation="270" />
 	</bots>
 	<npcs>
-		<npc id="1" name="Bob" x="3" y="0" z="1" rotation="180"></npc>
+		<npc id="1" name="Waddleton" x="3" y="0" z="1" rotation="180"></npc>
 	</npcs>
 	<objects>
 		<object x="2" y="1" z="4.5" rotation="180">
@@ -15,4 +15,11 @@
 			</mesh>
 		</object>
 	</objects>
+	<mission goal="Hack at least 1000 coins from the donation center.">
+		Welcome to the Donation Center. This is where ducks can donate their money to help Ducky. (Specifically, you'd normally have your DuckBot talk to Waddleton, who would then take your coins and give them to Ducky.)
+
+		Today, however, we have a problem. To get our very important message to Ducky, we're going to need some money. Unfortunately, we don't have any. So, we'll need to hack some.
+
+		Don't worry about if it's legal - once Ducky hears our message, he'll understand. And we'll return the coins back at the end!
+	</mission>
 </world>

@@ -34,6 +34,9 @@ namespace duckhacker
 
 			const glm::vec3& GetCenterPoint();
 
+			const std::string& GetMission();
+			const std::string& GetMissionGoal();
+
 			const State& GetState();
 
 			void Run();
@@ -44,6 +47,9 @@ namespace duckhacker
 		private:
 			std::vector<glm::vec4> bot_reset_positions_;
 			std::vector<glm::vec4> npc_reset_positions_;
+
+			std::string mission_;
+			std::string mission_goal_;
 
 			glm::vec3 center_point_;
 			State state_ = State::READY;
