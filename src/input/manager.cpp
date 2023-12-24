@@ -35,7 +35,9 @@ namespace duckhacker
 
 		void Manager::ProcessEvent(SDL_Event * e)
 		{
-			if (e->type == SDL_MOUSEWHEEL)
+			ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+			if (e->type == SDL_MOUSEWHEEL && !io.WantCaptureMouse)
 			{
 				if (e->wheel.x != 0)
 				{
@@ -72,6 +74,11 @@ namespace duckhacker
 				mouse_x_last_ = mouse_x;
 				mouse_y_last_ = mouse_y;
 				mouse_left_down_last_ = mouse_left_down;
+			}
+			else
+			{
+				mouse_scroll_x_ = 0;
+				mouse_scroll_y_ = 0;
 			}
 		}
 	}
