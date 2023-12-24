@@ -8,6 +8,10 @@
 static constexpr int MISSION_MODAL_ID = 0x12345678;
 static constexpr int MISSION_MODAL_WIDTH = 500;
 
+static constexpr int VICTORY_MODAL_ID = 0x12345679;
+static constexpr const char * VICTORY_MODAL_NAME = "Victory";
+static constexpr int VICTORY_MODAL_WIDTH = 300;
+
 namespace duckhacker
 {
 	namespace game
@@ -231,7 +235,18 @@ namespace duckhacker
 				if (ImGui::Button(ICON_STOP))
 				{
 					world_->Stop();
+					world_->Reset();
 				}
+			}
+
+			if (world_->GetState() == world::State::VICTORY)
+			{
+				ImGui::PushOverrideID(VICTORY_MODAL_ID);
+				if (!ImGui::IsPopupOpen(VICTORY_MODAL_NAME, ImGuiPopupFlags_AnyPopupId))
+				{
+					ImGui::OpenPopup(VICTORY_MODAL_NAME);
+				}
+				ImGui::PopID();
 			}
 
 			ImGui::SameLine();
@@ -322,6 +337,24 @@ namespace duckhacker
 				ImGui::SetCursorPosX(MISSION_MODAL_WIDTH - 100);
 				if (ImGui::Button("OK", ImVec2(100, 0)))
 				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
+			ImGui::PopID();
+
+			ImGui::PushOverrideID(VICTORY_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(VICTORY_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal(VICTORY_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::TextWrapped("You did it!");
+
+				ImGui::SetCursorPosX(VICTORY_MODAL_WIDTH - 100);
+				if (ImGui::Button("OK", ImVec2(100, 0)))
+				{
+					// TODO: level progression
+					world_->Reset();
 					ImGui::CloseCurrentPopup();
 				}
 

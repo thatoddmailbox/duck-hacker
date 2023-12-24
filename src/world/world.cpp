@@ -232,6 +232,11 @@ namespace duckhacker
 			coins_ += amount;
 		}
 
+		void World::Win()
+		{
+			state_ = State::VICTORY;
+		}
+
 		bool World::IsOccupied(int x, int y, int z)
 		{
 			// TODO: should check objects, edge of field
@@ -275,7 +280,10 @@ namespace duckhacker
 			{
 				bot->WaitForStop();
 			}
+		}
 
+		void World::Reset()
+		{
 			// reset world
 			for (size_t i = 0; i < bots.size(); i++)
 			{

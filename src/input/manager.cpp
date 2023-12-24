@@ -77,6 +77,9 @@ namespace duckhacker
 			}
 			else
 			{
+				horizontal_ = 0;
+				vertical_ = 0;
+
 				mouse_scroll_x_ = 0;
 				mouse_scroll_y_ = 0;
 			}

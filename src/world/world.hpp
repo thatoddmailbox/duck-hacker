@@ -20,7 +20,8 @@ namespace duckhacker
 		enum class State
 		{
 			READY,
-			RUNNING
+			RUNNING,
+			VICTORY
 		};
 
 		class World
@@ -45,11 +46,13 @@ namespace duckhacker
 			const std::atomic_int& GetTicks();
 
 			void AddCoins(int amount);
+			void Win();
 
 			bool IsOccupied(int x, int y, int z);
 
 			void Run();
 			void Stop();
+			void Reset();
 
 			void Update(float dt);
 

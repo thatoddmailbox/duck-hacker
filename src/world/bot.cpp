@@ -95,6 +95,11 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_AddCoins_();
 		}
 
+		static int Bot_OnLuaCall_NPC_Win(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_Win_();
+		}
+
 		Bot::Bot(world::World * world, content::Manager * content_manager, BotType t, int id, std::string name, int x, int y, int z, int rotation, std::string mesh, std::string c)
 		{
 			world_ = world;
@@ -438,6 +443,38 @@ namespace duckhacker
 			return 0;
 		}
 
+		int Bot::OnLuaCall_NPC_Win_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			action_done_ = false;
+			action_type_ = BotAction::WIN;
+
+			{
+				std::unique_lock<std::mutex> lock(action_done_mutex_);
+
+				// signal that something's available
+				action_available_ = true;
+
+				// wait for the action to be done
+				action_done_condition_.wait(lock, [this] {
+					return this->action_done_ || this->stop_requested_;
+				});
+			}
+
+			if (stop_requested_)
+			{
+				longjmp(preexec_state, 1);
+			}
+
+			return 0;
+		}
+
 		void Bot::RequestStop()
 		{
 			stop_requested_ = true;
@@ -598,11 +635,13 @@ namespace duckhacker
 			// for npcs, we have some special secret functions
 			if (type == BotType::NPC)
 			{
-				std::cout << "npc bot" << std::endl;
 				lua_newtable(lua_state_);
 
 				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_AddCoins);
 				lua_setfield(lua_state_, 1, "addCoins");
+
+				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_Win);
+				lua_setfield(lua_state_, 1, "win");
 
 				lua_setglobal(lua_state_, "npc");
 			}
@@ -692,6 +731,16 @@ namespace duckhacker
 
 					anim_counter_ = 0;
 					anim_happening_ = true;
+				}
+				else if (action_type_ == BotAction::WIN)
+				{
+					world_->Stop();
+					world_->Win();
+
+					action_done_mutex_.lock();
+					action_done_ = true;
+					action_done_mutex_.unlock();
+					action_done_condition_.notify_one();
 				}
 			}
 

@@ -26,7 +26,8 @@ namespace duckhacker
 		enum class BotAction
 		{
 			MOVE,
-			TURN
+			TURN,
+			WIN
 		};
 
 		enum class BotType
@@ -113,6 +114,7 @@ namespace duckhacker
 			int OnLuaCall_Sleep_();
 
 			int OnLuaCall_NPC_AddCoins_();
+			int OnLuaCall_NPC_Win_();
 
 		public:
 			void HandleWarning_(const char * msg);
