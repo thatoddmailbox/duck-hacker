@@ -45,7 +45,7 @@ namespace duckhacker
 				void OnGatherCode(wxThreadEvent& e);
 
 				std::map<int, Frame *> frames_;
-				HelpFrame * help_frame_;
+				HelpFrame * help_frame_ = nullptr;
 			};
 		}
 	}
