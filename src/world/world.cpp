@@ -186,6 +186,11 @@ namespace duckhacker
 			return center_point_;
 		}
 
+		world::Console& World::GetConsole()
+		{
+			return console_;
+		}
+
 		const std::string& World::GetMission()
 		{
 			return mission_;
@@ -250,6 +255,8 @@ namespace duckhacker
 			{
 				bot->Update(dt);
 			}
+
+			console_.Update(bots);
 		}
 	}
 }

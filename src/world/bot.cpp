@@ -1,5 +1,7 @@
 #include "world/bot.hpp"
 
+#include <sstream>
+
 const float BOT_ANIMATION_TIME = 1;
 const float BOT_PAUSE_TIME = 0.1;
 
@@ -149,6 +151,18 @@ namespace duckhacker
 		const float& Bot::GetDisplayRotation()
 		{
 			return display_rotation_;
+		}
+
+		void Bot::Log(std::string line)
+		{
+			std::unique_lock<std::mutex> lock(lines_mutex_);
+
+			std::stringstream ss(line);
+			std::string individual_line;
+			while (std::getline(ss, individual_line, '\n'))
+			{
+				lines_.push_back(individual_line);
+			}
 		}
 
 		void Bot::Execute()
@@ -465,8 +479,8 @@ namespace duckhacker
 			{
 				msg = "error object is not a string";
 			}
-
-			printf("ERROR: %s\n", msg);
+\
+			Log("Error!\n" + std::string(msg));
 
 			longjmp(preexec_state, 1);
 		}

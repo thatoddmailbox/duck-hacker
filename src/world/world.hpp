@@ -10,6 +10,7 @@
 #include "render/object.hpp"
 
 #include "world/bot.hpp"
+#include "world/console.hpp"
 #include "world/npc.hpp"
 
 namespace duckhacker
@@ -34,6 +35,8 @@ namespace duckhacker
 
 			const glm::vec3& GetCenterPoint();
 
+			world::Console& GetConsole();
+
 			const std::string& GetMission();
 			const std::string& GetMissionGoal();
 
@@ -45,6 +48,8 @@ namespace duckhacker
 			void Update(float dt);
 
 		private:
+			world::Console console_;
+
 			std::vector<glm::vec4> bot_reset_positions_;
 			std::vector<glm::vec4> npc_reset_positions_;
 

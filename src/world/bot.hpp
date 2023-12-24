@@ -4,6 +4,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <csetjmp>
+#include <deque>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -26,6 +27,8 @@ namespace duckhacker
 			TURN
 		};
 
+		class Console;
+
 		class Bot
 		{
 		public:
@@ -47,6 +50,14 @@ namespace duckhacker
 
 			const glm::vec3& GetDisplayCoords();
 			const float& GetDisplayRotation();
+
+			void Log(std::string line);
+
+		protected:
+			friend class Console;
+
+			std::mutex lines_mutex_;
+			std::deque<std::string> lines_;
 
 		private:
 			int id_;
