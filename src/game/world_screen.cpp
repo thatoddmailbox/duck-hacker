@@ -128,9 +128,8 @@ namespace duckhacker
 				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
-			glm::vec2 bla = world_->bots[0]->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
-			bla *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
-			ShowTooltip(bla, "test");
+			world::Bot * hovered_bot = nullptr;
+			world::NPC * hovered_npc = nullptr;
 
 			ImGui::SetNextWindowPos(ImVec2(50, 125), ImGuiCond_Appearing);
 			if (ImGui::Begin("World"))
@@ -141,6 +140,11 @@ namespace duckhacker
 					{
 						editor_thread_->OpenEditor(bot->GetID(), bot->code);
 					}
+
+					if (ImGui::IsItemHovered())
+					{
+						hovered_bot = bot;
+					}
 					// ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
 					// ImGui::Text("rotation %d\n", bot->GetRotation());
 				}
@@ -150,10 +154,28 @@ namespace duckhacker
 					ImGui::Selectable(npc->GetName().c_str());
 					// ImGui::Text("position %d %d %d\n", npc->GetX(), npc->GetY(), npc->GetZ());
 					// ImGui::Text("rotation %d\n", npc->GetRotation());
+
+					if (ImGui::IsItemHovered())
+					{
+						hovered_npc = npc;
+					}
 				}
 			}
 
 			ImGui::End();
+
+			if (hovered_bot != nullptr)
+			{
+				glm::vec2 screen_position = hovered_bot->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
+				screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+				ShowTooltip(screen_position, hovered_bot->GetName().c_str());
+			}
+			else if (hovered_npc != nullptr)
+			{
+				glm::vec2 screen_position = hovered_npc->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
+				screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+				ShowTooltip(screen_position, hovered_npc->GetName().c_str());
+			}
 
 			ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Appearing);
 			ImGui::Begin("Control");
