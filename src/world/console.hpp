@@ -5,17 +5,12 @@
 #include <vector>
 
 #include "world/bot.hpp"
+#include "world/console_line.hpp"
 
 namespace duckhacker
 {
 	namespace world
 	{
-		struct ConsoleLine
-		{
-			std::string name;
-			std::string text;
-		};
-
 		class Console
 		{
 		public:

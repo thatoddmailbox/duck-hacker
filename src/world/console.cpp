@@ -22,15 +22,11 @@ namespace duckhacker
 				std::unique_lock<std::mutex> lock(bot->lines_mutex_);
 				while (bot->lines_.size() > 0)
 				{
-					std::string line = bot->lines_.front();
+					ConsoleLine line = bot->lines_.front();
 					bot->lines_.pop_front();
 
-					ConsoleLine console_line;
-					console_line.name = bot->GetName();
-					console_line.text = line;
-
 					lines_mutex_.lock();
-					lines_.push_back(console_line);
+					lines_.push_back(line);
 					lines_mutex_.unlock();
 				}
 			}

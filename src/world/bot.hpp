@@ -17,6 +17,8 @@
 
 #include "render/object.hpp"
 
+#include "world/console_line.hpp"
+
 namespace duckhacker
 {
 	namespace world
@@ -51,13 +53,13 @@ namespace duckhacker
 			const glm::vec3& GetDisplayCoords();
 			const float& GetDisplayRotation();
 
-			void Log(std::string line);
+			void Log(ConsoleLineType line_type, std::string line);
 
 		protected:
 			friend class Console;
 
 			std::mutex lines_mutex_;
-			std::deque<std::string> lines_;
+			std::deque<ConsoleLine> lines_;
 
 		private:
 			int id_;

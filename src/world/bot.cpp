@@ -153,7 +153,7 @@ namespace duckhacker
 			return display_rotation_;
 		}
 
-		void Bot::Log(std::string line)
+		void Bot::Log(ConsoleLineType line_type, std::string line)
 		{
 			std::unique_lock<std::mutex> lock(lines_mutex_);
 
@@ -161,7 +161,13 @@ namespace duckhacker
 			std::string individual_line;
 			while (std::getline(ss, individual_line, '\n'))
 			{
-				lines_.push_back(individual_line);
+				ConsoleLine console_line;
+
+				console_line.type = line_type;
+				console_line.text = individual_line;
+				console_line.name = name_;
+
+				lines_.push_back(console_line);
 			}
 		}
 
@@ -469,7 +475,7 @@ namespace duckhacker
 
 		void Bot::HandleWarning_(const char * msg)
 		{
-			printf("WARNING: %s\n", msg);
+			Log(ConsoleLineType::WARNING, std::string(msg));
 		}
 
 		void Bot::HandleError_()
@@ -480,7 +486,7 @@ namespace duckhacker
 				msg = "error object is not a string";
 			}
 \
-			Log("Error!\n" + std::string(msg));
+			Log(ConsoleLineType::ERROR, std::string(msg));
 
 			longjmp(preexec_state, 1);
 		}
