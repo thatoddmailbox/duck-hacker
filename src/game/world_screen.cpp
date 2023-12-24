@@ -2,6 +2,12 @@
 
 #include "render/object.hpp"
 
+#include "external/imgui/imgui.h"
+#include "external/imgui/imgui_internal.h"
+
+static constexpr int MISSION_MODAL_ID = 0x12345678;
+static constexpr int MISSION_MODAL_WIDTH = 500;
+
 namespace duckhacker
 {
 	namespace game
@@ -189,10 +195,20 @@ namespace duckhacker
 			int button_width = text_size.x + style.FramePadding.x * 2;
 			int button_height = text_size.y + style.FramePadding.y * 2;
 
+			int side_buttons_width = 100;
+
 			ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
 			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, button_height + style.WindowPadding.y * 2), ImGuiCond_Always);
 			ImGui::Begin("Controls", nullptr,  ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration);
 
+			if (ImGui::Button("Mission", ImVec2(side_buttons_width, 0)))
+			{
+				ImGui::PushOverrideID(MISSION_MODAL_ID);
+				ImGui::OpenPopup("Mission");
+				ImGui::PopID();
+			}
+
+			ImGui::SameLine();
 			ImGui::SetCursorPosX((SCREEN_WIDTH - button_width) / 2);
 			if (world_->GetState() == world::State::READY)
 			{
@@ -225,6 +241,13 @@ namespace duckhacker
 				}
 			}
 
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(SCREEN_WIDTH - side_buttons_width - style.WindowPadding.x);
+			if (ImGui::Button("Menu", ImVec2(side_buttons_width, 0)))
+			{
+				// TODO: implement
+			}
+
 			ImGui::End();
 
 			ImGui::PopStyleColor(2);
@@ -251,9 +274,38 @@ namespace duckhacker
 				ImGui::SliderFloat4("Diffuse##Light2Diffuse", &lights_[1].Diffuse.x, 0, 1);
 				ImGui::SliderFloat4("Ambient##Light2Ambient", &lights_[1].Ambient.x, 0, 1);
 				ImGui::SliderFloat4("Specular##Light2Specular", &lights_[1].Specular.x, 0, 1);
+
+				// ImGui::SeparatorText("Sign");
+				// float r = -world_->objects[2].GetRotation().y;
+				// if (ImGui::SliderFloat("Rotation", &r, 0, 360))
+				// {
+				// 	world_->objects[2].SetRotation(glm::vec3(0, -r, 0));
+				// }
 			}
 
 			ImGui::End();
+
+			ImGui::PushOverrideID(MISSION_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal("Mission", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::TextWrapped("%s", world_->GetMission().c_str());
+
+				ImGui::NewLine();
+
+				ImGui::PushFont(content_manager->Font(content::FontType::MEDIUM));
+				ImGui::TextWrapped("Goal: %s", world_->GetMissionGoal().c_str());
+				ImGui::PopFont();
+
+				ImGui::SetCursorPosX(MISSION_MODAL_WIDTH - 100);
+				if (ImGui::Button("OK", ImVec2(100, 0)))
+				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
+			ImGui::PopID();
 		}
 	}
 }
