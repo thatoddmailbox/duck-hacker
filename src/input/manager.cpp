@@ -58,7 +58,7 @@ namespace duckhacker
 			{
 				int mouse_x, mouse_y;
 				uint32_t mouse_state = SDL_GetMouseState(&mouse_x, &mouse_y);
-				bool mouse_left_down = (mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) != 0);
+				bool mouse_left_down = ((mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0);
 
 				if (mouse_left_down && mouse_left_down_last_)
 				{

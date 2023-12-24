@@ -16,7 +16,8 @@ namespace duckhacker
 			void EditorThread::Run_()
 			{
 				int argc = 0;
-				char * argv[0];
+				char * argv[1];
+				argv[0] = nullptr;
 				wxEntry(argc, argv);
 			}
 

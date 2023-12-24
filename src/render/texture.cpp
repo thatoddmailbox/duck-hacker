@@ -9,10 +9,9 @@ namespace duckhacker
 	{
 		Texture::Texture(const char * path)
 		{
-			png_image image = {
-				.opaque = nullptr,
-				.version = PNG_IMAGE_VERSION
-			};
+			png_image image = {};
+			image.opaque = nullptr;
+			image.version = PNG_IMAGE_VERSION;
 
 			// TODO: don't copy the physfs file into memory
 			PHYSFS_File * file = PHYSFS_openRead(path);
