@@ -31,12 +31,6 @@ namespace duckhacker
 			return;
 		}
 
-		if (IMG_Init(IMG_INIT_PNG) == 0)
-		{
-			HandleFatalError("IMG_Init failed.");
-			return;
-		}
-
 		window_ = SDL_CreateWindow(
 			"Duck Hacker",
 			SDL_WINDOWPOS_CENTERED,
