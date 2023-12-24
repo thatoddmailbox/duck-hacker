@@ -5,6 +5,8 @@
 
 #include "glm/glm.hpp"
 
+#include "defs.hpp"
+
 #include "content/manager.hpp"
 #include "game/screen.hpp"
 #include "game/editor/editor_thread.hpp"
@@ -38,8 +40,7 @@ namespace duckhacker
 			float radius_ = 8.0f;
 			float target_radius_ = 8.0f;
 
-			// TODO: would be nice to not hardcode this
-			render::Camera main_camera_ = render::Camera(800, 600);
+			render::Camera main_camera_ = render::Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
 		};
 	}
 }

@@ -12,6 +12,7 @@
 #include "external/imgui/backends/imgui_impl_sdl2.h"
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
+#include "defs.hpp"
 #include "game/world_screen.hpp"
 #include "game/editor/editor_thread.hpp"
 #include "world/world.hpp"
@@ -41,8 +42,8 @@ namespace duckhacker
 			"Duck Hacker",
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			800,
-			600,
+			SCREEN_WIDTH,
+			SCREEN_HEIGHT,
 			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
 		);
 		if (window_ == nullptr)
