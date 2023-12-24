@@ -54,6 +54,8 @@ namespace duckhacker
 			const glm::vec3& GetDisplayCoords();
 			const float& GetDisplayRotation();
 
+			const std::atomic_bool& IsCrashed();
+
 			void Log(ConsoleLineType line_type, std::string line);
 
 		protected:
@@ -71,6 +73,7 @@ namespace duckhacker
 			world::World * world_;
 
 			bool running_ = false;
+			std::atomic_bool crashed_ = ATOMIC_VAR_INIT(false);
 
 			int target_x_, target_y_, target_z_;
 			int target_rotation_;

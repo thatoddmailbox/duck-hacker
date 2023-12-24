@@ -123,6 +123,17 @@ namespace duckhacker
 			for (world::Bot * bot : world_->bots)
 			{
 				bot->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
+
+				if (bot->IsCrashed())
+				{
+					ImGui::PushID(bot->GetID());
+
+					glm::vec2 screen_position = bot->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
+					screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+					ShowTooltip(screen_position, "Crashed!");
+
+					ImGui::PopID();
+				}
 			}
 
 			for (world::NPC * npc : world_->npcs)

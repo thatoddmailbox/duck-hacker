@@ -157,6 +157,11 @@ namespace duckhacker
 			return display_rotation_;
 		}
 
+		const std::atomic_bool& Bot::IsCrashed()
+		{
+			return crashed_;
+		}
+
 		void Bot::Log(ConsoleLineType line_type, std::string line)
 		{
 			std::unique_lock<std::mutex> lock(lines_mutex_);
@@ -180,6 +185,7 @@ namespace duckhacker
 		{
 			execute_thread_ = std::thread(Bot::EnterExecuteThread_, this);
 			running_ = true;
+			crashed_ = false;
 		}
 
 		void Bot::EnterExecuteThread_(Bot * b)
@@ -268,7 +274,8 @@ namespace duckhacker
 		void Bot::WaitForStop()
 		{
 			execute_thread_.join();
-			running_  = false;
+			running_ = false;
+			crashed_ = false;
 
 			// reset internal state
 			action_available_ = false;
@@ -546,6 +553,8 @@ namespace duckhacker
 			}
 \
 			Log(ConsoleLineType::ERROR, std::string(msg));
+
+			crashed_ = true;
 
 			longjmp(preexec_state, 1);
 		}
