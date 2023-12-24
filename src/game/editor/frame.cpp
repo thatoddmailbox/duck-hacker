@@ -14,23 +14,29 @@ namespace duckhacker
 			{
 				SetTitle("Code Editor (DuckBot " + std::to_string(bot_id) + ")");
 
-				wxSizer * root = new wxBoxSizer(wxVERTICAL);
+				wxSizer * panel_base = new wxBoxSizer(wxVERTICAL);
+				wxPanel * panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+				panel_base->Add(panel, 1, wxEXPAND);
+				SetSizer(panel_base);
 
-				wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+				wxSizer * root = new wxBoxSizer(wxVERTICAL);
+				panel->SetSizer(root);
+
+				wxSizer * sizer = new wxBoxSizer(wxHORIZONTAL);
 				sizer->AddSpacer(10);
 
-				// wxStaticText * bot_info = new wxStaticText(this, wxID_ANY, "DuckBot " + std::to_string(bot_id));
+				// wxStaticText * bot_info = new wxStaticText(panel, wxID_ANY, "DuckBot " + std::to_string(bot_id));
 				// sizer->Add(bot_info, wxSizerFlags().Center());
 
 				sizer->AddStretchSpacer(1);
 
-				wxButton* aboutBtn = new wxButton(this, wxID_ANY, "About...");
+				wxButton * aboutBtn = new wxButton(panel, wxID_ANY, "About...");
 				// aboutBtn->Bind(wxEVT_BUTTON, &MyFrame::OnAbout, this);
 				sizer->Add(aboutBtn, wxSizerFlags().Center());
 
 				sizer->AddSpacer(4);
 
-				wxButton* helpBtn = new wxButton(this, wxID_ANY, "Help");
+				wxButton * helpBtn = new wxButton(panel, wxID_ANY, "Help");
 				helpBtn->Bind(wxEVT_BUTTON, &Frame::OnOpenHelp, this);
 				sizer->Add(helpBtn, wxSizerFlags().Center());
 
@@ -40,7 +46,7 @@ namespace duckhacker
 				root->Add(sizer, 0, wxEXPAND);
 				root->AddSpacer(2);
 
-				text_control_ = new wxStyledTextCtrl(this, wxID_ANY);
+				text_control_ = new wxStyledTextCtrl(panel, wxID_ANY);
 
 				text_control_->SetMarginWidth(0, 32);
 				text_control_->StyleSetForeground(wxSTC_STYLE_LINENUMBER, wxColour(75, 75, 75) );
@@ -66,9 +72,6 @@ namespace duckhacker
 				text_control_->StyleSetForeground(wxSTC_LUA_COMMENTLINE,          wxColour(150,150,150));
 
 				root->Add(text_control_, 1, wxEXPAND);
-				// printf("text %p\n", text);
-
-				SetSizer(root);
 			}
 
 			Frame::~Frame()
