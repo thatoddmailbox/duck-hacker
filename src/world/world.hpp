@@ -1,6 +1,7 @@
 #ifndef _WORLD_WORLD_HPP
 #define _WORLD_WORLD_HPP
 
+#include <atomic>
 #include <vector>
 
 #include "glm/glm.hpp"
@@ -42,6 +43,8 @@ namespace duckhacker
 
 			const State& GetState();
 
+			const std::atomic_int& GetTicks();
+
 			void Run();
 			void Stop();
 
@@ -49,6 +52,9 @@ namespace duckhacker
 
 		private:
 			world::Console console_;
+
+			std::atomic_int ticks_ = ATOMIC_VAR_INIT(0);
+			float ticks_accum_ = 0;
 
 			std::vector<glm::vec4> bot_reset_positions_;
 			std::vector<glm::vec4> npc_reset_positions_;

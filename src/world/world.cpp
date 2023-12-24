@@ -42,7 +42,7 @@ namespace duckhacker
 				int z = bot_node.attribute("z").as_int();
 				int rotation = bot_node.attribute("rotation").as_int();
 
-				Bot * bot = new Bot(content_manager, id, x, y, z, rotation);
+				Bot * bot = new Bot(this, content_manager, id, x, y, z, rotation);
 				bots.push_back(bot);
 
 				bot_reset_positions_.push_back(glm::vec4(x, y, z, rotation));
@@ -206,6 +206,11 @@ namespace duckhacker
 			return state_;
 		}
 
+		const std::atomic_int& World::GetTicks()
+		{
+			return ticks_;
+		}
+
 		void World::Run()
 		{
 			state_ = State::RUNNING;
@@ -242,6 +247,8 @@ namespace duckhacker
 			}
 
 			state_ = State::READY;
+			ticks_ = 0;
+			ticks_accum_ = 0;
 		}
 
 		void World::Update(float dt)
@@ -249,6 +256,13 @@ namespace duckhacker
 			if (state_ != State::RUNNING)
 			{
 				return;
+			}
+
+			ticks_accum_ += dt;
+			while (ticks_accum_ > 0.1f)
+			{
+				ticks_++;
+				ticks_accum_ -= 0.1f;
 			}
 
 			for (Bot * bot : bots)

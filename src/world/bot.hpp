@@ -30,11 +30,12 @@ namespace duckhacker
 		};
 
 		class Console;
+		class World;
 
 		class Bot
 		{
 		public:
-			Bot(content::Manager * content_manager, int id, int x, int y, int z, int rotation);
+			Bot(world::World * world, content::Manager * content_manager, int id, int x, int y, int z, int rotation);
 			~Bot();
 
 			std::string code;
@@ -66,6 +67,8 @@ namespace duckhacker
 			std::string name_;
 			int x_, y_, z_;
 			int rotation_;
+
+			world::World * world_;
 
 			bool running_ = false;
 

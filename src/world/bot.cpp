@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+#include "world/world.hpp"
+
 const float BOT_ANIMATION_TIME = 1;
 const float BOT_PAUSE_TIME = 0.1;
 
@@ -63,8 +65,10 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
 		}
 
-		Bot::Bot(content::Manager * content_manager, int id, int x, int y, int z, int rotation)
+		Bot::Bot(world::World * world, content::Manager * content_manager, int id, int x, int y, int z, int rotation)
 		{
+			world_ = world;
+
 			id_ = id;
 			x_ = x;
 			y_ = y;
@@ -163,6 +167,7 @@ namespace duckhacker
 			{
 				ConsoleLine console_line;
 
+				console_line.ticks = world_->GetTicks();
 				console_line.type = line_type;
 				console_line.text = individual_line;
 				console_line.name = name_;

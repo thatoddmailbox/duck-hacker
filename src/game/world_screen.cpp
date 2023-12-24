@@ -295,7 +295,7 @@ namespace duckhacker
 				console_focused = (console_window == ImGui::GetCurrentContext()->NavWindow && !console_window->SkipItems);
 			}
 
-			if (ImGui::Begin("Console", nullptr, ((console.new_lines && !console_focused) ? ImGuiWindowFlags_UnsavedDocument : 0)))
+			if (ImGui::Begin("Console", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ((console.new_lines && !console_focused) ? ImGuiWindowFlags_UnsavedDocument : 0)))
 			{
 				if (console_focused)
 				{
@@ -306,7 +306,7 @@ namespace duckhacker
 
 				for (const world::ConsoleLine& line : lines)
 				{
-					ImGui::Text("[%s] %s", line.name.c_str(), line.text.c_str());
+					ImGui::Text("[%4d] [%s] [%s] %s", line.ticks, line.name.c_str(), world::ConsoleLineTypeToString[(int) line.type], line.text.c_str());
 				}
 
 				console.UnlockLines();
