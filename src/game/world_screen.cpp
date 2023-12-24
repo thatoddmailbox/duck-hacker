@@ -323,6 +323,8 @@ namespace duckhacker
 				console_focused = (console_window == ImGui::GetCurrentContext()->NavWindow && !console_window->SkipItems);
 			}
 
+			ImGui::SetNextWindowSize(ImVec2(450, 250), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 450 - 50, SCREEN_HEIGHT - 250 - 50), ImGuiCond_Appearing);
 			if (ImGui::Begin("Console", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ((console.new_lines && !console_focused) ? ImGuiWindowFlags_UnsavedDocument : 0)))
 			{
 				if (console_focused)
@@ -330,14 +332,34 @@ namespace duckhacker
 					console.new_lines = false;
 				}
 
-				const std::vector<world::ConsoleLine>& lines = console.LockLines();
+				const std::deque<world::ConsoleLine>& lines = console.GetLines();
 
 				for (const world::ConsoleLine& line : lines)
 				{
-					ImGui::Text("[%4d] [%s] [%s] %s", line.ticks, line.name.c_str(), world::ConsoleLineTypeToString[(int) line.type], line.text.c_str());
-				}
+					bool changed_color = false;
+					if (line.type == world::ConsoleLineType::ERROR)
+					{
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+						changed_color = true;
+					}
+					else if (line.type == world::ConsoleLineType::WARNING)
+					{
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(162, 162, 46, 255));
+						changed_color = true;
+					}
+					else if (line.type == world::ConsoleLineType::SPOKEN)
+					{
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(62, 27, 196, 255));
+						changed_color = true;
+					}
 
-				console.UnlockLines();
+					ImGui::Text("[%4d] [%s] [%s] %s", line.ticks, line.name.c_str(), world::ConsoleLineTypeToString[(int) line.type], line.text.c_str());
+
+					if (changed_color)
+					{
+						ImGui::PopStyleColor();
+					}
+				}
 			}
 
 			ImGui::End();

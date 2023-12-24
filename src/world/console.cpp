@@ -1,18 +1,19 @@
 #include "world/console.hpp"
 
+#define CONSOLE_MAX_LINES 300
+
 namespace duckhacker
 {
 	namespace world
 	{
-		const std::vector<ConsoleLine>& Console::LockLines()
+		void Console::Reset()
 		{
-			lines_mutex_.lock();
-			return lines_;
+			lines_.clear();
 		}
 
-		void Console::UnlockLines()
+		const std::deque<ConsoleLine>& Console::GetLines()
 		{
-			lines_mutex_.unlock();
+			return lines_;
 		}
 
 		void Console::Update(std::vector<Bot *>& bots)
@@ -25,9 +26,11 @@ namespace duckhacker
 					ConsoleLine line = bot->lines_.front();
 					bot->lines_.pop_front();
 
-					lines_mutex_.lock();
 					lines_.push_back(line);
-					lines_mutex_.unlock();
+					if (lines_.size() > CONSOLE_MAX_LINES)
+					{
+						lines_.pop_front();
+					}
 
 					new_lines = true;
 				}

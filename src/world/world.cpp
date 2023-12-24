@@ -275,6 +275,8 @@ namespace duckhacker
 		{
 			state_ = State::RUNNING;
 
+			console_.Reset();
+
 			for (Bot * bot : bots)
 			{
 				bot->Execute();

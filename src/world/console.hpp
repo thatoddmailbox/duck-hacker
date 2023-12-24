@@ -2,6 +2,7 @@
 #define _WORLD_CONSOLE_HPP
 
 #include <atomic>
+#include <deque>
 #include <mutex>
 #include <vector>
 
@@ -15,16 +16,16 @@ namespace duckhacker
 		class Console
 		{
 		public:
-			const std::vector<ConsoleLine>& LockLines();
-			void UnlockLines();
+			void Reset();
+
+			const std::deque<ConsoleLine>& GetLines();
 
 			std::atomic_bool new_lines = ATOMIC_VAR_INIT(false);
 
 			void Update(std::vector<Bot *>& bots);
 
 		private:
-			std::mutex lines_mutex_;
-			std::vector<ConsoleLine> lines_;
+			std::deque<ConsoleLine> lines_;
 		};
 	}
 }
