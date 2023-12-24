@@ -211,6 +211,37 @@ namespace duckhacker
 			return ticks_;
 		}
 
+		bool World::IsOccupied(int x, int y, int z)
+		{
+			// TODO: should check objects, edge of field
+
+			// never allow bots to go below y = 0
+			if (y < 0)
+			{
+				return true;
+			}
+
+			// check bots
+			for (Bot * bot : bots)
+			{
+				if (bot->GetX() == x && bot->GetY() == y && bot->GetZ() == z)
+				{
+					return true;
+				}
+			}
+
+			// check npcs
+			for (NPC * npc : npcs)
+			{
+				if (npc->GetX() == x && npc->GetY() == y && npc->GetZ() == z)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		void World::Run()
 		{
 			state_ = State::RUNNING;

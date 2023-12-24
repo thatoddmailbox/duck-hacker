@@ -45,14 +45,24 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(-1, 0, 0);
 		}
 
-		static int Bot_OnLuaCall_MoveLeft(lua_State * L)
+		static int Bot_OnLuaCall_CanMoveUp(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, -1);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_CanMove_(0, 1, 0);
 		}
 
-		static int Bot_OnLuaCall_MoveRight(lua_State * L)
+		static int Bot_OnLuaCall_CanMoveDown(lua_State * L)
 		{
-			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Move_(0, 0, 1);
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_CanMove_(0, -1, 0);
+		}
+
+		static int Bot_OnLuaCall_CanMoveForward(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_CanMove_(1, 0, 0);
+		}
+
+		static int Bot_OnLuaCall_CanMoveBackward(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_CanMove_(-1, 0, 0);
 		}
 
 		static int Bot_OnLuaCall_TurnLeft(lua_State * L)
@@ -202,6 +212,13 @@ namespace duckhacker
 				return lua_error(lua_state_);
 			}
 
+			// check that we can move there
+			if (!OnLuaCall_CanMove_(dx, dy, dz))
+			{
+				lua_pushliteral(lua_state_, "can't move there (something is in the way)");
+				return lua_error(lua_state_);
+			}
+
 			// set up the action
 			printf("move %d %d %d\n", dx, dy, dz);
 			action_done_ = false;
@@ -228,6 +245,48 @@ namespace duckhacker
 			}
 
 			return 0;
+		}
+
+		bool Bot::OnLuaCall_CanMove_(int dx, int dy, int dz)
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			int dx_rotated = dx;
+			int dy_rotated = dy;
+			int dz_rotated = dz;
+
+			if (rotation_ == 0)
+			{
+				// do nothing
+			}
+			else if (rotation_ == 90)
+			{
+				int temp = dx_rotated;
+				dx_rotated = -dz_rotated;
+				dz_rotated = temp;
+			}
+			else if (rotation_ == 180)
+			{
+				dx_rotated = -dx_rotated;
+				dz_rotated = -dz_rotated;
+			}
+			else if (rotation_ == 270)
+			{
+				int temp = dx_rotated;
+				dx_rotated = dz_rotated;
+				dz_rotated = -temp;
+			}
+
+			int x = x_ + dx_rotated;
+			int y = y_ + dy_rotated;
+			int z = z_ + dz_rotated;
+
+			return !world_->IsOccupied(x, y, z);
 		}
 
 		int Bot::OnLuaCall_Turn_(int da)
@@ -393,11 +452,17 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveBackward);
 			lua_setfield(lua_state_, 1, "moveBackward");
 
-			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveLeft);
-			lua_setfield(lua_state_, 1, "moveLeft");
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_CanMoveUp);
+			lua_setfield(lua_state_, 1, "canMoveUp");
 
-			lua_pushcfunction(lua_state_, Bot_OnLuaCall_MoveRight);
-			lua_setfield(lua_state_, 1, "moveRight");
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_CanMoveDown);
+			lua_setfield(lua_state_, 1, "canMoveDown");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_CanMoveForward);
+			lua_setfield(lua_state_, 1, "canMoveForward");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_CanMoveBackward);
+			lua_setfield(lua_state_, 1, "canMoveBackward");
 
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_TurnLeft);
 			lua_setfield(lua_state_, 1, "turnLeft");

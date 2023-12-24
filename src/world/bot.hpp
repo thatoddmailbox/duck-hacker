@@ -98,6 +98,7 @@ namespace duckhacker
 
 		public:
 			int OnLuaCall_Move_(int dx, int dy, int dz);
+			bool OnLuaCall_CanMove_(int dx, int dy, int dz);
 			int OnLuaCall_Turn_(int da);
 
 		public:

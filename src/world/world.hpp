@@ -45,6 +45,8 @@ namespace duckhacker
 
 			const std::atomic_int& GetTicks();
 
+			bool IsOccupied(int x, int y, int z);
+
 			void Run();
 			void Stop();
 
