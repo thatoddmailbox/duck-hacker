@@ -1,5 +1,9 @@
 #include "game/editor/help_frame.hpp"
 
+#include "game/editor/app.hpp"
+
+wxDECLARE_APP(duckhacker::game::editor::App);
+
 namespace duckhacker
 {
 	namespace game
@@ -18,6 +22,11 @@ namespace duckhacker
 
 				wxStaticText * text = new wxStaticText(panel, wxID_ANY, "Help goes here I guess?");
 				root->Add(text, wxSizerFlags().Center());
+			}
+
+			HelpFrame::~HelpFrame()
+			{
+				wxGetApp().NotifyHelpFrameClosed();
 			}
 		}
 	}

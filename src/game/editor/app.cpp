@@ -61,6 +61,11 @@ namespace duckhacker
 				}
 			}
 
+			void App::NotifyHelpFrameClosed()
+			{
+				help_frame_ = nullptr;
+			}
+
 			void App::OnOpenEditor(wxThreadEvent& e)
 			{
 				int bot_id = e.GetInt();

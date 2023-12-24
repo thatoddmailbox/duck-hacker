@@ -13,6 +13,7 @@ namespace duckhacker
 			{
 			public:
 				HelpFrame();
+				~HelpFrame();
 			};
 		}
 	}

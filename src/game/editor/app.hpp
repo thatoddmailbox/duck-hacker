@@ -37,7 +37,9 @@ namespace duckhacker
 
 			protected:
 				friend class Frame;
+				friend class HelpFrame;
 				void NotifyFrameClosed(Frame * frame);
+				void NotifyHelpFrameClosed();
 
 			private:
 				void OnOpenEditor(wxThreadEvent& e);
