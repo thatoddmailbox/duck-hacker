@@ -132,21 +132,28 @@ namespace duckhacker
 			bla *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
 			ShowTooltip(bla, "test");
 
-			for (world::Bot * bot : world_->bots)
+			ImGui::SetNextWindowPos(ImVec2(50, 125), ImGuiCond_Appearing);
+			if (ImGui::Begin("World"))
 			{
-				ImGui::SetNextWindowPos(ImVec2(50, 125), ImGuiCond_Appearing);
-				ImGui::Begin("DuckBot");
-
-				ImGui::Text("beep bloop");
-				ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
-				ImGui::Text("rotation %d\n", bot->GetRotation());
-				if (ImGui::Button("Edit code"))
+				for (world::Bot * bot : world_->bots)
 				{
-					editor_thread_->OpenEditor(bot->GetID(), bot->code);
+					if (ImGui::Selectable(bot->GetName().c_str()))
+					{
+						editor_thread_->OpenEditor(bot->GetID(), bot->code);
+					}
+					// ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
+					// ImGui::Text("rotation %d\n", bot->GetRotation());
 				}
 
-				ImGui::End();
+				for (world::NPC * npc : world_->npcs)
+				{
+					ImGui::Selectable(npc->GetName().c_str());
+					// ImGui::Text("position %d %d %d\n", npc->GetX(), npc->GetY(), npc->GetZ());
+					// ImGui::Text("rotation %d\n", npc->GetRotation());
+				}
 			}
+
+			ImGui::End();
 
 			ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Appearing);
 			ImGui::Begin("Control");
