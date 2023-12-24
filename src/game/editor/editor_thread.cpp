@@ -2,7 +2,6 @@
 
 wxIMPLEMENT_APP_NO_MAIN(duckhacker::game::editor::App);
 
-#include <unistd.h>
 namespace duckhacker
 {
 	namespace game
@@ -19,13 +18,6 @@ namespace duckhacker
 				int argc = 0;
 				char * argv[0];
 				wxEntry(argc, argv);
-
-				// printf("beep boop i am thread\n");
-				// while (1)
-				// {
-				// 	sleep(1);
-				// 	printf("hi\n");
-				// }
 			}
 
 			void EditorThread::OpenEditor(int bot_id, std::string initial_code)
