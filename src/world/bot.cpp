@@ -299,6 +299,40 @@ namespace duckhacker
 			return 1;  /* return the traceback */
 		}
 
+		static int Bot_OnLuaCall_Print(lua_State * L)
+		{
+			// based on lua source code
+			// see https://github.com/lua/lua/blob/7923dbbf72da303ca1cca17efd24725668992f15/lbaselib.c#L24-L37
+
+			std::string output;
+
+			int n = lua_gettop(L);  /* number of arguments */
+			int i;
+			for (i = 1; i <= n; i++) {  /* for each argument */
+				size_t l;
+				const char *s = luaL_tolstring(L, i, &l);  /* convert it to string */
+				if (i > 1)  /* not the first element? */
+					output += "\t";
+				output += std::string(s, l);  /* print it */
+				lua_pop(L, 1);  /* pop result */
+			}
+			output += "\n";
+
+			(*((Bot **) lua_getextraspace(L)))->Log(ConsoleLineType::INFO, output);
+			return 0;
+		}
+
+		// this is a copy of the structure from linit.c
+		// we omit several libraries that we don't want
+		static const luaL_Reg loadedlibs[] = {
+			{LUA_GNAME, luaopen_base},
+			{LUA_TABLIBNAME, luaopen_table},
+			{LUA_STRLIBNAME, luaopen_string},
+			{LUA_MATHLIBNAME, luaopen_math},
+			{LUA_UTF8LIBNAME, luaopen_utf8},
+			{NULL, NULL}
+		};
+
 		void Bot::Execute_()
 		{
 			lua_state_ = luaL_newstate();
@@ -310,7 +344,27 @@ namespace duckhacker
 			lua_atpanic(lua_state_, Bot_HandleError);
 			lua_setwarnf(lua_state_, Bot_HandleWarning, lua_state_);
 
-			luaL_openlibs(lua_state_);
+			// as per linit.c
+			const luaL_Reg *lib;
+			for (lib = loadedlibs; lib->func; lib++) {
+				luaL_requiref(lua_state_, lib->name, lib->func, 1);
+				lua_pop(lua_state_, 1);
+			}
+
+			// we also want to remove some problematic functions from the global table
+			// we also replace print with our own implementation that logs to our console instead of stdout
+			lua_getglobal(lua_state_, LUA_GNAME);
+
+			lua_pushnil(lua_state_);
+			lua_setfield(lua_state_, -2, "dofile");
+
+			lua_pushnil(lua_state_);
+			lua_setfield(lua_state_, -2, "loadfile");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_Print);
+			lua_setfield(lua_state_, -2, "print");
+
+			lua_pop(lua_state_, 1);
 
 			lua_sethook(lua_state_, Bot_HandleInstructionCount, LUA_MASKCOUNT, 100);
 
