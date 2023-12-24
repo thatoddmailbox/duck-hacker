@@ -106,8 +106,10 @@ namespace duckhacker
 
 		public:
 			int OnLuaCall_Move_(int dx, int dy, int dz);
-			bool OnLuaCall_CanMove_(int dx, int dy, int dz);
+			int OnLuaCall_CanMove_(int dx, int dy, int dz);
 			int OnLuaCall_Turn_(int da);
+			int OnLuaCall_GetTime_();
+			int OnLuaCall_Sleep_();
 
 		public:
 			void HandleWarning_(const char * msg);

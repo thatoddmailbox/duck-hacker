@@ -75,6 +75,16 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Turn_(90);
 		}
 
+		static int Bot_OnLuaCall_GetTime(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_GetTime_();
+		}
+
+		static int Bot_OnLuaCall_Sleep(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_Sleep_();
+		}
+
 		Bot::Bot(world::World * world, content::Manager * content_manager, BotType t, int id, std::string name, int x, int y, int z, int rotation, std::string mesh, std::string c)
 		{
 			world_ = world;
@@ -216,7 +226,10 @@ namespace duckhacker
 			}
 
 			// check that we can move there
-			if (!OnLuaCall_CanMove_(dx, dy, dz))
+			OnLuaCall_CanMove_(dx, dy, dz);
+			bool can_move = lua_toboolean(lua_state_, -1);
+			lua_pop(lua_state_, 1);
+			if (!can_move)
 			{
 				lua_pushliteral(lua_state_, "can't move there (something is in the way)");
 				return lua_error(lua_state_);
@@ -250,7 +263,7 @@ namespace duckhacker
 			return 0;
 		}
 
-		bool Bot::OnLuaCall_CanMove_(int dx, int dy, int dz)
+		int Bot::OnLuaCall_CanMove_(int dx, int dy, int dz)
 		{
 			int n = lua_gettop(lua_state_);
 			if (n != 0)
@@ -289,7 +302,9 @@ namespace duckhacker
 			int y = y_ + dy_rotated;
 			int z = z_ + dz_rotated;
 
-			return !world_->IsOccupied(x, y, z);
+			bool result = !world_->IsOccupied(x, y, z);
+			lua_pushboolean(lua_state_, result);
+			return 1;
 		}
 
 		int Bot::OnLuaCall_Turn_(int da)
@@ -322,6 +337,57 @@ namespace duckhacker
 			if (stop_requested_)
 			{
 				longjmp(preexec_state, 1);
+			}
+
+			return 0;
+		}
+
+		int Bot::OnLuaCall_GetTime_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 0)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			lua_pushinteger(lua_state_, world_->GetTicks());
+			return 1;
+		}
+
+		int Bot::OnLuaCall_Sleep_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 1)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			int is_num = 0;
+			int ticks = lua_tointegerx(lua_state_, 1, &is_num);
+			if (!is_num)
+			{
+				lua_pushliteral(lua_state_, "sleep time must be an integer");
+				return lua_error(lua_state_);
+			}
+			else if (ticks <= 0)
+			{
+				lua_pushliteral(lua_state_, "sleep time must be positive");
+				return lua_error(lua_state_);
+			}
+
+			int start_time = world_->GetTicks();
+			while (world_->GetTicks() - start_time < ticks)
+			{
+				// TODO: kinda sus that we're using SDL in a non-main thread
+				// it's fine for the platforms we care about (windows and linux) but it's not guaranteed to work
+				SDL_Delay(100);
+
+				if (stop_requested_)
+				{
+					longjmp(preexec_state, 1);
+				}
 			}
 
 			return 0;
@@ -472,6 +538,12 @@ namespace duckhacker
 
 			lua_pushcfunction(lua_state_, Bot_OnLuaCall_TurnRight);
 			lua_setfield(lua_state_, 1, "turnRight");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_GetTime);
+			lua_setfield(lua_state_, 1, "getTime");
+
+			lua_pushcfunction(lua_state_, Bot_OnLuaCall_Sleep);
+			lua_setfield(lua_state_, 1, "sleep");
 
 			lua_setglobal(lua_state_, "duckbot");
 
