@@ -136,18 +136,12 @@ namespace duckhacker
 				}
 			}
 
-			for (world::NPC * npc : world_->npcs)
-			{
-				npc->object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
-			}
-
 			for (render::Object& object : world_->objects)
 			{
 				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
 			world::Bot * hovered_bot = nullptr;
-			world::NPC * hovered_npc = nullptr;
 
 			ImGui::SetNextWindowPos(ImVec2(50, 100), ImGuiCond_Appearing);
 			if (ImGui::Begin("World"))
@@ -166,18 +160,6 @@ namespace duckhacker
 					// ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
 					// ImGui::Text("rotation %d\n", bot->GetRotation());
 				}
-
-				for (world::NPC * npc : world_->npcs)
-				{
-					ImGui::Selectable(npc->GetName().c_str());
-					// ImGui::Text("position %d %d %d\n", npc->GetX(), npc->GetY(), npc->GetZ());
-					// ImGui::Text("rotation %d\n", npc->GetRotation());
-
-					if (ImGui::IsItemHovered())
-					{
-						hovered_npc = npc;
-					}
-				}
 			}
 
 			ImGui::End();
@@ -187,12 +169,6 @@ namespace duckhacker
 				glm::vec2 screen_position = hovered_bot->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
 				screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
 				ShowTooltip(screen_position, hovered_bot->GetName().c_str());
-			}
-			else if (hovered_npc != nullptr)
-			{
-				glm::vec2 screen_position = hovered_npc->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
-				screen_position *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
-				ShowTooltip(screen_position, hovered_npc->GetName().c_str());
 			}
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);

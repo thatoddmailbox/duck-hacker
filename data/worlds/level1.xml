@@ -23,9 +23,6 @@
 			src="worlds/level1_waddleton.lua"
 		/>
 	</bots>
-	<npcs>
-		<npc id="1" name="Waddleton" x="3" y="4" z="1" rotation="180"></npc>
-	</npcs>
 	<objects>
 		<object x="2" y="1" z="4.5" rotation="180">
 			<mesh type="sign" w="2.5" h="1" d="0.01">
