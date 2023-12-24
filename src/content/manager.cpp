@@ -59,18 +59,25 @@ namespace duckhacker
 			font_regular_ = io.Fonts->Fonts[0];
 
 			config.MergeMode = false;
+			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::MEDIUM), &config, text_range);
+			config.MergeMode = true;
+			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::MEDIUM), &config, icon_range);
+			io.Fonts->Build();
+			font_medium_ = io.Fonts->Fonts[1];
+
+			config.MergeMode = false;
 			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::LARGE), &config, text_range);
 			config.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::LARGE), &config, icon_range);
 			io.Fonts->Build();
-			font_large_ = io.Fonts->Fonts[1];
+			font_large_ = io.Fonts->Fonts[2];
 
 			config.MergeMode = false;
 			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::TITLE), &config, text_range);
 			config.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::TITLE), &config, icon_range);
 			io.Fonts->Build();
-			font_title_ = io.Fonts->Fonts[2];
+			font_title_ = io.Fonts->Fonts[3];
 
 			free(text_font_file_data);
 			free(icon_font_file_data);
@@ -81,6 +88,10 @@ namespace duckhacker
 			if (type == FontType::LARGE)
 			{
 				return font_large_;
+			}
+			else if (type == FontType::MEDIUM)
+			{
+				return font_medium_;
 			}
 			else if (type == FontType::TITLE)
 			{

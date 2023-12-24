@@ -32,6 +32,7 @@ namespace duckhacker
 			constexpr static int SizeOfFont(const FontType type)
 			{
 				return (type == FontType::LARGE ? 24 :
+						type == FontType::MEDIUM ? 20 :
 						(type == FontType::TITLE ? 36 : 18));
 			};
 
@@ -50,6 +51,7 @@ namespace duckhacker
 			std::map<std::string, render::Texture *> textures_;
 
 			ImFont * font_regular_;
+			ImFont * font_medium_;
 			ImFont * font_large_;
 			ImFont * font_title_;
 		};

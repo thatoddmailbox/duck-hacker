@@ -8,6 +8,7 @@ namespace duckhacker
 		enum FontType
 		{
 			REGULAR,
+			MEDIUM,
 			LARGE,
 			TITLE
 		};
