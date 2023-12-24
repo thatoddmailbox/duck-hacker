@@ -31,6 +31,10 @@ namespace duckhacker
 			return;
 		}
 
+		// note that windows requires multisampling settings to be set before the window is created
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+
 		window_ = SDL_CreateWindow(
 			"Duck Hacker",
 			SDL_WINDOWPOS_CENTERED,
@@ -52,9 +56,6 @@ namespace duckhacker
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
 
 		SDL_GLContext context = SDL_GL_CreateContext(window_);
 
