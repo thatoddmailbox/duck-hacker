@@ -285,6 +285,35 @@ namespace duckhacker
 
 			ImGui::End();
 
+			world::Console& console = world_->GetConsole();
+
+			// TODO: have to mess with ImGui internals to get this to work, kind of hacky
+			ImGuiWindow * console_window = ImGui::FindWindowByName("Console");
+			bool console_focused = false;
+			if (console_window)
+			{
+				console_focused = (console_window == ImGui::GetCurrentContext()->NavWindow && !console_window->SkipItems);
+			}
+
+			if (ImGui::Begin("Console", nullptr, ((console.new_lines && !console_focused) ? ImGuiWindowFlags_UnsavedDocument : 0)))
+			{
+				if (console_focused)
+				{
+					console.new_lines = false;
+				}
+
+				const std::vector<world::ConsoleLine>& lines = console.LockLines();
+
+				for (const world::ConsoleLine& line : lines)
+				{
+					ImGui::Text("[%s] %s", line.name.c_str(), line.text.c_str());
+				}
+
+				console.UnlockLines();
+			}
+
+			ImGui::End();
+
 			ImGui::PushOverrideID(MISSION_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
 			if (ImGui::BeginPopupModal("Mission", nullptr, ImGuiWindowFlags_AlwaysAutoResize))

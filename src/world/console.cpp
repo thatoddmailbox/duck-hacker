@@ -28,6 +28,8 @@ namespace duckhacker
 					lines_mutex_.lock();
 					lines_.push_back(line);
 					lines_mutex_.unlock();
+
+					new_lines = true;
 				}
 			}
 		}
