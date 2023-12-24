@@ -2,6 +2,7 @@
 
 #include "external/physfsrwops.h"
 
+#include "defs.hpp"
 #include "render/mesh_factory.hpp"
 
 namespace duckhacker
@@ -25,24 +26,54 @@ namespace duckhacker
 		{
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-			ImFontConfig config;
-			config.FontDataOwnedByAtlas = false;
-			PHYSFS_file * font_file = PHYSFS_openRead("fonts/Lato-Regular.ttf");
-			int64_t font_file_length = PHYSFS_fileLength(font_file);
-			char * font_file_data = (char *) malloc(font_file_length + 1);
-			PHYSFS_readBytes(font_file, font_file_data, font_file_length);
-			PHYSFS_close(font_file);
+			PHYSFS_file * text_font_file = PHYSFS_openRead("fonts/Lato-Regular.ttf");
+			int64_t text_font_file_length = PHYSFS_fileLength(text_font_file);
+			char * text_font_file_data = (char *) malloc(text_font_file_length + 1);
+			PHYSFS_readBytes(text_font_file, text_font_file_data, text_font_file_length);
+			PHYSFS_close(text_font_file);
+
+			PHYSFS_file * icon_font_file = PHYSFS_openRead("fonts/fa-solid-900.ttf");
+			int64_t icon_font_file_length = PHYSFS_fileLength(icon_font_file);
+			char * icon_font_file_data = (char *) malloc(icon_font_file_length + 1);
+			PHYSFS_readBytes(icon_font_file, icon_font_file_data, icon_font_file_length);
+			PHYSFS_close(icon_font_file);
 
 			static const ImWchar text_range[] =
 			{
 				0x0020, 0x007F,
 				0,
 			};
-			font_regular_ = io.Fonts->AddFontFromMemoryTTF(font_file_data, font_file_length, SizeOfFont(FontType::REGULAR), &config, text_range);
-			font_large_ = io.Fonts->AddFontFromMemoryTTF(font_file_data, font_file_length, SizeOfFont(FontType::LARGE), &config, text_range);
-			font_title_ = io.Fonts->AddFontFromMemoryTTF(font_file_data, font_file_length, SizeOfFont(FontType::TITLE), &config, text_range);
+			static const ImWchar icon_range[] =
+			{
+				0xF04B, 0xF04D,
+				0,
+			};
+
+			ImFontConfig config;
+			config.FontDataOwnedByAtlas = false;
+
+			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::REGULAR), &config, text_range);
+			config.MergeMode = true;
+			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::REGULAR), &config, icon_range);
 			io.Fonts->Build();
-			free(font_file_data);
+			font_regular_ = io.Fonts->Fonts[0];
+
+			config.MergeMode = false;
+			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::LARGE), &config, text_range);
+			config.MergeMode = true;
+			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::LARGE), &config, icon_range);
+			io.Fonts->Build();
+			font_large_ = io.Fonts->Fonts[1];
+
+			config.MergeMode = false;
+			io.Fonts->AddFontFromMemoryTTF(text_font_file_data, text_font_file_length, SizeOfFont(FontType::TITLE), &config, text_range);
+			config.MergeMode = true;
+			io.Fonts->AddFontFromMemoryTTF(icon_font_file_data, icon_font_file_length, SizeOfFont(FontType::TITLE), &config, icon_range);
+			io.Fonts->Build();
+			font_title_ = io.Fonts->Fonts[2];
+
+			free(text_font_file_data);
+			free(icon_font_file_data);
 		}
 
 		ImFont * Manager::Font(const FontType type)
