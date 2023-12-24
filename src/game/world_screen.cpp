@@ -91,6 +91,23 @@ namespace duckhacker
 			main_camera_.LookAt(center_point, glm::vec3(0, 1, 0));
 		}
 
+		static void ShowTooltip(glm::vec2 anchor_point, const char * text)
+		{
+			ImGuiStyle& style = ImGui::GetStyle();
+			ImVec2 text_size = ImGui::CalcTextSize(text);
+
+			int window_width = text_size.x + style.WindowPadding.x * 2;
+			int window_height = text_size.y + style.WindowPadding.y * 2;
+
+			ImGui::SetNextWindowPos(ImVec2(anchor_point.x - (window_width / 2), anchor_point.y - (window_height / 2)), ImGuiCond_Always);
+
+			ImGui::Begin("##Tooltip", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+
+			ImGui::Text("%s", text);
+
+			ImGui::End();
+		}
+
 		void WorldScreen::Draw(content::Manager * content_manager)
 		{
 			glm::vec3 camera_position = main_camera_.GetPosition();
@@ -110,6 +127,10 @@ namespace duckhacker
 			{
 				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
+
+			glm::vec2 bla = world_->bots[0]->object.ObjectPositionToScreenPosition(glm::vec3(0, 0, 0), main_camera_.GetProjection(), main_camera_.GetView());
+			bla *= glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+			ShowTooltip(bla, "test");
 
 			for (world::Bot * bot : world_->bots)
 			{
