@@ -100,8 +100,9 @@ namespace duckhacker
 			int window_height = text_size.y + style.WindowPadding.y * 2;
 
 			ImGui::SetNextWindowPos(ImVec2(anchor_point.x - (window_width / 2), anchor_point.y - (window_height / 2)), ImGuiCond_Always);
+			ImGui::SetNextWindowSize(ImVec2(window_width, window_height), ImGuiCond_Always);
 
-			ImGui::Begin("##Tooltip", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+			ImGui::Begin("##Tooltip", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 			ImGui::Text("%s", text);
 
