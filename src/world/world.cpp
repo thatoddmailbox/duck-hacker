@@ -53,12 +53,13 @@ namespace duckhacker
 			for (pugi::xml_node npc_node : npcs_node.children("npc"))
 			{
 				int id = npc_node.attribute("id").as_int();
+				std::string name = npc_node.attribute("name").as_string();
 				int x = npc_node.attribute("x").as_int();
 				int y = npc_node.attribute("y").as_int();
 				int z = npc_node.attribute("z").as_int();
 				int rotation = npc_node.attribute("rotation").as_int();
 
-				NPC * npc = new NPC(content_manager, id, x, y, z, rotation);
+				NPC * npc = new NPC(content_manager, id, name, x, y, z, rotation);
 				npcs.push_back(npc);
 
 				npc_reset_positions_.push_back(glm::vec4(x, y, z, rotation));

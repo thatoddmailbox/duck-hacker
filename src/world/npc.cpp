@@ -4,9 +4,10 @@ namespace duckhacker
 {
 	namespace world
 	{
-		NPC::NPC(content::Manager * content_manager, int id, int x, int y, int z, int rotation)
+		NPC::NPC(content::Manager * content_manager, int id, std::string name, int x, int y, int z, int rotation)
 		{
 			id_ = id;
+			name_ = name;
 			x_ = x;
 			y_ = y;
 			z_ = z;
@@ -25,6 +26,11 @@ namespace duckhacker
 		const int& NPC::GetID()
 		{
 			return id_;
+		}
+
+		const std::string NPC::GetName()
+		{
+			return name_;
 		}
 
 		const int& NPC::GetX()

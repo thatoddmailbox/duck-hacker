@@ -14,12 +14,13 @@ namespace duckhacker
 		class NPC
 		{
 		public:
-			NPC(content::Manager * content_manager, int id, int x, int y, int z, int rotation);
+			NPC(content::Manager * content_manager, int id, std::string name, int x, int y, int z, int rotation);
 			~NPC();
 
 			render::Object object;
 
 			const int& GetID();
+			const std::string GetName();
 			const int& GetX();
 			const int& GetY();
 			const int& GetZ();
@@ -29,6 +30,7 @@ namespace duckhacker
 
 		private:
 			int id_;
+			std::string name_;
 			int x_, y_, z_;
 			int rotation_;
 		};
