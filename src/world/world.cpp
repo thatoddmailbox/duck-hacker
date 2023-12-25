@@ -10,9 +10,13 @@ namespace duckhacker
 	{
 		World::World(content::Manager * content_manager, std::string file_path)
 		{
-			// TODO: load via physfs
+			int64_t file_length;
+			char * file_contents = content_manager->File(file_path, &file_length);
+
 			pugi::xml_document doc;
-			pugi::xml_parse_result result = doc.load_file(file_path.c_str());
+			pugi::xml_parse_result result = doc.load_buffer(file_contents, file_length);
+			free(file_contents);
+
 			if (!result)
 			{
 				std::cout << "Failed to load world." << std::endl;

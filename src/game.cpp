@@ -79,7 +79,7 @@ namespace duckhacker
 		PHYSFS_mount("data/", nullptr, 0);
 
 		// TODO: who owns this?
-		world::World * world = new world::World(&content_manager_, "data/worlds/level1.xml");
+		world::World * world = new world::World(&content_manager_, "worlds/level1.xml");
 
 		game::WorldScreen world_screen(&content_manager_, &editor_thread, world);
 
