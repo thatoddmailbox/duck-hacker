@@ -190,6 +190,21 @@ namespace duckhacker
 					// ImGui::Text("position %d %d %d\n", bot->GetX(), bot->GetY(), bot->GetZ());
 					// ImGui::Text("rotation %d\n", bot->GetRotation());
 				}
+
+				ImGui::SeparatorText("Inventory");
+				const std::map<std::string, int>& inventory = world_->LockInventory();
+
+				if (inventory.empty())
+				{
+					ImGui::Text("(empty)");
+				}
+
+				for (const auto& item : inventory)
+				{
+					ImGui::Text("%d %s", item.second, item.first.c_str());
+				}
+
+				world_->UnlockInventory();
 			}
 
 			ImGui::End();

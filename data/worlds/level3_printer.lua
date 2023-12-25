@@ -66,9 +66,10 @@ while true do
 
 		duckbot.say("Done! Here's your posters. And I'll take the payment now.")
 
+		npc.addItem(amount, "posters")
 		npc.addCoins(-1 * cost)
 
-		if duckbot.getCoins() <= -300 then
+		if npc.getItemCount("posters") > 100 then
 			npc.win()
 		end
 	end

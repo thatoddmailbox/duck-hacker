@@ -224,9 +224,46 @@ namespace duckhacker
 			return ticks_;
 		}
 
+		const std::map<std::string, int>& World::LockInventory()
+		{
+			inventory_mutex_.lock();
+			return inventory_;
+		}
+
+		void World::UnlockInventory()
+		{
+			inventory_mutex_.unlock();
+		}
+
+		int World::GetItemCount(std::string item)
+		{
+			std::unique_lock<std::mutex> lock(inventory_mutex_);
+
+			if (inventory_.find(item) == inventory_.end())
+			{
+				return 0;
+			}
+
+			return inventory_[item];
+		}
+
 		void World::AddCoins(int amount)
 		{
 			coins_ += amount;
+		}
+
+		void World::AddItem(int amount, std::string item)
+		{
+			std::unique_lock<std::mutex> lock(inventory_mutex_);
+
+			if (inventory_.find(item) == inventory_.end())
+			{
+				inventory_[item] = amount;
+			}
+			else
+			{
+				inventory_[item] += amount;
+			}
 		}
 
 		void World::Win()

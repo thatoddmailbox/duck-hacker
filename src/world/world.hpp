@@ -2,6 +2,8 @@
 #define _WORLD_WORLD_HPP
 
 #include <atomic>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "glm/glm.hpp"
@@ -45,7 +47,13 @@ namespace duckhacker
 			const std::atomic_int& GetCoins();
 			const std::atomic_int& GetTicks();
 
+			const std::map<std::string, int>& LockInventory();
+			void UnlockInventory();
+
+			int GetItemCount(std::string item);
+
 			void AddCoins(int amount);
+			void AddItem(int amount, std::string item);
 			void Win();
 
 			void Heard(int x, int y, int z, std::string message);
@@ -66,6 +74,9 @@ namespace duckhacker
 
 			std::atomic_int ticks_ = ATOMIC_VAR_INIT(0);
 			float ticks_accum_ = 0;
+
+			std::map<std::string, int> inventory_;
+			std::mutex inventory_mutex_;
 
 			std::vector<glm::vec4> bot_reset_positions_;
 

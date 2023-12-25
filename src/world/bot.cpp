@@ -105,6 +105,16 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_AddCoins_();
 		}
 
+		static int Bot_OnLuaCall_NPC_AddItem(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_AddItem_();
+		}
+
+		static int Bot_OnLuaCall_NPC_GetItemCount(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_GetItemCount_();
+		}
+
 		static int Bot_OnLuaCall_NPC_Win(lua_State * L)
 		{
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_Win_();
@@ -573,6 +583,57 @@ namespace duckhacker
 			return 0;
 		}
 
+		int Bot::OnLuaCall_NPC_AddItem_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 2)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			int is_num = 0;
+			int amount = lua_tointegerx(lua_state_, 1, &is_num);
+			if (!is_num)
+			{
+				lua_pushliteral(lua_state_, "amount must be an integer");
+				return lua_error(lua_state_);
+			}
+
+			const char * item = lua_tostring(lua_state_, 2);
+			if (item == NULL)
+			{
+				lua_pushliteral(lua_state_, "item must be a string");
+				return lua_error(lua_state_);
+			}
+
+			world_->AddItem(amount, std::string(item));
+
+			return 0;
+		}
+
+		int Bot::OnLuaCall_NPC_GetItemCount_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 1)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			const char * item = lua_tostring(lua_state_, 1);
+			if (item == NULL)
+			{
+				lua_pushliteral(lua_state_, "item must be a string");
+				return lua_error(lua_state_);
+			}
+
+			int count = world_->GetItemCount(std::string(item));
+
+			lua_pushinteger(lua_state_, count);
+			return 1;
+		}
+
 		int Bot::OnLuaCall_NPC_Win_()
 		{
 			int n = lua_gettop(lua_state_);
@@ -780,6 +841,12 @@ namespace duckhacker
 
 				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_AddCoins);
 				lua_setfield(lua_state_, 1, "addCoins");
+
+				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_AddItem);
+				lua_setfield(lua_state_, 1, "addItem");
+
+				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_GetItemCount);
+				lua_setfield(lua_state_, 1, "getItemCount");
 
 				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_Win);
 				lua_setfield(lua_state_, 1, "win");
