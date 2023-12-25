@@ -13,7 +13,7 @@ namespace duckhacker
 			class Frame : public wxFrame
 			{
 			public:
-				Frame(int bot_id, wxString& initial_code);
+				Frame(int bot_id, const std::string& bot_name, wxString& initial_code);
 				~Frame();
 
 				wxString GetCode();

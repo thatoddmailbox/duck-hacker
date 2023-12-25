@@ -10,9 +10,9 @@ namespace duckhacker
 	{
 		namespace editor
 		{
-			Frame::Frame(int bot_id, wxString& initial_code) : wxFrame(NULL, wxID_ANY, "Code Editor")
+			Frame::Frame(int bot_id, const std::string& bot_name, wxString& initial_code) : wxFrame(NULL, wxID_ANY, "Code Editor")
 			{
-				SetTitle("Code Editor (DuckBot " + std::to_string(bot_id) + ")");
+				SetTitle("Code Editor (" + bot_name + ")");
 
 				wxSizer * panel_base = new wxBoxSizer(wxVERTICAL);
 				wxPanel * panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);

@@ -91,7 +91,7 @@ namespace duckhacker
 					// no existing editor for this bot
 					// open a new one
 					wxString initial_code = bot->GetCode();
-					Frame * frame = new Frame(bot_id, initial_code);
+					Frame * frame = new Frame(bot_id, bot->GetName(), initial_code);
 					frame->Show(true);
 					frames_[bot_id] = frame;
 				}
