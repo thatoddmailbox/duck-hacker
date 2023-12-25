@@ -125,7 +125,7 @@ namespace duckhacker
 			type = t;
 			name_ = name.empty() ? "DuckBot " + std::to_string(id_) : name;
 
-			code = c.empty() ? "-- Code for " + name_ + "\n" : c;
+			code_ = c.empty() ? "-- Code for " + name_ + "\n" : c;
 
 			action_available_ = false;
 			action_done_ = false;
@@ -144,6 +144,21 @@ namespace duckhacker
 		Bot::~Bot()
 		{
 			// lua_close(lua_state_);
+		}
+
+		std::string Bot::GetCode()
+		{
+			code_mutex_.lock();
+			std::string result = code_;
+			code_mutex_.unlock();
+
+			return result;
+		}
+
+		void Bot::SetCode(std::string code)
+		{
+			std::unique_lock<std::mutex> lock(code_mutex_);
+			code_ = code;
 		}
 
 		const int& Bot::GetID()
@@ -775,7 +790,9 @@ namespace duckhacker
 			lua_pushcfunction(lua_state_, build_traceback);
 			int traceback_idx = lua_gettop(lua_state_);
 
-			int status = luaL_loadbuffer(lua_state_, code.c_str(), code.length(), "=code");
+			code_mutex_.lock();
+			int status = luaL_loadbuffer(lua_state_, code_.c_str(), code_.length(), "=code");
+			code_mutex_.unlock();
 
 			if (setjmp(preexec_state) == 0)
 			{

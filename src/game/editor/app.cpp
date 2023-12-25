@@ -3,9 +3,13 @@
 #include "game/editor/frame.hpp"
 #include "game/editor/help_frame.hpp"
 
+#include "world/bot.hpp"
+#include "world/world.hpp"
+
 wxDEFINE_EVENT(EVENT_REQUEST_STOP, wxThreadEvent);
 wxDEFINE_EVENT(EVENT_OPEN_EDITOR, wxThreadEvent);
 wxDEFINE_EVENT(EVENT_GATHER_CODE, wxThreadEvent);
+wxDEFINE_EVENT(EVENT_SET_WORLD, wxThreadEvent);
 
 namespace duckhacker
 {
@@ -25,6 +29,7 @@ namespace duckhacker
 				Bind(EVENT_REQUEST_STOP, &App::OnRequestStop, this);
 				Bind(EVENT_OPEN_EDITOR, &App::OnOpenEditor, this);
 				Bind(EVENT_GATHER_CODE, &App::OnGatherCode, this);
+				Bind(EVENT_SET_WORLD, &App::OnSetWorld, this);
 
 				// wxMessageBox("Hellooooo this is wxWidgets!!","hi :)", wxOK | wxICON_INFORMATION, nullptr);
 
@@ -55,7 +60,14 @@ namespace duckhacker
 				{
 					if (p.second == frame)
 					{
-						frames_.erase(p.first);
+						int bot_id = p.first;
+
+						world::Bot * bot = bots_[bot_id];
+						bot->SetCode(std::string(p.second->GetCode()));
+
+						frames_.erase(bot_id);
+						bots_.erase(bots_.find(bot_id));
+
 						break;
 					}
 				}
@@ -68,13 +80,17 @@ namespace duckhacker
 
 			void App::OnOpenEditor(wxThreadEvent& e)
 			{
-				int bot_id = e.GetInt();
-				wxString initial_code = e.GetString();
+				world::Bot * bot = e.GetPayload<world::Bot *>();
+
+				int bot_id = bot->GetID();
 
 				if (frames_.find(bot_id) == frames_.end())
 				{
+					bots_[bot_id] = bot;
+
 					// no existing editor for this bot
 					// open a new one
+					wxString initial_code = bot->GetCode();
 					Frame * frame = new Frame(bot_id, initial_code);
 					frame->Show(true);
 					frames_[bot_id] = frame;
@@ -106,6 +122,21 @@ namespace duckhacker
 			void App::OnRequestStop(wxThreadEvent& e)
 			{
 				ExitMainLoop();
+			}
+
+			void App::OnSetWorld(wxThreadEvent& e)
+			{
+				world::World * world = e.GetPayload<world::World *>();
+
+				// close any open windows
+				for (std::pair<int, Frame *> p : frames_)
+				{
+					p.second->Close();
+					delete p.second;
+				}
+
+				frames_.clear();
+				bots_.clear();
 			}
 		}
 	}

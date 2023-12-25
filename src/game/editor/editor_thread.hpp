@@ -10,6 +10,12 @@
 
 namespace duckhacker
 {
+	namespace world
+	{
+		class Bot;
+		class World;
+	}
+
 	namespace game
 	{
 		namespace editor
@@ -18,7 +24,8 @@ namespace duckhacker
 			{
 			public:
 				static void Run(EditorThread * t);
-				void OpenEditor(int bot_id, std::string initial_code);
+				void SetWorld(world::World * world);
+				void OpenEditor(world::Bot * bot);
 				std::map<int, std::string> GatherCode();
 				void RequestStop();
 

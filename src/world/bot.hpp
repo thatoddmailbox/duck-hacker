@@ -49,7 +49,8 @@ namespace duckhacker
 
 			BotType type;
 
-			std::string code;
+			std::string GetCode();
+			void SetCode(std::string code);
 
 			render::Object object;
 
@@ -86,6 +87,9 @@ namespace duckhacker
 			std::string name_;
 			int x_, y_, z_;
 			int rotation_;
+
+			std::mutex code_mutex_;
+			std::string code_;
 
 			world::World * world_;
 

@@ -10,9 +10,15 @@
 wxDECLARE_EVENT(EVENT_REQUEST_STOP, wxThreadEvent);
 wxDECLARE_EVENT(EVENT_OPEN_EDITOR, wxThreadEvent);
 wxDECLARE_EVENT(EVENT_GATHER_CODE, wxThreadEvent);
+wxDECLARE_EVENT(EVENT_SET_WORLD, wxThreadEvent);
 
 namespace duckhacker
 {
+	namespace world
+	{
+		class Bot;
+	}
+
 	namespace game
 	{
 		namespace editor
@@ -45,8 +51,10 @@ namespace duckhacker
 				void OnOpenEditor(wxThreadEvent& e);
 				void OnRequestStop(wxThreadEvent& e);
 				void OnGatherCode(wxThreadEvent& e);
+				void OnSetWorld(wxThreadEvent& e);
 
 				std::map<int, Frame *> frames_;
+				std::map<int, world::Bot *> bots_;
 				HelpFrame * help_frame_ = nullptr;
 			};
 		}

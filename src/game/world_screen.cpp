@@ -180,7 +180,7 @@ namespace duckhacker
 
 					if (ImGui::Selectable(label.c_str()))
 					{
-						editor_thread_->OpenEditor(bot->GetID(), bot->code);
+						editor_thread_->OpenEditor(bot);
 					}
 
 					if (ImGui::IsItemHovered() && !bot->IsCrashed())
@@ -243,7 +243,7 @@ namespace duckhacker
 							continue;
 						}
 
-						bot->code = code[bot->GetID()];
+						bot->SetCode(code[bot->GetID()]);
 					}
 
 					// run all bots!

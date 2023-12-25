@@ -21,11 +21,17 @@ namespace duckhacker
 				wxEntry(argc, argv);
 			}
 
-			void EditorThread::OpenEditor(int bot_id, std::string initial_code)
+			void EditorThread::SetWorld(world::World * world)
+			{
+				wxThreadEvent * e = new wxThreadEvent(EVENT_SET_WORLD);
+				e->SetPayload(world);
+				wxGetApp().QueueEvent(e);
+			}
+
+			void EditorThread::OpenEditor(world::Bot * bot)
 			{
 				wxThreadEvent * e = new wxThreadEvent(EVENT_OPEN_EDITOR);
-				e->SetInt(bot_id);
-				e->SetString(initial_code);
+				e->SetPayload(bot);
 				wxGetApp().QueueEvent(e);
 			}
 
