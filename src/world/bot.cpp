@@ -1006,8 +1006,8 @@ namespace duckhacker
 			{
 				msg = "error object is not a string";
 			}
-\
-			Log(ConsoleLineType::ERROR, std::string(msg));
+
+			Log(ConsoleLineType::ERR, std::string(msg));
 
 			crashed_ = true;
 

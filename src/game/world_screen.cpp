@@ -337,7 +337,7 @@ namespace duckhacker
 				for (const world::ConsoleLine& line : lines)
 				{
 					bool changed_color = false;
-					if (line.type == world::ConsoleLineType::ERROR)
+					if (line.type == world::ConsoleLineType::ERR)
 					{
 						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
 						changed_color = true;

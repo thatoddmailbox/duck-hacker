@@ -12,7 +12,7 @@ namespace duckhacker
 			SPOKEN,
 			INFO,
 			WARNING,
-			ERROR
+			ERR
 		};
 
 		constexpr const char * ConsoleLineTypeToString[] =
