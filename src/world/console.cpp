@@ -6,9 +6,16 @@ namespace duckhacker
 {
 	namespace world
 	{
-		void Console::Reset()
+		void Console::Reset(std::vector<Bot *>& bots)
 		{
 			lines_.clear();
+			new_lines = false;
+
+			for (Bot * bot : bots)
+			{
+				std::unique_lock<std::mutex> lock(bot->lines_mutex_);
+				bot->lines_.clear();
+			}
 		}
 
 		const std::deque<ConsoleLine>& Console::GetLines()

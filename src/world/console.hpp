@@ -16,7 +16,7 @@ namespace duckhacker
 		class Console
 		{
 		public:
-			void Reset();
+			void Reset(std::vector<Bot *>& bots);
 
 			const std::deque<ConsoleLine>& GetLines();
 
