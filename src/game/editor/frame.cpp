@@ -30,9 +30,12 @@ namespace duckhacker
 
 				sizer->AddStretchSpacer(1);
 
-				wxButton * aboutBtn = new wxButton(panel, wxID_ANY, "About...");
-				// aboutBtn->Bind(wxEVT_BUTTON, &MyFrame::OnAbout, this);
-				sizer->Add(aboutBtn, wxSizerFlags().Center());
+				wxCheckBox * wrap_checkbox = new wxCheckBox(panel, wxID_ANY, "Word wrap");
+				wrap_checkbox->SetValue(true);
+				wrap_checkbox->Bind(wxEVT_CHECKBOX, [this](wxCommandEvent& e) {
+					text_control_->SetWrapMode(e.IsChecked() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
+				});
+				sizer->Add(wrap_checkbox, wxSizerFlags().Center());
 
 				sizer->AddSpacer(4);
 
@@ -52,6 +55,8 @@ namespace duckhacker
 				text_control_->StyleSetForeground(wxSTC_STYLE_LINENUMBER, wxColour(75, 75, 75) );
 				text_control_->StyleSetBackground(wxSTC_STYLE_LINENUMBER, wxColour(220, 220, 220));
 				text_control_->SetMarginType(0, wxSTC_MARGIN_NUMBER);
+
+				text_control_->SetTabWidth(4);
 
 				text_control_->SetWrapMode(wxSTC_WRAP_WORD);
 
