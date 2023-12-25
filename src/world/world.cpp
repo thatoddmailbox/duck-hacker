@@ -58,14 +58,7 @@ namespace duckhacker
 				std::string code;
 				if (!src.empty())
 				{
-					PHYSFS_file * code_file = PHYSFS_openRead(src.c_str());
-					int64_t code_file_length = PHYSFS_fileLength(code_file);
-					char * code_file_data = (char *) malloc(code_file_length + 1);
-					PHYSFS_readBytes(code_file, code_file_data, code_file_length);
-					PHYSFS_close(code_file);
-
-					code_file_data[code_file_length] = '\0';
-
+					char * code_file_data = content_manager->File(src, nullptr);
 					code = std::string(code_file_data);
 					free(code_file_data);
 				}

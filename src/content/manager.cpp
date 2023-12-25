@@ -26,17 +26,11 @@ namespace duckhacker
 		{
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-			PHYSFS_file * text_font_file = PHYSFS_openRead("fonts/Lato-Regular.ttf");
-			int64_t text_font_file_length = PHYSFS_fileLength(text_font_file);
-			char * text_font_file_data = (char *) malloc(text_font_file_length + 1);
-			PHYSFS_readBytes(text_font_file, text_font_file_data, text_font_file_length);
-			PHYSFS_close(text_font_file);
+			int64_t text_font_file_length;
+			char * text_font_file_data = File("fonts/Lato-Regular.ttf", &text_font_file_length);
 
-			PHYSFS_file * icon_font_file = PHYSFS_openRead("fonts/fa-solid-900.ttf");
-			int64_t icon_font_file_length = PHYSFS_fileLength(icon_font_file);
-			char * icon_font_file_data = (char *) malloc(icon_font_file_length + 1);
-			PHYSFS_readBytes(icon_font_file, icon_font_file_data, icon_font_file_length);
-			PHYSFS_close(icon_font_file);
+			int64_t icon_font_file_length;
+			char * icon_font_file_data = File("fonts/fa-solid-900.ttf", &icon_font_file_length);
 
 			static const ImWchar text_range[] =
 			{
@@ -83,6 +77,30 @@ namespace duckhacker
 			free(icon_font_file_data);
 		}
 
+		char * Manager::File(const std::string& path, int64_t * length)
+		{
+			PHYSFS_File * file = PHYSFS_openRead(path.c_str());
+			if (file == nullptr)
+			{
+				std::string physfs_msg = PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
+				std::string error_text = "There was a problem loading file '" + path + "'.\n\nPhysFS Error: " + physfs_msg + "\n\nWe will probably crash now.";
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", error_text.c_str(), nullptr);
+				return nullptr;
+			}
+
+			int64_t l = PHYSFS_fileLength(file);
+			if (length != nullptr)
+			{
+				*length = l;
+			}
+
+			char * data = (char *) malloc(l + 1);
+			PHYSFS_readBytes(file, data, l);
+			data[l] = '\0';
+			PHYSFS_close(file);
+			return data;
+		}
+
 		ImFont * Manager::Font(const FontType type)
 		{
 			if (type == FontType::LARGE)
@@ -99,17 +117,6 @@ namespace duckhacker
 			}
 
 			return font_regular_;
-		}
-
-		static char * read_physfs_file(std::string path)
-		{
-			PHYSFS_File * file = PHYSFS_openRead(path.c_str());
-			PHYSFS_sint64 file_length = PHYSFS_fileLength(file);
-			char * file_data = (char *) malloc(file_length + 1);
-			PHYSFS_readBytes(file, file_data, file_length);
-			file_data[file_length] = '\0';
-			PHYSFS_close(file);
-			return file_data;
 		}
 
 		render::Mesh * Manager::Mesh(const std::string& path, render::Shader * shader)
@@ -130,8 +137,8 @@ namespace duckhacker
 			if (shader_iter == shaders_.end())
 			{
 				// TODO: don't copy the physfs files into memory
-				char * vertex_source = read_physfs_file(path + ".vert.glsl");
-				char * fragment_source = read_physfs_file(path + ".frag.glsl");
+				char * vertex_source = File(path + ".vert.glsl", nullptr);
+				char * fragment_source = File(path + ".frag.glsl", nullptr);
 
 				shaders_[path] = new render::Shader(vertex_source, fragment_source);
 
@@ -148,7 +155,7 @@ namespace duckhacker
 			std::map<std::string, render::Texture *>::iterator texture_iter = textures_.find(path);
 			if (texture_iter == textures_.end())
 			{
-				textures_[path] = new render::Texture(path.c_str());
+				textures_[path] = new render::Texture(this, path.c_str());
 				texture_iter = textures_.find(path);
 			}
 			return texture_iter->second;

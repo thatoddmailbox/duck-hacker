@@ -384,13 +384,9 @@ namespace duckhacker
 
 		Mesh * MeshFactory::OBJ(content::Manager * content_manager, Shader * shader, const char * path)
 		{
-			PHYSFS_File * file = PHYSFS_openRead(path);
-
 			// we read the file in to a buffer
 			// TODO: can we make this better by reading chunk-by-chunk from the file?
-			PHYSFS_sint64 file_size = PHYSFS_fileLength(file);
-			char * file_data = (char *) malloc(file_size * sizeof(char));
-			PHYSFS_readBytes(file, file_data, file_size);
+			char * file_data = content_manager->File(path, nullptr);
 
 			std::vector<float3> vertex_coords;
 			std::vector<float3> vertex_normals;
@@ -585,7 +581,6 @@ namespace duckhacker
 			}
 
 			free(file_data);
-			PHYSFS_close(file);
 
 			std::vector<std::tuple<size_t, Material>> material_groups;
 

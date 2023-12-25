@@ -8,6 +8,11 @@
 
 namespace duckhacker
 {
+	namespace content
+	{
+		class Manager;
+	}
+
 	namespace render
 	{
 		class Shader;
@@ -15,7 +20,7 @@ namespace duckhacker
 		class Texture
 		{
 		public:
-			Texture(const char * path);
+			Texture(content::Manager * content_manager, const char * path);
 			~Texture();
 
 		private:

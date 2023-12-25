@@ -3,22 +3,21 @@
 #include <physfs.h>
 #include <png.h>
 
+#include "content/manager.hpp"
+
 namespace duckhacker
 {
 	namespace render
 	{
-		Texture::Texture(const char * path)
+		Texture::Texture(content::Manager * content_manager, const char * path)
 		{
 			png_image image = {};
 			image.opaque = nullptr;
 			image.version = PNG_IMAGE_VERSION;
 
-			// TODO: don't copy the physfs file into memory
-			PHYSFS_File * file = PHYSFS_openRead(path);
-			PHYSFS_sint64 file_length = PHYSFS_fileLength(file);
-			char * file_data = (char *) malloc(file_length);
-			PHYSFS_readBytes(file, file_data, file_length);
-			PHYSFS_close(file);
+			// TODO: don't copy the file into memory
+			int64_t file_length;
+			char * file_data = content_manager->File(path, &file_length);
 
 			png_image_begin_read_from_memory(&image, file_data, file_length);
 			image.format = PNG_FORMAT_RGBA;

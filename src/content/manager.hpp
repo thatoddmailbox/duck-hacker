@@ -35,6 +35,8 @@ namespace duckhacker
 						(type == FontType::TITLE ? 36 : 18));
 			};
 
+			char * File(const std::string& path, int64_t * length);
+
 			ImFont * Font(const FontType type);
 			render::Mesh * Mesh(const std::string& path, render::Shader * shader);
 			render::Shader * Shader(const std::string& path);
