@@ -14,29 +14,29 @@
 		<bot
 			id="100"
 			type="npc"
-			name="Waddleton"
-			x="3"
+			name="Featherwing"
+			x="2"
 			y="0"
 			z="1"
-			rotation="180"
+			rotation="90"
 			mesh="models/npc.obj"
-			src="worlds/level1_waddleton.lua"
+			src="worlds/level1_featherwing.lua"
 		/>
 	</bots>
 	<objects>
-		<object x="2" y="1" z="4.5" rotation="180">
+		<!-- <object x="2" y="1" z="4.5" rotation="180">
 			<mesh type="sign" w="2.5" h="1" d="0.01">
 				<material>
 					<texture src="textures/donation.png" />
 				</material>
 			</mesh>
-		</object>
+		</object> -->
 	</objects>
-	<mission goal="Hack at least 1000 coins from the donation center.">
-		Welcome to the Donation Center. This is where ducks can donate their money to help Ducky. (Specifically, you'd normally have your DuckBot talk to Waddleton, who would then take your coins and give them to Ducky.)
+	<mission goal="Tell Featherwing's DuckBot what 1 + 1 equals.">
+		Alright, the first thing you gotta learn is how to program DuckBots. Most ducks these days never learn this - they just use pre-made DuckBots. Disgusting.
 
-		Today, however, we have a problem. To get our very important message to Ducky, we're going to need some money. Unfortunately, we don't have any. So, we'll need to hack some.
+		Here's a simple task. Move over to my DuckBot and say hello. Then it'll ask you a simple math question. That's it.
 
-		Don't worry about if it's legal - once Ducky hears our message, he'll understand. And we'll return the coins back at the end!
+		Think you're up to it?
 	</mission>
 </world>
