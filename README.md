@@ -24,6 +24,7 @@ cmake --build . --config Release
 ```
 
 ##### libpng
+> *Note*
 > This requires some finagling because we are using Visual Studio 2022 (v143) but the included project with libpng is for Visual Studio 2019 (v142). There is also some fun because the included project targets 32-bit, but we need 64-bit.
 
 First, download [zlib source code](https://www.zlib.net/). (tested with v1.3) Extract into deps. **Rename the folder from `zlib-1.3` to `zlib`.**
