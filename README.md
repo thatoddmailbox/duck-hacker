@@ -66,6 +66,7 @@ Download [wxWidgets v3.2.4 Windows Binaries (Visual Studio 2022)](https://www.wx
 Create a folder called `wxWidgets` in deps, and extract both archives into there.
 
 #### Building it
+Creat a folder called `build`, then
 Run this command: `cmake -DSDL2_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2" -DSDL2MAIN_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2main.lib" -DSDL2_INCLUDE_DIR="../deps/SDL2-2.28.5/include/" -DPHYSFS_LIBRARY="../deps/physfs-release-3.2.0/build/Release/physfs.lib" -DPHYSFS_INCLUDE_DIR="../deps/physfs-release-3.2.0/src" -DLIBPNG_LIBRARY="../deps/lpng1640/projects/vstudio/x64/Release/libpng16.lib" -DLIBPNG_INCLUDE_DIR="../deps/lpng1640/" -DLUA_LIBRARY="../deps/lua-5.4.6/src/lua5.4.6.lib" -DLUA_INCLUDE_DIR="../deps/lua-5.4.6/src/" -DwxWidgets_ROOT_DIR="../deps/wxWidgets/" -DwxWidgets_CONFIGURATION=mswu -DwxWidgets_EXCLUDE_COMMON_LIBRARIES=ON ..`
 
 #### Copying DLLs
