@@ -1,0 +1,64 @@
+<world coins="200">
+	<field width="5" height="7" />
+	<bots>
+		<!-- Player bots -->
+		<bot
+			id="1"
+			x="3"
+			y="0"
+			z="1"
+			rotation="180"
+		/>
+
+		<!-- NPCs -->
+		<bot
+			id="100"
+			type="npc"
+			name="Archivist"
+			x="2"
+			y="0"
+			z="4"
+			rotation="270"
+			mesh="models/npc.obj"
+			src="worlds/level4_archivist.lua"
+		/>
+		<bot
+			id="101"
+			type="npc"
+			name="Assistant"
+			x="1"
+			y="0"
+			z="6"
+			rotation="0"
+			mesh="models/npc.obj"
+			src="worlds/level4_assistant.lua"
+		/>
+	</bots>
+	<objects>
+		<object x="2" y="1" z="6.5" rotation="180">
+			<mesh type="sign" w="2" h="0.375" d="0.01">
+				<material>
+					<texture src="textures/archives_direction.png" />
+				</material>
+			</mesh>
+		</object>
+		<object x="4.5" y="1" z="4.5" rotation="90">
+			<mesh type="sign" w="2.5" h="0.75" d="0.01">
+				<material>
+					<texture src="textures/quackprints_logo.png" />
+				</material>
+			</mesh>
+		</object>
+		<object x="2" y="-0.3" z="3.5" rotation="0">
+			<mesh type="cube" w="5" h="0.4" d="0.1">
+			</mesh>
+		</object>
+	</objects>
+	<mission goal="Get a copy of the secret map.">
+		OK, we've got enough Quacker followers to enter Duckland University's campus. Now, we need to find where the academic records building is.
+
+		That building isn't on the public map, but there's a secret map that shows where it is. We need to get a copy of that map.
+
+		This is the Duckland University Archives. They have a copy of all kinds of maps, including the secret map. But while they'll give you most maps if you just ask, they're very protective of the secret map. You'll need to find a way to somehow get a copy of it.
+	</mission>
+</world>
