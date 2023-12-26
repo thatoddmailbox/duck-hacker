@@ -71,6 +71,8 @@ cmake -DSDL2_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2" -DSDL2MAIN_LIBRARY="../d
 ```
 
 #### Copying DLLs
+These should all be copied into the folder that the final executable (`duck-hacker.exe`) is built.
+
 * `deps\lua-5.4.6\src\lua5.4.6.dll`
 * `deps\lpng1640\projects\vstudio\x64\Release\libpng16.dll`
 * `deps\physfs-release-3.2.0\build\Release\physfs.dll`
