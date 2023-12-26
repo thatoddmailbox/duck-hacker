@@ -40,7 +40,7 @@ namespace duckhacker
 
 			render::Object floor = render::Object();
 			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_depth));
-			floor.SetPosition(glm::vec3((field_width / 2) - 0.5, -1, field_depth / 2));
+			floor.SetPosition(glm::vec3((field_width / 2) - 0.5, -1, (field_depth / 2) - 0.5));
 			objects.push_back(floor);
 
 			render::Object wall1 = render::Object();
@@ -49,9 +49,14 @@ namespace duckhacker
 			objects.push_back(wall1);
 
 			render::Object wall2 = render::Object();
-			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth + 0.5));
-			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, (field_depth / 2) + 0.25));
+			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth));
+			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, (field_depth / 2) - 0.5));
 			objects.push_back(wall2);
+
+			render::Object corner = render::Object();
+			corner.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, 1));
+			corner.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, field_depth));
+			objects.push_back(corner);
 
 			pugi::xml_node bots_node = world_node.child("bots");
 
