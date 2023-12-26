@@ -49,8 +49,8 @@ namespace duckhacker
 			objects.push_back(wall1);
 
 			render::Object wall2 = render::Object();
-			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth));
-			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, field_depth / 2));
+			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth + 0.5));
+			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, (field_depth / 2) + 0.25));
 			objects.push_back(wall2);
 
 			pugi::xml_node bots_node = world_node.child("bots");
