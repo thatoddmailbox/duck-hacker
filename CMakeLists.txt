@@ -59,6 +59,10 @@ find_package(SDL2 REQUIRED)
 target_link_libraries(${PROJECT_NAME} "${SDL2_LIBRARY}" "${SDL2MAIN_LIBRARY}")
 include_directories("${SDL2_INCLUDE_DIR}")
 
+find_package(SDL2_mixer REQUIRED)
+target_link_libraries(${PROJECT_NAME} "${SDL2_MIXER_LIBRARY}")
+include_directories("${SDL2_MIXER_INCLUDE_DIR}")
+
 find_package(PhysFS REQUIRED)
 target_link_libraries(${PROJECT_NAME} "${PHYSFS_LIBRARY}")
 include_directories("${PHYSFS_INCLUDE_DIR}")
