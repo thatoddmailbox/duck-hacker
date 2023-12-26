@@ -60,10 +60,13 @@
 				</material>
 			</mesh>
 		</object>
+
+		<!-- desk -->
 		<object x="4.5" y="-0.3" z="2" rotation="0">
 			<mesh type="cube" w="0.1" h="0.4" d="5">
 			</mesh>
 		</object>
+
 		<object x="8" y="-0.2" z="1" rotation="90">
 			<mesh type="obj" src="models/printer.obj" />
 		</object>
