@@ -5,7 +5,7 @@ This is a game where you hack various things by programming DuckBots, small robo
 Make sure to run `git submodule update --init --recursive` to clone the submodules, as some dependencies are included that way.
 
 ### On Windows
-You will need Visual Studio 2022.
+You will need Visual Studio 2022 and CMake.
 
 #### Dependencies
 Make a folder called `deps/`.
