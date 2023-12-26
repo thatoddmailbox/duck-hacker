@@ -1,0 +1,56 @@
+<world coins="200">
+	<field width="3" depth="3" />
+	<bots>
+		<!-- Player bots -->
+		<bot
+			id="1"
+			x="2"
+			y="0"
+			z="1"
+			rotation="180"
+		/>
+
+		<!-- NPCs -->
+		<bot
+			id="100"
+			type="npc"
+			name="Security guard"
+			x="1"
+			y="0"
+			z="2"
+			rotation="270"
+			mesh="models/npc.obj"
+			src="worlds/level5_guard.lua"
+		/>
+		<bot
+			id="100"
+			type="npc"
+			name="Intercom"
+			x="2"
+			y="0"
+			z="2"
+			rotation="180"
+			mesh="models/npc.obj"
+			src="worlds/level5_intercom.lua"
+		/>
+	</bots>
+	<objects>
+		<object x="1" y="0" z="2.5" rotation="180">
+			<mesh type="sign" w="2" h="0.375" d="0.01">
+				<material>
+					<texture src="textures/archives_direction.png" />
+				</material>
+			</mesh>
+		</object>
+		<object x="2.5" y="1" z="1" rotation="90">
+			<mesh type="sign" w="3.5" h="1.2" d="0.01">
+				<material>
+					<texture src="textures/archives_logo.png" />
+				</material>
+			</mesh>
+		</object>
+	</objects>
+	<mission goal="Disable the alarm system.">
+		TODO write this
+	</mission>
+</world>
