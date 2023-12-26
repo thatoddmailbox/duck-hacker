@@ -39,7 +39,9 @@ while true do
 			local itemFound = false
 			if trimmedToken == "regular map" then
 				itemFound = true
-			elseif trimmedToken == "Halloween map" then
+			elseif trimmedToken == "historical map" then
+				itemFound = true
+			elseif trimmedToken == "green space map" then
 				itemFound = true
 			elseif trimmedToken == "secret map" then
 				itemFound = true
