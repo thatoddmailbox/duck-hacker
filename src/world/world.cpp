@@ -350,9 +350,15 @@ namespace duckhacker
 
 			state_ = State::READY;
 
+			// reset coins and time
 			coins_ = initial_coins_;
 			ticks_ = 0;
 			ticks_accum_ = 0;
+
+			// clear inventory
+			inventory_mutex_.lock();
+			inventory_.clear();
+			inventory_mutex_.unlock();
 		}
 
 		void World::Update(float dt)
