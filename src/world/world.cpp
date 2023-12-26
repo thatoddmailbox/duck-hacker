@@ -96,6 +96,10 @@ namespace duckhacker
 					std::string path = mesh_node.attribute("src").as_string();
 					mesh = render::MeshFactory::OBJ(content_manager, shader, path.c_str());
 				}
+				else
+				{
+					std::cout << "Unknown mesh type: " << mesh_type << std::endl;
+				}
 
 				float x = object_node.attribute("x").as_float();
 				float y = object_node.attribute("y").as_float();
