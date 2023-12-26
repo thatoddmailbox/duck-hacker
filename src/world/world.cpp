@@ -91,6 +91,11 @@ namespace duckhacker
 
 					mesh = render::MeshFactory::Box(shader, width, height, depth);
 				}
+				else if (mesh_type == "obj")
+				{
+					std::string path = mesh_node.attribute("src").as_string();
+					mesh = render::MeshFactory::OBJ(content_manager, shader, path.c_str());
+				}
 
 				float x = object_node.attribute("x").as_float();
 				float y = object_node.attribute("y").as_float();
