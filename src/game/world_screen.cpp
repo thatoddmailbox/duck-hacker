@@ -21,6 +21,7 @@ namespace duckhacker
 			editor_thread_ = editor_thread;
 
 			world_ = world;
+			focus_point_ = world_->GetCenterPoint();
 
 			render::Light light;
 			light.Direction = glm::vec3(-1, -0.75, -1);
@@ -92,13 +93,12 @@ namespace duckhacker
 				}
 			}
 
-			const glm::vec3& center_point = world_->GetCenterPoint();
-			main_camera_.SetPosition(center_point + glm::vec3(
+			main_camera_.SetPosition(focus_point_ + glm::vec3(
 				radius_ * cos(glm::radians(yaw_)) * cos(glm::radians(pitch_)),
 				radius_ * sin(glm::radians(pitch_)),
 				radius_ * sin(glm::radians(yaw_)) * cos(glm::radians(pitch_))
 			));
-			main_camera_.LookAt(center_point, glm::vec3(0, 1, 0));
+			main_camera_.LookAt(focus_point_, glm::vec3(0, 1, 0));
 		}
 
 		static void ShowTooltip(const std::string& id, glm::vec2 anchor_point, const char * text)
@@ -305,6 +305,7 @@ namespace duckhacker
 				ImGui::SliderFloat("Radius##CameraRadius", &target_radius_, 1, 100);
 				ImGui::SliderFloat("Yaw##CameraYaw", &yaw_, 0, 360);
 				ImGui::SliderFloat("Pitch##CameraPitch", &pitch_, -89, 89);
+				ImGui::SliderFloat3("Focus point##CameraFocus", &focus_point_.x, -5, 5);
 
 				ImGui::SeparatorText("Light 1");
 				ImGui::SliderFloat3("Direction##Light1Direction", &lights_[0].Direction.x, -1, 1);

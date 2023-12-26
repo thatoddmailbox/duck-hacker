@@ -39,6 +39,7 @@ namespace duckhacker
 			float pitch_ = 22.0f;
 			float radius_ = 8.0f;
 			float target_radius_ = 8.0f;
+			glm::vec3 focus_point_ = glm::vec3(0.0f, 0.0f, 0.0f);
 
 			render::Camera main_camera_ = render::Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
 		};
