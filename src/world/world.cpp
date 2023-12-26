@@ -30,7 +30,11 @@ namespace duckhacker
 
 			pugi::xml_node field_node = world_node.child("field");
 			int field_width = field_node.attribute("width").as_int();
+			float field_height = 4;
 			int field_depth = field_node.attribute("depth").as_int();
+
+			// required so the walls cover the floor
+			float field_height_offset = 1.5;
 
 			center_point_ = glm::vec3(field_width / 2, 0, field_depth / 2);
 
@@ -38,6 +42,16 @@ namespace duckhacker
 			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_depth));
 			floor.SetPosition(glm::vec3(field_width / 2, -1, field_depth / 2));
 			objects.push_back(floor);
+
+			render::Object wall1 = render::Object();
+			wall1.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, field_height, 1));
+			wall1.SetPosition(glm::vec3(field_width / 2, (field_height / 2) - field_height_offset, field_depth));
+			objects.push_back(wall1);
+
+			render::Object wall2 = render::Object();
+			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth));
+			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, field_depth / 2));
+			objects.push_back(wall2);
 
 			pugi::xml_node bots_node = world_node.child("bots");
 
