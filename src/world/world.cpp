@@ -30,13 +30,13 @@ namespace duckhacker
 
 			pugi::xml_node field_node = world_node.child("field");
 			int field_width = field_node.attribute("width").as_int();
-			int field_height = field_node.attribute("height").as_int();
+			int field_depth = field_node.attribute("depth").as_int();
 
-			center_point_ = glm::vec3(field_width / 2, 0, field_height / 2);
+			center_point_ = glm::vec3(field_width / 2, 0, field_depth / 2);
 
 			render::Object floor = render::Object();
-			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_height));
-			floor.SetPosition(glm::vec3(field_width / 2, -1, field_height / 2));
+			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_depth));
+			floor.SetPosition(glm::vec3(field_width / 2, -1, field_depth / 2));
 			objects.push_back(floor);
 
 			pugi::xml_node bots_node = world_node.child("bots");

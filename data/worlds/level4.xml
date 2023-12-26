@@ -1,5 +1,5 @@
 <world coins="200">
-	<field width="5" height="7" />
+	<field width="5" depth="7" />
 	<bots>
 		<!-- Player bots -->
 		<bot
