@@ -1,5 +1,5 @@
 <world coins="200">
-	<field width="5" height="5" />
+	<field width="9" height="5" />
 	<bots>
 		<!-- Player bots -->
 		<bot
@@ -15,7 +15,7 @@
 			id="100"
 			type="npc"
 			name="Clerk 1"
-			x="3"
+			x="5"
 			y="0"
 			z="1"
 			rotation="180"
@@ -26,7 +26,7 @@
 			id="101"
 			type="npc"
 			name="Clerk 2"
-			x="3"
+			x="5"
 			y="0"
 			z="2"
 			rotation="180"
@@ -37,7 +37,7 @@
 			id="102"
 			type="npc"
 			name="Clerk 3"
-			x="3"
+			x="5"
 			y="0"
 			z="3"
 			rotation="180"
