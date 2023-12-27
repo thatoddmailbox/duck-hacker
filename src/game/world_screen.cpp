@@ -8,7 +8,11 @@
 static constexpr int MISSION_MODAL_ID = 0x12345678;
 static constexpr int MISSION_MODAL_WIDTH = 500;
 
-static constexpr int VICTORY_MODAL_ID = 0x12345679;
+static constexpr int NO_EDIT_MODAL_ID = 0x12345679;
+static constexpr const char * NO_EDIT_MODAL_NAME = "Can't edit";
+static constexpr int NO_EDIT_MODAL_WIDTH = 350;
+
+static constexpr int VICTORY_MODAL_ID = 0x12345680;
 static constexpr const char * VICTORY_MODAL_NAME = "Victory";
 static constexpr int VICTORY_MODAL_WIDTH = 300;
 
@@ -181,7 +185,16 @@ namespace duckhacker
 
 					if (ImGui::Selectable(label.c_str()))
 					{
-						editor_thread_->OpenEditor(bot);
+						if (bot->type == world::BotType::PLAYER)
+						{
+							editor_thread_->OpenEditor(bot);
+						}
+						else
+						{
+							ImGui::PushOverrideID(NO_EDIT_MODAL_ID);
+							ImGui::OpenPopup(NO_EDIT_MODAL_NAME);
+							ImGui::PopID();
+						}
 					}
 
 					if (ImGui::IsItemHovered() && !bot->IsCrashed())
@@ -394,6 +407,22 @@ namespace duckhacker
 				ImGui::PopFont();
 
 				ImGui::SetCursorPosX(MISSION_MODAL_WIDTH - 100);
+				if (ImGui::Button("OK", ImVec2(100, 0)))
+				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
+			ImGui::PopID();
+
+			ImGui::PushOverrideID(NO_EDIT_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(NO_EDIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal(NO_EDIT_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::TextWrapped("You can only change the code of your DuckBot.");
+
+				ImGui::SetCursorPosX(NO_EDIT_MODAL_WIDTH - 100);
 				if (ImGui::Button("OK", ImVec2(100, 0)))
 				{
 					ImGui::CloseCurrentPopup();
