@@ -387,7 +387,7 @@ namespace duckhacker
 			{
 				ImGui::TextWrapped("%s", world_->GetMission().c_str());
 
-				ImGui::NewLine();
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 12);
 
 				ImGui::PushFont(content_manager->Font(content::FontType::MEDIUM));
 				ImGui::TextWrapped("Goal: %s", world_->GetMissionGoal().c_str());
