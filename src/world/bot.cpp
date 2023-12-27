@@ -138,12 +138,9 @@ namespace duckhacker
 			display_rotation_ = rotation;
 
 			type = t;
-			name_ = (
-				name.empty() ?
-					(
-						id_ == 1 ? "DuckBot" : "DuckBot " + std::to_string(id_)
-					) :
-					name
+			name_ = (name.empty() ?
+				(id_ == 1 ? "DuckBot" : "DuckBot " + std::to_string(id_)) :
+				name
 			);
 
 			code_ = c.empty() ? "-- Code for " + name_ + "\n" : c;
