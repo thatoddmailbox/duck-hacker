@@ -1,5 +1,7 @@
 #include "world/world.hpp"
 
+#include <set>
+
 #include "render/mesh_factory.hpp"
 
 #include "pugixml.hpp"
@@ -60,6 +62,8 @@ namespace duckhacker
 
 			pugi::xml_node bots_node = world_node.child("bots");
 
+			std::set<int> bot_ids;
+
 			for (pugi::xml_node bot_node : bots_node.children("bot"))
 			{
 				int id = bot_node.attribute("id").as_int();
@@ -70,6 +74,14 @@ namespace duckhacker
 				int rotation = bot_node.attribute("rotation").as_int();
 				std::string mesh = bot_node.attribute("mesh").as_string();
 				std::string src = bot_node.attribute("src").as_string();
+
+				if (bot_ids.find(id) != bot_ids.end())
+				{
+					std::string message = "Duplicate bot ID: " + std::to_string(id);
+					SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Warning", message.c_str(), nullptr);
+					continue;
+				}
+				bot_ids.insert(id);
 
 				std::string type_string = bot_node.attribute("type").as_string();
 				BotType type = BotType::PLAYER;
