@@ -115,6 +115,11 @@ namespace duckhacker
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_GetItemCount_();
 		}
 
+		static int Bot_OnLuaCall_NPC_RandomDigits(lua_State * L)
+		{
+			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_RandomDigits_();
+		}
+
 		static int Bot_OnLuaCall_NPC_Win(lua_State * L)
 		{
 			return (*((Bot **) lua_getextraspace(L)))->OnLuaCall_NPC_Win_();
@@ -634,6 +639,39 @@ namespace duckhacker
 			return 1;
 		}
 
+		int Bot::OnLuaCall_NPC_RandomDigits_()
+		{
+			int n = lua_gettop(lua_state_);
+			if (n != 1)
+			{
+				lua_pushliteral(lua_state_, "incorrect number of arguments");
+				return lua_error(lua_state_);
+			}
+
+			int is_num = 0;
+			int digits = lua_tointegerx(lua_state_, 1, &is_num);
+			if (!is_num)
+			{
+				lua_pushliteral(lua_state_, "digits must be an integer");
+				return lua_error(lua_state_);
+			}
+
+			if (digits < 1)
+			{
+				lua_pushliteral(lua_state_, "digits must be positive");
+				return lua_error(lua_state_);
+			}
+
+			std::string result = "";
+			for (int i = 0; i < digits; i++)
+			{
+				result += std::to_string(rand() % 10);
+			}
+
+			lua_pushstring(lua_state_, result.c_str());
+			return 1;
+		}
+
 		int Bot::OnLuaCall_NPC_Win_()
 		{
 			int n = lua_gettop(lua_state_);
@@ -847,6 +885,9 @@ namespace duckhacker
 
 				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_GetItemCount);
 				lua_setfield(lua_state_, 1, "getItemCount");
+
+				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_RandomDigits);
+				lua_setfield(lua_state_, 1, "randomDigits");
 
 				lua_pushcfunction(lua_state_, Bot_OnLuaCall_NPC_Win);
 				lua_setfield(lua_state_, 1, "win");

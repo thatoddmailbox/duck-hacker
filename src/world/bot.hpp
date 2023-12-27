@@ -137,6 +137,7 @@ namespace duckhacker
 			int OnLuaCall_NPC_AddCoins_();
 			int OnLuaCall_NPC_AddItem_();
 			int OnLuaCall_NPC_GetItemCount_();
+			int OnLuaCall_NPC_RandomDigits_();
 			int OnLuaCall_NPC_Win_();
 
 		public:
