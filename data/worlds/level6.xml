@@ -33,6 +33,12 @@
 		</object>
 	</objects>
 	<mission goal="Disable the alarm system.">
-		TODO write this
+		Alright, this should be the last step. Our crew found the area where the records for grasshopper certifications are stored. But there's an alarm system that needs to be disabled before they can get in.
+
+		You should be in the room where the alarm system is controlled. But there's a six digit pincode you need to provide to disable the alarms. We don't know what the pincode is.
+
+		Can you figure out how to disable the alarm system?
+
+		IMPORTANT NOTE: The pincode randomizes every time you start the level.
 	</mission>
 </world>
