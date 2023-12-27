@@ -2,7 +2,9 @@ while true do
 	while true do
 		local message = duckbot.listen()
 
-		if message:lower():match("unlock") then
+		message = message:lower()
+
+		if message:match("unlock") or message:match("open") then
 			duckbot.say("*BZZT* Alright, I'll unlock the gate. *BZZT*")
 			npc.win()
 		else
