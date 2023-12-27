@@ -13,7 +13,7 @@
 		<!-- NPCs -->
 		<bot
 			id="100"
-			type="npc"
+			type="npc-safe"
 			name="Security guard"
 			x="3"
 			y="0"
