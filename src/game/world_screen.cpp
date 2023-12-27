@@ -158,6 +158,43 @@ namespace duckhacker
 				object.Draw(main_camera_.GetProjection(), main_camera_.GetView(), &camera_position, lights_);
 			}
 
+			if (!opened_mission_)
+			{
+				opened_mission_ = true;
+
+				ImGui::PushOverrideID(MISSION_MODAL_ID);
+				ImGui::OpenPopup(MISSION_MODAL_NAME);
+				ImGui::PopID();
+			}
+
+			ImGui::PushOverrideID(MISSION_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal(MISSION_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::TextWrapped("%s", world_->GetMission().c_str());
+
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 12);
+
+				ImGui::PushFont(content_manager->Font(content::FontType::MEDIUM));
+				ImGui::TextWrapped("Goal: %s", world_->GetMissionGoal().c_str());
+				ImGui::PopFont();
+
+				ImGui::SetCursorPosX(MISSION_MODAL_WIDTH - 100);
+				if (ImGui::Button("OK", ImVec2(100, 0)))
+				{
+					no_ui_ = false;
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
+			ImGui::PopID();
+
+			if (no_ui_)
+			{
+				return;
+			}
+
 			world::Bot * hovered_bot = nullptr;
 
 			ImGui::SetNextWindowPos(ImVec2(50, SCREEN_HEIGHT - 250 - 50), ImGuiCond_Appearing);
@@ -394,28 +431,6 @@ namespace duckhacker
 			}
 
 			ImGui::End();
-
-			ImGui::PushOverrideID(MISSION_MODAL_ID);
-			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
-			if (ImGui::BeginPopupModal(MISSION_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-			{
-				ImGui::TextWrapped("%s", world_->GetMission().c_str());
-
-				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 12);
-
-				ImGui::PushFont(content_manager->Font(content::FontType::MEDIUM));
-				ImGui::TextWrapped("Goal: %s", world_->GetMissionGoal().c_str());
-				ImGui::PopFont();
-
-				ImGui::SetCursorPosX(MISSION_MODAL_WIDTH - 100);
-				if (ImGui::Button("OK", ImVec2(100, 0)))
-				{
-					ImGui::CloseCurrentPopup();
-				}
-
-				ImGui::EndPopup();
-			}
-			ImGui::PopID();
 
 			ImGui::PushOverrideID(NO_EDIT_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(NO_EDIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);

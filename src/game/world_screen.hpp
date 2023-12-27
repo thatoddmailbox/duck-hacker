@@ -33,6 +33,9 @@ namespace duckhacker
 			game::editor::EditorThread * editor_thread_;
 			world::World * world_;
 
+			bool no_ui_ = true;
+			bool opened_mission_ = false;
+
 			std::vector<render::Light> lights_;
 
 			float yaw_ = 240.0f;
