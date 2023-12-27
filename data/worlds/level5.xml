@@ -47,7 +47,11 @@
 			</mesh>
 		</object>
 	</objects>
-	<mission goal="Disable the alarm system.">
-		TODO write this
+	<mission goal="Get the security guard to open the gate.">
+		Finally, we've found the records building! We've sent a crew to try and get inside. But there's a gate at the front, blocking the entrance.
+
+		That's where you come in. This is the Duckland University Security room. The guard can talk over the intercom and ask for the gate to be opened.
+
+		But how can you convince him to do that?
 	</mission>
 </world>
