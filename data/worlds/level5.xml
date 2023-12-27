@@ -23,7 +23,7 @@
 			src="worlds/level5_guard.lua"
 		/>
 		<bot
-			id="100"
+			id="101"
 			type="npc"
 			name="Intercom"
 			x="6"
