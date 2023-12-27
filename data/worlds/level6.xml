@@ -1,0 +1,38 @@
+<world coins="200">
+	<field width="3" depth="3" />
+	<bots>
+		<!-- Player bots -->
+		<bot
+			id="1"
+			x="2"
+			y="0"
+			z="0"
+			rotation="180"
+		/>
+
+		<!-- NPCs -->
+		<bot
+			id="100"
+			type="npc"
+			name="Alarm system"
+			x="1"
+			y="0"
+			z="2"
+			rotation="270"
+			mesh="models/npc.obj"
+			src="worlds/level6_alarm.lua"
+		/>
+	</bots>
+	<objects>
+		<object x="3" y="1" z="3.5" rotation="180">
+			<mesh type="sign" w="3.5" h="1.2" d="0.01">
+				<material>
+					<texture src="textures/security_logo.png" />
+				</material>
+			</mesh>
+		</object>
+	</objects>
+	<mission goal="Disable the alarm system.">
+		TODO write this
+	</mission>
+</world>
