@@ -155,7 +155,8 @@ namespace duckhacker
 
 			world::Bot * hovered_bot = nullptr;
 
-			ImGui::SetNextWindowPos(ImVec2(50, 100), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(50, SCREEN_HEIGHT - 250 - 50), ImGuiCond_Appearing);
+			ImGui::SetNextWindowSize(ImVec2(200, 250), ImGuiCond_Appearing);
 			if (ImGui::Begin("World"))
 			{
 				ImGui::Text("Time: %d", world_->GetTicks().load());
