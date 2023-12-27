@@ -1,10 +1,10 @@
 <world coins="200">
-	<field width="3" depth="3" />
+	<field width="7" depth="4" />
 	<bots>
 		<!-- Player bots -->
 		<bot
 			id="1"
-			x="2"
+			x="4"
 			y="0"
 			z="1"
 			rotation="180"
@@ -15,9 +15,9 @@
 			id="100"
 			type="npc"
 			name="Security guard"
-			x="1"
+			x="3"
 			y="0"
-			z="2"
+			z="3"
 			rotation="270"
 			mesh="models/npc.obj"
 			src="worlds/level5_guard.lua"
@@ -26,26 +26,23 @@
 			id="100"
 			type="npc"
 			name="Intercom"
-			x="2"
+			x="6"
 			y="0"
-			z="2"
+			z="3"
 			rotation="180"
 			mesh="models/npc.obj"
 			src="worlds/level5_intercom.lua"
 		/>
 	</bots>
 	<objects>
-		<object x="1" y="0" z="2.5" rotation="180">
-			<mesh type="sign" w="2" h="0.375" d="0.01">
-				<material>
-					<texture src="textures/archives_direction.png" />
-				</material>
+		<object x="3" y="-0.3" z="2.5" rotation="180">
+			<mesh type="cube" w="7" h="0.4" d="0.1">
 			</mesh>
 		</object>
-		<object x="2.5" y="1" z="1" rotation="90">
+		<object x="3" y="1" z="3.5" rotation="180">
 			<mesh type="sign" w="3.5" h="1.2" d="0.01">
 				<material>
-					<texture src="textures/archives_logo.png" />
+					<texture src="textures/security_logo.png" />
 				</material>
 			</mesh>
 		</object>
