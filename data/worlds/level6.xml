@@ -24,10 +24,17 @@
 		/>
 	</bots>
 	<objects>
-		<object x="3" y="1" z="3.5" rotation="180">
-			<mesh type="sign" w="3.5" h="1.2" d="0.01">
+		<object x="1" y="1" z="2.5" rotation="180">
+			<mesh type="sign" w="2.5" h="1.75" d="0.01">
 				<material>
-					<texture src="textures/security_logo.png" />
+					<texture src="textures/alarm_access.png" />
+				</material>
+			</mesh>
+		</object>
+		<object x="2.5" y="1" z="1" rotation="90">
+			<mesh type="sign" w="2.5" h="0.5" d="0.01">
+				<material>
+					<texture src="textures/alarm_sign.png" />
 				</material>
 			</mesh>
 		</object>
