@@ -6,6 +6,7 @@
 #include "external/imgui/imgui_internal.h"
 
 static constexpr int MISSION_MODAL_ID = 0x12345678;
+static constexpr const char * MISSION_MODAL_NAME = "Mission";
 static constexpr int MISSION_MODAL_WIDTH = 500;
 
 static constexpr int NO_EDIT_MODAL_ID = 0x12345679;
@@ -250,7 +251,7 @@ namespace duckhacker
 			if (ImGui::Button("Mission", ImVec2(side_buttons_width, 0)))
 			{
 				ImGui::PushOverrideID(MISSION_MODAL_ID);
-				ImGui::OpenPopup("Mission");
+				ImGui::OpenPopup(MISSION_MODAL_NAME);
 				ImGui::PopID();
 			}
 
@@ -396,7 +397,7 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(MISSION_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
-			if (ImGui::BeginPopupModal("Mission", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			if (ImGui::BeginPopupModal(MISSION_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				ImGui::TextWrapped("%s", world_->GetMission().c_str());
 
