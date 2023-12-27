@@ -35,7 +35,8 @@ namespace duckhacker
 		enum class BotType
 		{
 			PLAYER,
-			NPC
+			NPC,
+			NPC_SAFE
 		};
 
 		class Console;

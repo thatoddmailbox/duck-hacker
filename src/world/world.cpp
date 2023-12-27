@@ -89,6 +89,10 @@ namespace duckhacker
 				{
 					type = BotType::NPC;
 				}
+				else if (type_string == "npc-safe")
+				{
+					type = BotType::NPC_SAFE;
+				}
 
 				std::string code;
 				if (!src.empty())
