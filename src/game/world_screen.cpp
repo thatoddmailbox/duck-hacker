@@ -6,6 +6,11 @@
 #include "external/imgui/imgui.h"
 #include "external/imgui/imgui_internal.h"
 
+static constexpr int MENU_MODAL_ID = 0x12345677;
+static constexpr const char * MENU_MODAL_NAME = "##Menu";
+static constexpr int MENU_MODAL_WIDTH = 250;
+static constexpr int MENU_BUTTON_HEIGHT = 50;
+
 static constexpr int MISSION_MODAL_ID = 0x12345678;
 static constexpr const char * MISSION_MODAL_NAME = "Mission";
 static constexpr int MISSION_MODAL_WIDTH = 500;
@@ -342,7 +347,9 @@ namespace duckhacker
 			ImGui::SetCursorPosX(SCREEN_WIDTH - side_buttons_width - style.WindowPadding.x);
 			if (ImGui::Button("Menu", ImVec2(side_buttons_width, 0)))
 			{
-				// TODO: implement
+				ImGui::PushOverrideID(MENU_MODAL_ID);
+				ImGui::OpenPopup(MENU_MODAL_NAME);
+				ImGui::PopID();
 			}
 
 			ImGui::End();
@@ -465,6 +472,27 @@ namespace duckhacker
 				}
 
 				ImGui::EndPopup();
+			}
+			ImGui::PopID();
+
+			ImGui::PushOverrideID(MENU_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(MENU_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal(MENU_MODAL_NAME, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 8.0f));
+
+				if (ImGui::Button("Resume", ImVec2(MENU_MODAL_WIDTH, MENU_BUTTON_HEIGHT)))
+				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::Button("Back to main menu", ImVec2(MENU_MODAL_WIDTH, MENU_BUTTON_HEIGHT)))
+				{
+					editor_thread_->SetWorld(nullptr);
+					game_->GoToMainMenu();
+				}
+
+				ImGui::PopStyleVar();
 			}
 			ImGui::PopID();
 		}
