@@ -12,7 +12,7 @@
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
 #include "defs.hpp"
-#include "game/menu_main_screen.hpp"
+#include "game/main_menu_screen.hpp"
 #include "game/world_screen.hpp"
 #include "world/world.hpp"
 
@@ -20,9 +20,9 @@ namespace duckhacker
 {
 	Game::~Game()
 	{
-		if (menu_main_screen_)
+		if (main_menu_screen_)
 		{
-			delete menu_main_screen_;
+			delete main_menu_screen_;
 		}
 		if (world_screen_)
 		{
@@ -48,11 +48,11 @@ namespace duckhacker
 
 	void Game::GoToMainMenu()
 	{
-		if (!menu_main_screen_)
+		if (!main_menu_screen_)
 		{
-			menu_main_screen_ = new game::MenuMainScreen(this, &content_manager_);
+			main_menu_screen_ = new game::MainMenuScreen(this, &content_manager_);
 		}
-		SetScreen_(menu_main_screen_);
+		SetScreen_(main_menu_screen_);
 	}
 
 	void Game::GoToWorld(std::string world_path)

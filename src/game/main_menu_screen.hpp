@@ -13,11 +13,11 @@ namespace duckhacker
 
 	namespace game
 	{
-		class MenuMainScreen : public Screen
+		class MainMenuScreen : public Screen
 		{
 		public:
-			MenuMainScreen(Game * game, content::Manager * content_manager);
-			~MenuMainScreen();
+			MainMenuScreen(Game * game, content::Manager * content_manager);
+			~MainMenuScreen();
 
 			void Update(double dt, input::Manager * input_manager) override;
 			void Draw(content::Manager * content_manager) override;

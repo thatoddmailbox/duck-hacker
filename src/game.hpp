@@ -15,7 +15,7 @@ namespace duckhacker
 {
 	namespace game
 	{
-		class MenuMainScreen;
+		class MainMenuScreen;
 		class WorldScreen;
 	}
 
@@ -46,7 +46,7 @@ namespace duckhacker
 
 		world::World * world_ = nullptr;
 
-		game::MenuMainScreen * menu_main_screen_ = nullptr;
+		game::MainMenuScreen * main_menu_screen_ = nullptr;
 		game::WorldScreen * world_screen_ = nullptr;
 
 		content::Manager content_manager_;

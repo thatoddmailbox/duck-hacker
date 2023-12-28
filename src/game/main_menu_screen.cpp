@@ -1,4 +1,4 @@
-#include "game/menu_main_screen.hpp"
+#include "game/main_menu_screen.hpp"
 
 #include <SDL.h>
 
@@ -9,16 +9,16 @@ namespace duckhacker
 {
 	namespace game
 	{
-		MenuMainScreen::MenuMainScreen(Game * game, content::Manager * content_manager)
+		MainMenuScreen::MainMenuScreen(Game * game, content::Manager * content_manager)
 		{
 			game_ = game;
 		}
 
-		MenuMainScreen::~MenuMainScreen()
+		MainMenuScreen::~MainMenuScreen()
 		{
 		}
 
-		void MenuMainScreen::Update(double dt, input::Manager * input_manager)
+		void MainMenuScreen::Update(double dt, input::Manager * input_manager)
 		{
 		}
 
@@ -28,7 +28,7 @@ namespace duckhacker
 			ImGui::Text("%s", text);
 		}
 
-		void MenuMainScreen::Draw(content::Manager * content_manager)
+		void MainMenuScreen::Draw(content::Manager * content_manager)
 		{
 			ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
 			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
