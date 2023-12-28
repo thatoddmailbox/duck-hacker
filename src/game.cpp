@@ -13,6 +13,7 @@
 
 #include "defs.hpp"
 #include "game/main_menu_screen.hpp"
+#include "game/level_select_screen.hpp"
 #include "game/world_screen.hpp"
 #include "world/world.hpp"
 
@@ -20,6 +21,10 @@ namespace duckhacker
 {
 	Game::~Game()
 	{
+		if (level_select_screen_)
+		{
+			delete level_select_screen_;
+		}
 		if (main_menu_screen_)
 		{
 			delete main_menu_screen_;
@@ -44,6 +49,15 @@ namespace duckhacker
 	void Game::SetScreen_(game::Screen * screen)
 	{
 		current_screen_ = screen;
+	}
+
+	void Game::GoToLevelSelect()
+	{
+		if (!level_select_screen_)
+		{
+			level_select_screen_ = new game::LevelSelectScreen(this, &content_manager_);
+		}
+		SetScreen_(level_select_screen_);
 	}
 
 	void Game::GoToMainMenu()

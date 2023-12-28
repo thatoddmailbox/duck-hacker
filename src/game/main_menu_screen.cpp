@@ -58,7 +58,7 @@ namespace duckhacker
 			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 64 + 20);
 			if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
-				game_->GoToWorld("worlds/level4.xml");
+				game_->GoToLevelSelect();
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);

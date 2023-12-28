@@ -15,6 +15,7 @@ namespace duckhacker
 {
 	namespace game
 	{
+		class LevelSelectScreen;
 		class MainMenuScreen;
 		class WorldScreen;
 	}
@@ -29,6 +30,7 @@ namespace duckhacker
 	public:
 		~Game();
 
+		void GoToLevelSelect();
 		void GoToMainMenu();
 		void GoToWorld(std::string world_path);
 
@@ -46,6 +48,7 @@ namespace duckhacker
 
 		world::World * world_ = nullptr;
 
+		game::LevelSelectScreen * level_select_screen_ = nullptr;
 		game::MainMenuScreen * main_menu_screen_ = nullptr;
 		game::WorldScreen * world_screen_ = nullptr;
 
