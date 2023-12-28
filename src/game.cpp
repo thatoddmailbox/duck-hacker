@@ -57,6 +57,17 @@ namespace duckhacker
 
 	void Game::GoToLevelSelect()
 	{
+		if (world_screen_)
+		{
+			delete world_screen_;
+			world_screen_ = nullptr;
+		}
+		if (world_)
+		{
+			delete world_;
+			world_ = nullptr;
+		}
+
 		if (!level_select_screen_)
 		{
 			level_select_screen_ = new game::LevelSelectScreen(this, &content_manager_);
@@ -66,6 +77,17 @@ namespace duckhacker
 
 	void Game::GoToMainMenu()
 	{
+		if (world_screen_)
+		{
+			delete world_screen_;
+			world_screen_ = nullptr;
+		}
+		if (world_)
+		{
+			delete world_;
+			world_ = nullptr;
+		}
+
 		if (!main_menu_screen_)
 		{
 			main_menu_screen_ = new game::MainMenuScreen(this, &content_manager_);
@@ -80,6 +102,7 @@ namespace duckhacker
 		if (world_)
 		{
 			delete world_;
+			world_ = nullptr;
 		}
 		world_ = new world::World(&content_manager_, world_path);
 
