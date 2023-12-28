@@ -37,7 +37,16 @@ namespace duckhacker
 
 			ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
-			ImGui::SetCursorPosY(100);
+			constexpr int LOGO_SIZE = 250;
+
+			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - LOGO_SIZE) / 2.0f);
+			ImGui::SetCursorPosY(50);
+			ImGui::Image(
+				(void *) (intptr_t) (content_manager->Texture("textures/logo.png")->GetTextureID()),
+				ImVec2(LOGO_SIZE, LOGO_SIZE)
+			);
+
+			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30);
 			ImGui::PushFont(content_manager->Font(content::FontType::TITLE));
 			TextCentered("Duck Hacker");
 			ImGui::PopFont();
@@ -46,14 +55,14 @@ namespace duckhacker
 			constexpr int BUTTON_HEIGHT = 50;
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(200);
+			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 50 + 20);
 			if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToWorld("worlds/level4.xml");
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(200 + BUTTON_HEIGHT + 20);
+			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 50 + 20 + BUTTON_HEIGHT + 20);
 			if (ImGui::Button("Quit", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				SDL_Event event;
