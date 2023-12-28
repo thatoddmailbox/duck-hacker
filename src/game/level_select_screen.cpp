@@ -60,7 +60,19 @@ namespace duckhacker
 				ImGui::PushID(i);
 				if (level_unlocked_[i] && ImGui::Button(level_strings_[i].c_str(), ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 				{
-					game_->GoToWorld(game_->GetProgressManager().GetLevelPath(i));
+					const std::string level_path = game_->GetProgressManager().GetLevelPath(i);
+					if (level_path == "intro")
+					{
+						// TODO: implement
+					}
+					else if (level_path == "outro")
+					{
+						// TODO: implement
+					}
+					else
+					{
+						game_->GoToWorld(level_path);
+					}
 				}
 				ImGui::PopID();
 

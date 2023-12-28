@@ -3,12 +3,14 @@
 #include <vector>
 
 std::vector<std::string> levels = {
+	"intro",
 	"worlds/level1.xml",
 	"worlds/level2.xml",
 	"worlds/level3.xml",
 	"worlds/level4.xml",
 	"worlds/level5.xml",
 	"worlds/level6.xml",
+	"outro"
 };
 
 namespace duckhacker
