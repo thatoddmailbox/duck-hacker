@@ -45,15 +45,23 @@ namespace duckhacker
 			constexpr int BUTTON_WIDTH = 200;
 			constexpr int BUTTON_HEIGHT = 50;
 
-			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
 			ImGui::SetCursorPosY(50 + 64 + 20);
-			if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
+			for (int i = 0; i < 6; i++)
 			{
-				game_->GoToWorld("worlds/level4.xml");
+				ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
+
+				ImGui::PushID(i);
+				if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
+				{
+					game_->GoToWorld("worlds/level" + std::to_string(i+1) + ".xml");
+				}
+				ImGui::PopID();
+
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20);
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(50 + 64 + 20 + BUTTON_HEIGHT + 20);
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20);
 			if (ImGui::Button("Back to menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToMainMenu();
