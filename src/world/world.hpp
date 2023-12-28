@@ -14,6 +14,7 @@
 
 #include "world/bot.hpp"
 #include "world/console.hpp"
+#include "world/obstacle.hpp"
 
 namespace duckhacker
 {
@@ -34,6 +35,7 @@ namespace duckhacker
 
 			std::vector<Bot *> bots;
 			std::vector<render::Object> objects;
+			std::vector<Obstacle> obstacles;
 
 			const glm::vec3& GetCenterPoint();
 

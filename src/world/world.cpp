@@ -211,6 +211,51 @@ namespace duckhacker
 				objects.push_back(object);
 			}
 
+			pugi::xml_node obstacles_node = world_node.child("obstacles");
+
+			for (pugi::xml_node obstacle_node : obstacles_node.children("obstacle"))
+			{
+				std::string type_string = obstacle_node.attribute("type").as_string();
+				ObstacleType type = ObstacleType::WALL;
+				if (type_string == "wall")
+				{
+					type = ObstacleType::WALL;
+				}
+				else
+				{
+					std::cout << "Unknown obstacle type: " << type_string << std::endl;
+				}
+
+				int x = obstacle_node.attribute("x").as_int();
+				int y = obstacle_node.attribute("y").as_int();
+				int z = obstacle_node.attribute("z").as_int();
+
+				std::string blocks_string = obstacle_node.attribute("blocks").as_string();
+				BotType blocks = BotType::PLAYER;
+				if (blocks_string == "player")
+				{
+					blocks = BotType::PLAYER;
+				}
+				else if (blocks_string == "npc-safe")
+				{
+					blocks = BotType::NPC_SAFE;
+				}
+				else
+				{
+					std::cout << "Unknown obstacle blocks: " << blocks_string << std::endl;
+				}
+
+				Obstacle obstacle;
+
+				obstacle.type = type;
+				obstacle.x = x;
+				obstacle.y = y;
+				obstacle.z = z;
+				obstacle.blocks = blocks;
+
+				obstacles.push_back(obstacle);
+			}
+
 			pugi::xml_node mission_node = world_node.child("mission");
 
 			mission_ = mission_node.text().as_string();
@@ -352,6 +397,30 @@ namespace duckhacker
 			for (Bot * bot : bots)
 			{
 				if (bot->GetX() == x && bot->GetY() == y && bot->GetZ() == z)
+				{
+					return true;
+				}
+			}
+
+			// check obstacles
+			for (Obstacle obstacle : obstacles)
+			{
+				if (obstacle.type != ObstacleType::WALL)
+				{
+					continue;
+				}
+
+				if (obstacle.blocks != asker)
+				{
+					continue;
+				}
+
+				bool obstacle_exists_here = (
+					(obstacle.x == x || obstacle.x == -1) &&
+					(obstacle.y == y || obstacle.y == -1) &&
+					(obstacle.z == z || obstacle.z == -1)
+				);
+				if (obstacle_exists_here)
 				{
 					return true;
 				}
