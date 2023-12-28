@@ -90,6 +90,7 @@ namespace duckhacker
 
 			glm::vec3 center_point_;
 			State state_ = State::READY;
+			bool stopping_ = false;
 		};
 	}
 }

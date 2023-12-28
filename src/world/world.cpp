@@ -272,6 +272,11 @@ namespace duckhacker
 
 		World::~World()
 		{
+			if (state_ == State::RUNNING && !stopping_)
+			{
+				Stop();
+			}
+
 			for (Bot * bot : bots)
 			{
 				delete bot;
@@ -443,6 +448,8 @@ namespace duckhacker
 
 		void World::Stop()
 		{
+			stopping_ = true;
+
 			for (Bot * bot : bots)
 			{
 				bot->RequestStop();
@@ -464,6 +471,7 @@ namespace duckhacker
 			}
 
 			state_ = State::READY;
+			stopping_ = false;
 
 			// reset coins and time
 			coins_ = initial_coins_;
