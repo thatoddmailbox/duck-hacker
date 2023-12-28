@@ -29,6 +29,7 @@ namespace duckhacker
 			Game * game_;
 
 			std::vector<std::string> level_strings_;
+			std::vector<bool> level_unlocked_;
 		};
 	}
 }

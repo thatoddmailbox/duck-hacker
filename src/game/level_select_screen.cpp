@@ -16,6 +16,7 @@ namespace duckhacker
 			for (int i = 0; i < 6; i++)
 			{
 				level_strings_.push_back("Level " + std::to_string(i + 1));
+				level_unlocked_.push_back(true);
 			}
 		}
 
@@ -56,7 +57,7 @@ namespace duckhacker
 				ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
 
 				ImGui::PushID(i);
-				if (ImGui::Button(level_strings_[i].c_str(), ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
+				if (level_unlocked_[i] && ImGui::Button(level_strings_[i].c_str(), ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 				{
 					game_->GoToWorld("worlds/level" + std::to_string(i+1) + ".xml");
 				}
