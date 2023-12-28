@@ -31,33 +31,33 @@ namespace duckhacker
 			coins_ = initial_coins_;
 
 			pugi::xml_node field_node = world_node.child("field");
-			float field_width = field_node.attribute("width").as_int();
+			field_width_ = field_node.attribute("width").as_int();
 			float field_height = 4;
-			float field_depth = field_node.attribute("depth").as_int();
+			field_depth_ = field_node.attribute("depth").as_int();
 
 			// required so the walls cover the floor
 			float field_height_offset = 1.5;
 
-			center_point_ = glm::vec3(field_width / 2, 0, field_depth / 2);
+			center_point_ = glm::vec3(field_width_ / 2.0f, 0, field_depth_ / 2.0f);
 
 			render::Object floor = render::Object();
-			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, 1, field_depth));
-			floor.SetPosition(glm::vec3((field_width / 2) - 0.5, -1, (field_depth / 2) - 0.5));
+			floor.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width_, 1, field_depth_));
+			floor.SetPosition(glm::vec3((field_width_ / 2.0f) - 0.5, -1, (field_depth_ / 2.0f) - 0.5));
 			objects.push_back(floor);
 
 			render::Object wall1 = render::Object();
-			wall1.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width, field_height, 1));
-			wall1.SetPosition(glm::vec3((field_width / 2) - 0.5, (field_height / 2) - field_height_offset, field_depth));
+			wall1.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), field_width_, field_height, 1));
+			wall1.SetPosition(glm::vec3((field_width_ / 2.0f) - 0.5, (field_height / 2.0f) - field_height_offset, field_depth_));
 			objects.push_back(wall1);
 
 			render::Object wall2 = render::Object();
-			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth));
-			wall2.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, (field_depth / 2) - 0.5));
+			wall2.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, field_depth_));
+			wall2.SetPosition(glm::vec3(field_width_, (field_height / 2.0f) - field_height_offset, (field_depth_ / 2.0f) - 0.5));
 			objects.push_back(wall2);
 
 			render::Object corner = render::Object();
 			corner.SetMesh(render::MeshFactory::Box(content_manager->Shader("shaders/basic"), 1, field_height, 1));
-			corner.SetPosition(glm::vec3(field_width, (field_height / 2) - field_height_offset, field_depth));
+			corner.SetPosition(glm::vec3(field_width_, (field_height / 2.0f) - field_height_offset, field_depth_));
 			objects.push_back(corner);
 
 			pugi::xml_node bots_node = world_node.child("bots");

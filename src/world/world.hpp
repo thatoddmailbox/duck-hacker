@@ -69,6 +69,9 @@ namespace duckhacker
 		private:
 			world::Console console_;
 
+			int field_width_ = 0;
+			int field_depth_ = 0;
+
 			std::atomic_int coins_ = ATOMIC_VAR_INIT(0);
 			int initial_coins_ = 0;
 
