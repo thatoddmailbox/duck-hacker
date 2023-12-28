@@ -34,8 +34,6 @@ while true do
 		duckbot.turnRight()
 		duckbot.turnRight()
 		duckbot.moveForward()
-		duckbot.moveForward()
-		duckbot.moveForward()
 
 		-- do a dance
 		duckbot.turnLeft()
@@ -60,8 +58,6 @@ while true do
 		-- move to desk
 		duckbot.turnRight()
 		duckbot.turnRight()
-		duckbot.moveForward()
-		duckbot.moveForward()
 		duckbot.moveForward()
 
 		duckbot.say("Done! Here's your posters. And I'll take the payment now.")

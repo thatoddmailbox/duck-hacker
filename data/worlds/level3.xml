@@ -1,5 +1,5 @@
 <world coins="200">
-	<field width="9" depth="5" />
+	<field width="6" depth="5" />
 	<bots>
 		<!-- Player bots -->
 		<bot
@@ -15,7 +15,7 @@
 			id="100"
 			type="npc"
 			name="Clerk 1"
-			x="5"
+			x="3"
 			y="0"
 			z="1"
 			rotation="180"
@@ -26,7 +26,7 @@
 			id="101"
 			type="npc"
 			name="Clerk 2"
-			x="5"
+			x="3"
 			y="0"
 			z="2"
 			rotation="180"
@@ -37,7 +37,7 @@
 			id="102"
 			type="npc"
 			name="Clerk 3"
-			x="5"
+			x="3"
 			y="0"
 			z="3"
 			rotation="180"
@@ -46,14 +46,14 @@
 		/>
 	</bots>
 	<objects>
-		<object x="2" y="1" z="4.5" rotation="180">
+		<object x="5.5" y="1" z="2" rotation="90">
 			<mesh type="sign" w="2.5" h="0.75" d="0.01">
 				<material>
 					<texture src="textures/quackprints_prices.png" />
 				</material>
 			</mesh>
 		</object>
-		<object x="5" y="1" z="4.5" rotation="180">
+		<object x="2.5" y="1" z="4.5" rotation="180">
 			<mesh type="sign" w="2.5" h="0.75" d="0.01">
 				<material>
 					<texture src="textures/quackprints_logo.png" />
@@ -62,18 +62,18 @@
 		</object>
 
 		<!-- desk -->
-		<object x="4.5" y="-0.3" z="2" rotation="0">
+		<object x="2.5" y="-0.3" z="2" rotation="0">
 			<mesh type="cube" w="0.1" h="0.4" d="5">
 			</mesh>
 		</object>
 
-		<object x="8" y="-0.2" z="1" rotation="90">
+		<object x="5" y="-0.2" z="1" rotation="90">
 			<mesh type="obj" src="models/printer.obj" />
 		</object>
-		<object x="8" y="-0.2" z="2" rotation="90">
+		<object x="5" y="-0.2" z="2" rotation="90">
 			<mesh type="obj" src="models/printer.obj" />
 		</object>
-		<object x="8" y="-0.2" z="3" rotation="90">
+		<object x="5" y="-0.2" z="3" rotation="90">
 			<mesh type="obj" src="models/printer.obj" />
 		</object>
 	</objects>
