@@ -25,7 +25,7 @@ namespace duckhacker
 
 	void Game::Run()
 	{
-		if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		{
 			HandleFatalError("SDL_Init failed.");
 			return;
@@ -68,6 +68,11 @@ namespace duckhacker
 		std::cout << glGetString(GL_VERSION) << std::endl;
 
 		glEnable(GL_MULTISAMPLE);
+
+		//
+		// set up audio
+		//
+		music_manager_.Init();
 
 		//
 		// launch editor thread

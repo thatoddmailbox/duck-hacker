@@ -5,6 +5,7 @@
 
 #include "content/manager.hpp"
 #include "game/screen.hpp"
+#include "music/manager.hpp"
 #include "input/manager.hpp"
 
 namespace duckhacker
@@ -21,6 +22,7 @@ namespace duckhacker
 
 		game::Screen * current_screen_ = nullptr;
 		content::Manager content_manager_;
+		music::Manager music_manager_;
 		input::Manager input_manager_;
 	};
 };

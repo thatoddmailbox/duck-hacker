@@ -34,6 +34,8 @@ file(GLOB SOURCES
 	"src/game/editor/*.cpp"
 	"src/input/*.c"
 	"src/input/*.cpp"
+	"src/music/*.c"
+	"src/music/*.cpp"
 	"src/render/*.c"
 	"src/render/*.cpp"
 	"src/world/*.c"
