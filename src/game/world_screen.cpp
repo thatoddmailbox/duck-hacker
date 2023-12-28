@@ -1,5 +1,6 @@
 #include "game/world_screen.hpp"
 
+#include "game.hpp"
 #include "render/object.hpp"
 
 #include "external/imgui/imgui.h"
@@ -21,8 +22,9 @@ namespace duckhacker
 {
 	namespace game
 	{
-		WorldScreen::WorldScreen(content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world)
+		WorldScreen::WorldScreen(Game * game, content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world)
 		{
+			game_ = game;
 			editor_thread_ = editor_thread;
 
 			world_ = world;

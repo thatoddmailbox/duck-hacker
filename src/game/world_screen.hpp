@@ -18,18 +18,22 @@
 
 namespace duckhacker
 {
+	class Game;
+
 	namespace game
 	{
 		class WorldScreen : public Screen
 		{
 		public:
-			WorldScreen(content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world);
+			WorldScreen(Game * game, content::Manager * content_manager, game::editor::EditorThread * editor_thread, world::World * world);
 			~WorldScreen();
 
 			void Update(double dt, input::Manager * input_manager) override;
 			void Draw(content::Manager * content_manager) override;
 
 		private:
+			Game * game_;
+
 			game::editor::EditorThread * editor_thread_;
 			world::World * world_;
 

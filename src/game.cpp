@@ -85,7 +85,7 @@ namespace duckhacker
 
 		if (!world_screen_)
 		{
-			world_screen_ = new game::WorldScreen(&content_manager_, &editor_thread_, world_);
+			world_screen_ = new game::WorldScreen(this, &content_manager_, &editor_thread_, world_);
 		}
 		else
 		{
