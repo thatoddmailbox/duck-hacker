@@ -41,6 +41,7 @@ namespace duckhacker
 			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 
 			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(1.0f, 1.0f, 1.0f, 0.0f));
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 8.0f));
 
 			ImGui::Begin("Level Select", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
@@ -50,13 +51,17 @@ namespace duckhacker
 			ImGui::PopFont();
 
 			constexpr int BUTTON_WIDTH = 200;
+			constexpr int GRID_WIDTH_COUNT = 3;
+			constexpr int GRID_WIDTH_SPACING = 20;
+			constexpr int GRID_WIDTH_PIXELS = (BUTTON_WIDTH * GRID_WIDTH_COUNT) + (GRID_WIDTH_SPACING * (GRID_WIDTH_COUNT - 1));
 			constexpr int BUTTON_HEIGHT = 50;
 
+			float grid_x = (ImGui::GetWindowSize().x - GRID_WIDTH_PIXELS) / 2.0f;
+
+			ImGui::SetCursorPosX(grid_x);
 			ImGui::SetCursorPosY(50 + 64 + 20);
 			for (int i = 0; i < level_strings_.size(); i++)
 			{
-				ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-
 				ImGui::PushID(i);
 				if (level_unlocked_[i] && ImGui::Button(level_strings_[i].c_str(), ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 				{
@@ -76,11 +81,20 @@ namespace duckhacker
 				}
 				ImGui::PopID();
 
-				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20);
+				if ((i + 1) % GRID_WIDTH_COUNT != 0)
+				{
+					ImGui::SameLine();
+					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + GRID_WIDTH_SPACING);
+				}
+				else
+				{
+					ImGui::SetCursorPosX(grid_x);
+					ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20);
+				}
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(50 + 64 + 20 + (level_strings_.size() * (BUTTON_HEIGHT + 20)) + 40);
+			ImGui::SetCursorPosY(50 + 64 + 20 + (((level_strings_.size() / GRID_WIDTH_COUNT) + 1) * (BUTTON_HEIGHT + 20)) + 40);
 			if (ImGui::Button("Back to menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToMainMenu();
@@ -88,6 +102,7 @@ namespace duckhacker
 
 			ImGui::End();
 
+			ImGui::PopStyleVar();
 			ImGui::PopStyleColor();
 		}
 	}
