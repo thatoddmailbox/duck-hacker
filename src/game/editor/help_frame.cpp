@@ -44,11 +44,9 @@ namespace duckhacker
 					"  * duckbot.canMoveBackward()\n\treturns true if the bot can move backward, false if it can't\n\n"
 					"  * duckbot.turnLeft()\n\trotates the bot 90 degrees to its left\n\n"
 					"  * duckbot.turnRight()\n\trotates the bot 90 degrees to its right\n\n"
-					"\n"
 					"Conversation:\n"
 					"  * duckbot.say(\"Hello!\")\n\tsays the given message\n\n"
 					"  * duckbot.listen()\n\tlistens for a message from another bot, and then returns it\n\n"
-					"\n"
 					"World:\n"
 					"  * duckbot.getCoins()\n\treturns the number of coins you have\n\n"
 					"  * duckbot.getTime()\n\treturns the current time, in ticks\n\n"
@@ -69,8 +67,54 @@ namespace duckhacker
 				wxSizer * lua_panel_sizer = new wxBoxSizer(wxVERTICAL);
 				lua_panel->SetSizer(lua_panel_sizer);
 
-				wxStaticText * lua_text = new wxStaticText(lua_panel, wxID_ANY, "Help goes here I guess?");
-				lua_panel_sizer->Add(lua_text, wxSizerFlags().Center());
+				wxTextCtrl * lua_text = new wxTextCtrl(
+					lua_panel,
+					wxID_ANY,
+					"Lua is a simple programming language. You can find a lot of information online, but here is a short summary.\n"
+					"\n"
+					"Basics:\n"
+					"  * -- this is a comment\n\n"
+					"  * 10 + 20\n\treturns 30\n\n"
+					"  * \"Hello\" .. \" world\"\n\treturns \"Hello world\"\n\n"
+					"  * tonumber(\"10\")\n\treturns 10\n\n"
+					"  * tostring(10)\n\treturns \"10\"\n\n"
+					"  * print(\"Hello!\")\n\tprints \"Hello!\" to the console\n\n"
+					"  * error(\"Quack\")\n\tthrows an error with message \"Quack\"\n\n"
+					"Variables:\n"
+					"  * local x = 10\n\tdeclares a variable named x, and sets it to 10\n\n"
+					"  * x = 20\n\tsets the variable x to 20\n\n"
+					"  * local y\n\tdeclares a variable named y, but doesn't set it to anything\n\n"
+					"  * local z = x + y\n\tsets the variable z to the sum of x and y\n\n"
+					"Functions:\n"
+					"  * function foo()\n    \t-- do stuff\n    end\n\n"
+					"  * function bar(x, y)\n    \treturn x + y\n    end\n\n"
+					"Conditionals:\n"
+					"  * if x == 10 then\n    \t-- do stuff\n    end\n\n"
+					"  * if x == 10 then\n    \t-- do stuff\n    else\n    \t-- do other stuff\n    end\n\n"
+					"  * if x == 10 then\n    \t-- do stuff\n    elseif x == 20 then\n    \t-- do other stuff\n    else\n    \t-- do other other stuff\n    end\n\n"
+					"Loops:\n"
+					"  * while x < 10 do -- while x is less than 10, do...\n    \t-- do stuff\n    end\n\n"
+					"  * for i = 1, 10 do -- for i from 1 to 10, do...\n    \t-- do stuff\n    end\n\n"
+					"Arrays:\n"
+					"  * NOTE: Lua arrays start at 1, not 0\n\n"
+					"  * local a = {}\n\tdeclares an empty array named a\n\n"
+					"  * local a = {1, 2, 3}\n\tdeclares an array named a with three elements\n\n"
+					"  * a[1] = 10\n\tsets the first element of a to 10\n\n"
+					"  * #a\n\treturns the number of elements in a\n\n"
+					"  * table.insert(a, 10)\n\tadds 10 to the end of a\n\n"
+					"  * table.remove(a)\n\tremoves the last element of a\n\n"
+					"  * table.remove(a, 2)\n\tremoves the second element of a\n\n"
+					"You may also find this reference of built-in Lua functions useful: https://www.lua.org/manual/5.4/#functions\n"
+					"DuckBots can access all the math, string, and table functions."
+					,
+					wxDefaultPosition,
+					wxDefaultSize,
+					wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH | wxTE_RICH2 | wxTE_AUTO_URL | wxTE_NOHIDESEL
+				);
+				lua_text->SetEditable(false);
+				lua_text->SetBackgroundColour(wxColour(255, 255, 255));
+				lua_text->SetMargins(10, 10);
+				lua_panel_sizer->Add(lua_text, wxSizerFlags().Expand().Proportion(1));
 
 				notebook->AddPage(lua_panel, "Lua programming");
 			}
