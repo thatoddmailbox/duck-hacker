@@ -23,6 +23,8 @@ namespace duckhacker
 			Texture(content::Manager * content_manager, const char * path);
 			~Texture();
 
+			GLuint GetTextureID() const;
+
 		private:
 			friend class Shader;
 

@@ -54,5 +54,10 @@ namespace duckhacker
 		{
 			glDeleteTextures(1, &texture_);
 		}
+
+		GLuint Texture::GetTextureID() const
+		{
+			return texture_;
+		}
 	}
 }
