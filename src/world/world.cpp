@@ -329,10 +329,16 @@ namespace duckhacker
 
 		bool World::IsOccupied(int x, int y, int z)
 		{
-			// TODO: should check objects, edge of field
+			// TODO: should check objects
 
 			// never allow bots to go below y = 0
 			if (y < 0)
+			{
+				return true;
+			}
+
+			// don't allow bots to go past the edge of the field
+			if (x < 0 || x >= field_width_ || z < 0 || z >= field_depth_)
 			{
 				return true;
 			}
