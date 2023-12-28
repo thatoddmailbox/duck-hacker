@@ -37,6 +37,8 @@ namespace duckhacker
 			std::vector<render::Object> objects;
 			std::vector<Obstacle> obstacles;
 
+			const std::string& GetFilePath();
+
 			const glm::vec3& GetCenterPoint();
 
 			world::Console& GetConsole();
@@ -70,6 +72,8 @@ namespace duckhacker
 
 		private:
 			world::Console console_;
+
+			std::string file_path_;
 
 			int field_width_ = 0;
 			int field_depth_ = 0;

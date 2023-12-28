@@ -12,6 +12,8 @@ namespace duckhacker
 	{
 		World::World(content::Manager * content_manager, std::string file_path)
 		{
+			file_path_ = file_path;
+
 			int64_t file_length;
 			char * file_contents = content_manager->File(file_path, &file_length);
 
@@ -281,6 +283,11 @@ namespace duckhacker
 			{
 				delete bot;
 			}
+		}
+
+		const std::string& World::GetFilePath()
+		{
+			return file_path_;
 		}
 
 		const glm::vec3& World::GetCenterPoint()
