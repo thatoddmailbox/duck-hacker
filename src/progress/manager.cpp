@@ -22,6 +22,19 @@ namespace duckhacker
 			// TODO; load from disk? or something?
 		}
 
+		int Manager::GetLevelIndexFromPath(std::string path)
+		{
+			for (int i = 0; i < levels.size(); i++)
+			{
+				if (levels[i] == path)
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		std::string Manager::GetLevelName(int index)
 		{
 			if (index == 0)
