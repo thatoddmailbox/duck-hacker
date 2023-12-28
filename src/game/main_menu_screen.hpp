@@ -1,5 +1,5 @@
-#ifndef _GAME_MENU_MAIN_SCREEN_HPP
-#define _GAME_MENU_MAIN_SCREEN_HPP
+#ifndef _GAME_MAIN_MENU_SCREEN_HPP
+#define _GAME_MAIN_MENU_SCREEN_HPP
 
 #include "defs.hpp"
 
