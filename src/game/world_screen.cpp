@@ -38,8 +38,7 @@ namespace duckhacker
 			game_ = game;
 			editor_thread_ = editor_thread;
 
-			world_ = world;
-			focus_point_ = world_->GetCenterPoint();
+			SetWorld(world);
 
 			render::Light light;
 			light.Direction = glm::vec3(-1, -0.75, -1);
@@ -61,6 +60,20 @@ namespace duckhacker
 		WorldScreen::~WorldScreen()
 		{
 
+		}
+
+		void WorldScreen::SetWorld(world::World * world)
+		{
+			world_ = world;
+			focus_point_ = world_->GetCenterPoint();
+
+			no_ui_ = true;
+			opened_mission_ = false;
+
+			yaw_ = 240.0f;
+			pitch_ = 22.0f;
+			radius_ = 8.0f;
+			target_radius_ = 8.0f;
 		}
 
 		void WorldScreen::Update(double dt, input::Manager * input_manager)

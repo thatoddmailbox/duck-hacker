@@ -112,7 +112,7 @@ namespace duckhacker
 		}
 		else
 		{
-			// TODO: change world
+			world_screen_->SetWorld(world_);
 		}
 		SetScreen_(world_screen_);
 	}
