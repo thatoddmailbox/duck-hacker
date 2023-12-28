@@ -312,7 +312,7 @@ namespace duckhacker
 			OnLuaCall_CanMove_(dx, dy, dz);
 			bool can_move = lua_toboolean(lua_state_, -1);
 			lua_pop(lua_state_, 1);
-			if (!can_move)
+			if (!can_move && type != BotType::NPC)
 			{
 				lua_pushliteral(lua_state_, "can't move there (something is in the way)");
 				return lua_error(lua_state_);
