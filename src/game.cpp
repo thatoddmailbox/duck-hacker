@@ -77,6 +77,7 @@ namespace duckhacker
 		{
 			level_select_screen_ = new game::LevelSelectScreen(this, &content_manager_);
 		}
+		level_select_screen_->OnEnter();
 		SetScreen_(level_select_screen_);
 	}
 

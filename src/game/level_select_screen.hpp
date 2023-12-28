@@ -22,6 +22,8 @@ namespace duckhacker
 			LevelSelectScreen(Game * game, content::Manager * content_manager);
 			~LevelSelectScreen();
 
+			void OnEnter();
+
 			void Update(double dt, input::Manager * input_manager) override;
 			void Draw(content::Manager * content_manager) override;
 

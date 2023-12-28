@@ -12,6 +12,16 @@ namespace duckhacker
 		LevelSelectScreen::LevelSelectScreen(Game * game, content::Manager * content_manager)
 		{
 			game_ = game;
+		}
+
+		LevelSelectScreen::~LevelSelectScreen()
+		{
+		}
+
+		void LevelSelectScreen::OnEnter()
+		{
+			level_strings_.clear();
+			level_unlocked_.clear();
 
 			progress::Manager& progress_manager = game_->GetProgressManager();
 			for (int i = 0; i < progress_manager.GetLevelCount(); i++)
@@ -19,10 +29,6 @@ namespace duckhacker
 				level_strings_.push_back(progress_manager.GetLevelName(i));
 				level_unlocked_.push_back(progress_manager.IsLevelUnlocked(i));
 			}
-		}
-
-		LevelSelectScreen::~LevelSelectScreen()
-		{
 		}
 
 		void LevelSelectScreen::Update(double dt, input::Manager * input_manager)
