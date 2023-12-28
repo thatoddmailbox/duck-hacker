@@ -95,7 +95,7 @@ namespace duckhacker
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
 			ImGui::SetCursorPosY(50 + 64 + 20 + (((level_strings_.size() / GRID_WIDTH_COUNT) + 1) * (BUTTON_HEIGHT + 20)) + 40);
-			if (ImGui::Button("Back to menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
+			if (ImGui::Button("Back to main menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToMainMenu();
 			}
