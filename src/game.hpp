@@ -10,6 +10,7 @@
 #include "game/screen.hpp"
 #include "music/manager.hpp"
 #include "input/manager.hpp"
+#include "progress/manager.hpp"
 
 namespace duckhacker
 {
@@ -34,6 +35,8 @@ namespace duckhacker
 		void GoToMainMenu();
 		void GoToWorld(std::string world_path);
 
+		progress::Manager& GetProgressManager() { return progress_manager_; }
+
 		void Run();
 
 	private:
@@ -55,6 +58,7 @@ namespace duckhacker
 		content::Manager content_manager_;
 		music::Manager music_manager_;
 		input::Manager input_manager_;
+		progress::Manager progress_manager_;
 	};
 };
 

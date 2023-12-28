@@ -13,10 +13,11 @@ namespace duckhacker
 		{
 			game_ = game;
 
-			for (int i = 0; i < 6; i++)
+			progress::Manager& progress_manager = game_->GetProgressManager();
+			for (int i = 0; i < progress_manager.GetLevelCount(); i++)
 			{
 				level_strings_.push_back("Level " + std::to_string(i + 1));
-				level_unlocked_.push_back(true);
+				level_unlocked_.push_back(progress_manager.IsLevelUnlocked(i));
 			}
 		}
 
@@ -52,14 +53,14 @@ namespace duckhacker
 			constexpr int BUTTON_HEIGHT = 50;
 
 			ImGui::SetCursorPosY(50 + 64 + 20);
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < level_strings_.size(); i++)
 			{
 				ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
 
 				ImGui::PushID(i);
 				if (level_unlocked_[i] && ImGui::Button(level_strings_[i].c_str(), ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 				{
-					game_->GoToWorld("worlds/level" + std::to_string(i+1) + ".xml");
+					game_->GoToWorld(game_->GetProgressManager().GetLevelPath(i));
 				}
 				ImGui::PopID();
 
