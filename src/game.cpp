@@ -14,19 +14,66 @@
 #include "defs.hpp"
 #include "game/menu_main_screen.hpp"
 #include "game/world_screen.hpp"
-#include "game/editor/editor_thread.hpp"
 #include "world/world.hpp"
 
 namespace duckhacker
 {
+	Game::~Game()
+	{
+		if (menu_main_screen_)
+		{
+			delete menu_main_screen_;
+		}
+		if (world_screen_)
+		{
+			delete world_screen_;
+		}
+
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplSDL2_Shutdown();
+		ImGui::DestroyContext();
+
+		PHYSFS_deinit();
+	}
+
 	void Game::HandleFatalError(const char * message)
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", message, NULL);
 	}
 
-	void Game::SetScreen(game::Screen * screen)
+	void Game::SetScreen_(game::Screen * screen)
 	{
 		current_screen_ = screen;
+	}
+
+	void Game::GoToMainMenu()
+	{
+		if (!menu_main_screen_)
+		{
+			menu_main_screen_ = new game::MenuMainScreen(this, &content_manager_);
+		}
+		SetScreen_(menu_main_screen_);
+	}
+
+	void Game::GoToWorld(std::string world_path)
+	{
+		editor_thread_.SetWorld(nullptr);
+
+		if (world_)
+		{
+			delete world_;
+		}
+		world_ = new world::World(&content_manager_, world_path);
+
+		if (!world_screen_)
+		{
+			world_screen_ = new game::WorldScreen(&content_manager_, &editor_thread_, world_);
+		}
+		else
+		{
+			// TODO: change world
+		}
+		SetScreen_(world_screen_);
 	}
 
 	void Game::Run()
@@ -83,20 +130,12 @@ namespace duckhacker
 		//
 		// launch editor thread
 		//
-		game::editor::EditorThread editor_thread;
-		std::thread t(game::editor::EditorThread::Run, &editor_thread);
+		std::thread t(game::editor::EditorThread::Run, &editor_thread_);
 
 		// TODO: error checking, read from an archive
 		PHYSFS_mount("data/", nullptr, 0);
 
-		// TODO: who owns this?
-		world::World * world = new world::World(&content_manager_, "worlds/level4.xml");
-
-		game::WorldScreen world_screen(&content_manager_, &editor_thread, world);
-		SetScreen(&world_screen);
-
-		game::MenuMainScreen lol = game::MenuMainScreen(this, &content_manager_);
-		SetScreen(&lol);
+		GoToMainMenu();
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -181,7 +220,7 @@ namespace duckhacker
 			SDL_Delay(15);
 		}
 
-		editor_thread.RequestStop();
+		editor_thread_.RequestStop();
 		t.join();
 
 		SDL_DestroyWindow(window_);

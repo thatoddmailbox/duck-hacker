@@ -49,8 +49,7 @@ namespace duckhacker
 			ImGui::SetCursorPosY(200);
 			if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
-				world::World * world = new world::World(content_manager, "worlds/level4.xml");
-				game_->SetScreen(new game::WorldScreen(content_manager, nullptr, world));
+				game_->GoToWorld("worlds/level4.xml");
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
