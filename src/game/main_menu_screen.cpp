@@ -55,14 +55,14 @@ namespace duckhacker
 			constexpr int BUTTON_HEIGHT = 50;
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 50 + 20);
+			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 64 + 20);
 			if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToWorld("worlds/level4.xml");
 			}
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 50 + 20 + BUTTON_HEIGHT + 20);
+			ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 64 + 20 + BUTTON_HEIGHT + 20);
 			if (ImGui::Button("Quit", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				SDL_Event event;

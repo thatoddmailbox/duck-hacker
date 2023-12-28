@@ -32,7 +32,7 @@ namespace duckhacker
 			{
 				return (type == FontType::LARGE ? 24 :
 						type == FontType::MEDIUM ? 20 :
-						(type == FontType::TITLE ? 36 : 18));
+						(type == FontType::TITLE ? 48 : 18));
 			};
 
 			char * File(const std::string& path, int64_t * length);
