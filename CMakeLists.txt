@@ -36,6 +36,8 @@ file(GLOB SOURCES
 	"src/input/*.cpp"
 	"src/music/*.c"
 	"src/music/*.cpp"
+	"src/progress/*.c"
+	"src/progress/*.cpp"
 	"src/render/*.c"
 	"src/render/*.cpp"
 	"src/world/*.c"
