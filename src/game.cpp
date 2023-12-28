@@ -135,6 +135,8 @@ namespace duckhacker
 			return;
 		}
 
+		progress_manager_.Init();
+
 		// note that windows requires multisampling settings to be set before the window is created
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);

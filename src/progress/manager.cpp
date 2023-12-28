@@ -1,6 +1,8 @@
 #include "progress/manager.hpp"
 
-#include <vector>
+#include <SDL.h>
+
+#include "pugixml.hpp"
 
 std::vector<std::string> levels = {
 	"intro",
@@ -19,7 +21,60 @@ namespace duckhacker
 	{
 		void Manager::Init()
 		{
-			// TODO; load from disk? or something?
+			char * path = SDL_GetPrefPath("Dogo", "Duck Hacker");
+			progress_path_ = std::string(path) + "progress.xml";
+			SDL_free(path);
+
+			LoadProgress();
+		}
+
+		void Manager::LoadProgress()
+		{
+			for (int i = 0; i < levels.size(); i++)
+			{
+				completed_.push_back(false);
+			}
+
+			pugi::xml_document doc;
+			pugi::xml_parse_result result = doc.load_file(progress_path_.c_str());
+			if (!result)
+			{
+				// assume no progress
+				return;
+			}
+
+			pugi::xml_node root = doc.child("progress");
+			for (pugi::xml_node level = root.child("level"); level; level = level.next_sibling("level"))
+			{
+				std::string path = level.attribute("path").as_string();
+				bool completed = level.attribute("completed").as_bool();
+
+				int index = GetLevelIndexFromPath(path);
+
+				completed_[index] = completed;
+			}
+		}
+
+		void Manager::SaveProgress()
+		{
+			pugi::xml_document doc;
+			pugi::xml_node root = doc.append_child("progress");
+
+			for (int i = 0; i < levels.size(); i++)
+			{
+				pugi::xml_node level = root.append_child("level");
+				level.append_attribute("path").set_value(levels[i].c_str());
+				level.append_attribute("completed").set_value(completed_[i]);
+			}
+
+			doc.save_file(progress_path_.c_str());
+		}
+
+		void Manager::SetLevelCompleted(std::string path)
+		{
+			int index = GetLevelIndexFromPath(path);
+			completed_[index] = true;
+			SaveProgress();
 		}
 
 		int Manager::GetLevelIndexFromPath(std::string path)
@@ -66,8 +121,12 @@ namespace duckhacker
 				return true;
 			}
 
-			// TODO: implement
-			return true;
+			if (index == 1)
+			{
+				return true;
+			}
+
+			return completed_[index - 1];
 		}
 	}
 }
