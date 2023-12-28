@@ -129,10 +129,20 @@ namespace duckhacker
 				world::World * world = e.GetPayload<world::World *>();
 
 				// close any open windows
+				// note how we build a list and then iterate over that, instead of iterating over the map directly
+				// this is because when a window is closed, it will call NotifyFrameClosed, which will remove the window from the map
+				// and we don't want to modify the map while iterating over it
+
+				std::vector<Frame *> frames_to_close;
 				for (std::pair<int, Frame *> p : frames_)
 				{
-					p.second->Close();
-					delete p.second;
+					frames_to_close.push_back(p.second);
+				}
+
+				for (Frame * frame : frames_to_close)
+				{
+					frame->Close();
+					delete frame;
 				}
 
 				frames_.clear();
