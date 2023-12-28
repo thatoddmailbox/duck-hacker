@@ -12,6 +12,20 @@ namespace duckhacker
 	{
 		namespace editor
 		{
+			void OnTextURL(wxTextUrlEvent & event)
+			{
+				if (!event.GetMouseEvent().ButtonUp(wxMOUSE_BTN_LEFT))
+				{
+					return;
+				}
+
+				wxTextCtrl * text = (wxTextCtrl *) event.GetEventObject();
+
+				wxString url = text->GetRange(event.GetURLStart(), event.GetURLEnd());
+
+				wxLaunchDefaultBrowser(url);
+			}
+
 			HelpFrame::HelpFrame() : wxFrame(NULL, wxID_ANY, "Help")
 			{
 				wxSizer * panel_base = new wxBoxSizer(wxVERTICAL);
@@ -58,6 +72,7 @@ namespace duckhacker
 				duckbot_text->SetEditable(false);
 				duckbot_text->SetBackgroundColour(wxColour(255, 255, 255));
 				duckbot_text->SetMargins(10, 10);
+				duckbot_text->Bind(wxEVT_TEXT_URL, OnTextURL);
 				duckbot_panel_sizer->Add(duckbot_text, wxSizerFlags().Expand().Proportion(1));
 
 				notebook->AddPage(duckbot_panel, "DuckBot programming");
@@ -114,6 +129,7 @@ namespace duckhacker
 				lua_text->SetEditable(false);
 				lua_text->SetBackgroundColour(wxColour(255, 255, 255));
 				lua_text->SetMargins(10, 10);
+				lua_text->Bind(wxEVT_TEXT_URL, OnTextURL);
 				lua_panel_sizer->Add(lua_text, wxSizerFlags().Expand().Proportion(1));
 
 				notebook->AddPage(lua_panel, "Lua programming");
