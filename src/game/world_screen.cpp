@@ -26,7 +26,8 @@ static constexpr int NO_EDIT_MODAL_WIDTH = 350;
 
 static constexpr int VICTORY_MODAL_ID = 0x12345680;
 static constexpr const char * VICTORY_MODAL_NAME = "Victory";
-static constexpr int VICTORY_MODAL_WIDTH = 300;
+static constexpr int VICTORY_MODAL_WIDTH = 250;
+static constexpr int VICTORY_BUTTON_HEIGHT = 50;
 
 namespace duckhacker
 {
@@ -464,16 +465,35 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(VICTORY_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(VICTORY_MODAL_WIDTH, 0), ImGuiCond_Appearing);
-			if (ImGui::BeginPopupModal(VICTORY_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			if (ImGui::BeginPopupModal(VICTORY_MODAL_NAME, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize))
 			{
-				ImGui::TextWrapped("You did it!");
+				static const char * hacked_text = "Hacked!";
 
-				ImGui::SetCursorPosX(VICTORY_MODAL_WIDTH - 100);
-				if (ImGui::Button("OK", ImVec2(100, 0)))
+				ImGui::PushFont(content_manager->Font(content::FontType::TITLE));
+				ImVec2 hacked_text_size = ImGui::CalcTextSize(hacked_text);
+				ImGui::SetCursorPosX((VICTORY_MODAL_WIDTH + 16 - hacked_text_size.x) / 2.0f);
+				ImGui::Text("%s", hacked_text);
+				ImGui::PopFont();
+
+				ImGui::Spacing();
+
+				if (ImGui::Button("Next level", ImVec2(VICTORY_MODAL_WIDTH, VICTORY_BUTTON_HEIGHT)))
 				{
 					// TODO: level progression
 					world_->Reset();
 					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::Button("Back to this level", ImVec2(VICTORY_MODAL_WIDTH, VICTORY_BUTTON_HEIGHT)))
+				{
+					world_->Reset();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::Button("Back to main menu", ImVec2(VICTORY_MODAL_WIDTH, VICTORY_BUTTON_HEIGHT)))
+				{
+					editor_thread_->SetWorld(nullptr);
+					game_->GoToMainMenu();
 				}
 
 				ImGui::EndPopup();
