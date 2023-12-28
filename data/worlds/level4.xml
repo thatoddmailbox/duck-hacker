@@ -68,6 +68,10 @@
 			</mesh>
 		</object>
 	</objects>
+	<obstacles>
+		<obstacle type="wall" x="-1" y="-1" z="4" blocks="player" />
+		<obstacle type="wall" x="-1" y="-1" z="3" blocks="npc-safe" />
+	</obstacles>
 	<mission goal="Get a copy of the secret map.">
 		OK, we've got enough Quacker followers to enter Duckland University's campus. Now, we need to find where the academic records building is located.
 
