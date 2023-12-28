@@ -58,7 +58,7 @@ namespace duckhacker
 
 			void Heard(int x, int y, int z, std::string message);
 
-			bool IsOccupied(int x, int y, int z);
+			bool IsOccupied(int x, int y, int z, BotType asker);
 
 			void Run();
 			void Stop();

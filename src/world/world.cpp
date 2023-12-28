@@ -327,9 +327,14 @@ namespace duckhacker
 			}
 		}
 
-		bool World::IsOccupied(int x, int y, int z)
+		bool World::IsOccupied(int x, int y, int z, BotType asker)
 		{
 			// TODO: should check objects
+			if (asker == BotType::NPC)
+			{
+				// have fun, no restrictions
+				return false;
+			}
 
 			// never allow bots to go below y = 0
 			if (y < 0)
