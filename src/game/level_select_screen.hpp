@@ -3,6 +3,9 @@
 
 #include "defs.hpp"
 
+#include <string>
+#include <vector>
+
 #include "content/manager.hpp"
 #include "game/screen.hpp"
 #include "input/manager.hpp"
@@ -24,6 +27,8 @@ namespace duckhacker
 
 		private:
 			Game * game_;
+
+			std::vector<std::string> level_strings_;
 		};
 	}
 }
