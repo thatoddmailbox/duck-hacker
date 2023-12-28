@@ -6,6 +6,11 @@
 #include "external/imgui/imgui.h"
 #include "external/imgui/imgui_internal.h"
 
+static constexpr int EXIT_MODAL_ID = 0x12345676;
+static constexpr const char * EXIT_MODAL_NAME = "Are you sure?";
+static constexpr int EXIT_MODAL_WIDTH = 350;
+static constexpr int EXIT_BUTTON_HEIGHT = 50;
+
 static constexpr int MENU_MODAL_ID = 0x12345677;
 static constexpr const char * MENU_MODAL_NAME = "##Menu";
 static constexpr int MENU_MODAL_WIDTH = 250;
@@ -488,11 +493,37 @@ namespace duckhacker
 
 				if (ImGui::Button("Back to main menu", ImVec2(MENU_MODAL_WIDTH, MENU_BUTTON_HEIGHT)))
 				{
+					ImGui::PushOverrideID(EXIT_MODAL_ID);
+					ImGui::OpenPopup(EXIT_MODAL_NAME);
+					ImGui::PopID();
+				}
+
+				ImGui::PopStyleVar();
+			}
+			ImGui::PopID();
+
+
+			ImGui::PushOverrideID(EXIT_MODAL_ID);
+			ImGui::SetNextWindowSize(ImVec2(EXIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			if (ImGui::BeginPopupModal(EXIT_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+			{
+				ImGui::TextWrapped("You will lose your progress in this level.");
+
+				ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100 * 2 - 8);
+				if (ImGui::Button("No", ImVec2(100, 0)))
+				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::SameLine();
+				ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100);
+				if (ImGui::Button("Yes", ImVec2(100, 0)))
+				{
 					editor_thread_->SetWorld(nullptr);
 					game_->GoToMainMenu();
 				}
 
-				ImGui::PopStyleVar();
+				ImGui::EndPopup();
 			}
 			ImGui::PopID();
 		}
