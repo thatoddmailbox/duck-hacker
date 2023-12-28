@@ -3,7 +3,9 @@
 
 #include <SDL.h>
 
+#include "content/manager.hpp"
 #include "game/screen.hpp"
+#include "input/manager.hpp"
 
 namespace duckhacker
 {
