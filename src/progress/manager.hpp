@@ -14,6 +14,7 @@ namespace duckhacker
 		public:
 			void Init();
 
+			std::string GetLevelName(int index);
 			const std::string& GetLevelPath(int index);
 			int GetLevelCount();
 			bool IsLevelUnlocked(int index);

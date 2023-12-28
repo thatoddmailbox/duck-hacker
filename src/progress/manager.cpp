@@ -22,6 +22,20 @@ namespace duckhacker
 			// TODO; load from disk? or something?
 		}
 
+		std::string Manager::GetLevelName(int index)
+		{
+			if (index == 0)
+			{
+				return "Intro";
+			}
+			else if (index == levels.size() - 1)
+			{
+				return "Outro";
+			}
+
+			return "Level " + std::to_string(index);
+		}
+
 		const std::string& Manager::GetLevelPath(int index)
 		{
 			return levels[index];
@@ -40,7 +54,7 @@ namespace duckhacker
 			}
 
 			// TODO: implement
-			return false;
+			return true;
 		}
 	}
 }

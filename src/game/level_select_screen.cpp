@@ -16,7 +16,7 @@ namespace duckhacker
 			progress::Manager& progress_manager = game_->GetProgressManager();
 			for (int i = 0; i < progress_manager.GetLevelCount(); i++)
 			{
-				level_strings_.push_back("Level " + std::to_string(i + 1));
+				level_strings_.push_back(progress_manager.GetLevelName(i));
 				level_unlocked_.push_back(progress_manager.IsLevelUnlocked(i));
 			}
 		}
