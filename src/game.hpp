@@ -13,6 +13,7 @@ namespace duckhacker
 	class Game
 	{
 	public:
+		void SetScreen(game::Screen * screen);
 		void Run();
 
 	private:

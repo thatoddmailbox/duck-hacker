@@ -12,6 +12,7 @@
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
 #include "defs.hpp"
+#include "game/menu_main_screen.hpp"
 #include "game/world_screen.hpp"
 #include "game/editor/editor_thread.hpp"
 #include "world/world.hpp"
@@ -21,6 +22,11 @@ namespace duckhacker
 	void Game::HandleFatalError(const char * message)
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", message, NULL);
+	}
+
+	void Game::SetScreen(game::Screen * screen)
+	{
+		current_screen_ = screen;
 	}
 
 	void Game::Run()
@@ -84,11 +90,13 @@ namespace duckhacker
 		PHYSFS_mount("data/", nullptr, 0);
 
 		// TODO: who owns this?
-		world::World * world = new world::World(&content_manager_, "worlds/level1.xml");
+		world::World * world = new world::World(&content_manager_, "worlds/level4.xml");
 
 		game::WorldScreen world_screen(&content_manager_, &editor_thread, world);
+		SetScreen(&world_screen);
 
-		current_screen_ = &world_screen;
+		game::MenuMainScreen lol = game::MenuMainScreen(this, &content_manager_);
+		SetScreen(&lol);
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
