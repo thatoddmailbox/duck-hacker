@@ -33,6 +33,10 @@ namespace duckhacker
 		{
 			delete world_screen_;
 		}
+		if (world_)
+		{
+			delete world_;
+		}
 
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplSDL2_Shutdown();
