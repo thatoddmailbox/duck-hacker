@@ -31,8 +31,10 @@ namespace duckhacker
 	public:
 		~Game();
 
+		void GoToIntro();
 		void GoToLevelSelect();
 		void GoToMainMenu();
+		void GoToOutro();
 		void GoToWorld(std::string world_path);
 
 		progress::Manager& GetProgressManager() { return progress_manager_; }

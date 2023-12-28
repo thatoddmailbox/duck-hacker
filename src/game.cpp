@@ -55,6 +55,11 @@ namespace duckhacker
 		current_screen_ = screen;
 	}
 
+	void Game::GoToIntro()
+	{
+		// TODO: implement
+	}
+
 	void Game::GoToLevelSelect()
 	{
 		if (world_screen_)
@@ -93,6 +98,11 @@ namespace duckhacker
 			main_menu_screen_ = new game::MainMenuScreen(this, &content_manager_);
 		}
 		SetScreen_(main_menu_screen_);
+	}
+
+	void Game::GoToOutro()
+	{
+		// TODO: implement
 	}
 
 	void Game::GoToWorld(std::string world_path)

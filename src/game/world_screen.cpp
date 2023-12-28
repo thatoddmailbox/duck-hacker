@@ -492,9 +492,22 @@ namespace duckhacker
 
 				if (ImGui::Button("Next level", ImVec2(VICTORY_MODAL_WIDTH, VICTORY_BUTTON_HEIGHT)))
 				{
-					// TODO: level progression
 					world_->Reset();
 					ImGui::CloseCurrentPopup();
+
+					progress::Manager& progress_manager = game_->GetProgressManager();
+
+					int current_index = progress_manager.GetLevelIndexFromPath(world_->GetFilePath());
+					std::string next_path = progress_manager.GetLevelPath(current_index + 1);
+
+					if (next_path == "outro")
+					{
+						game_->GoToOutro();
+					}
+					else
+					{
+						game_->GoToWorld(next_path);
+					}
 				}
 
 				if (ImGui::Button("Back to this level", ImVec2(VICTORY_MODAL_WIDTH, VICTORY_BUTTON_HEIGHT)))
