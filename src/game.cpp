@@ -15,6 +15,7 @@
 #include "game/intro_screen.hpp"
 #include "game/level_select_screen.hpp"
 #include "game/main_menu_screen.hpp"
+#include "game/outro_screen.hpp"
 #include "game/world_screen.hpp"
 #include "world/world.hpp"
 
@@ -110,7 +111,13 @@ namespace duckhacker
 
 	void Game::GoToOutro()
 	{
-		// TODO: implement
+		if (!outro_screen_)
+		{
+			outro_screen_ = new game::OutroScreen(this, &content_manager_);
+		}
+
+		outro_screen_->OnEnter();
+		SetScreen_(outro_screen_);
 	}
 
 	void Game::GoToWorld(std::string world_path)

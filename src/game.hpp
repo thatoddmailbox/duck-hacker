@@ -19,6 +19,7 @@ namespace duckhacker
 		class IntroScreen;
 		class LevelSelectScreen;
 		class MainMenuScreen;
+		class OutroScreen;
 		class WorldScreen;
 	}
 
@@ -57,6 +58,7 @@ namespace duckhacker
 		game::IntroScreen * intro_screen_ = nullptr;
 		game::LevelSelectScreen * level_select_screen_ = nullptr;
 		game::MainMenuScreen * main_menu_screen_ = nullptr;
+		game::OutroScreen * outro_screen_ = nullptr;
 		game::WorldScreen * world_screen_ = nullptr;
 
 		content::Manager content_manager_;
