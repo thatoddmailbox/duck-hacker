@@ -112,6 +112,7 @@ namespace duckhacker
 			{
 				if (lines_index_ == all_lines_.size() - 1)
 				{
+					game_->GetProgressManager().SetLevelCompleted("intro");
 					game_->GoToWorld("worlds/level1.xml");
 				}
 
