@@ -12,8 +12,9 @@
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
 #include "defs.hpp"
-#include "game/main_menu_screen.hpp"
+#include "game/intro_screen.hpp"
 #include "game/level_select_screen.hpp"
+#include "game/main_menu_screen.hpp"
 #include "game/world_screen.hpp"
 #include "world/world.hpp"
 
@@ -57,7 +58,13 @@ namespace duckhacker
 
 	void Game::GoToIntro()
 	{
-		// TODO: implement
+		if (!intro_screen_)
+		{
+			intro_screen_ = new game::IntroScreen(this, &content_manager_);
+		}
+
+		intro_screen_->OnEnter();
+		SetScreen_(intro_screen_);
 	}
 
 	void Game::GoToLevelSelect()
