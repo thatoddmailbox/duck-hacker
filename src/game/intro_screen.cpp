@@ -27,7 +27,7 @@ static std::vector<std::vector<std::string>> all_lines_ =
 		"",
 		"Doing so would allow him to get into Ducky's office and give him the message.",
 		"",
-		"The problem was that is is very difficult to get the qualifications needed for this job.",
+		"The problem was that it is very difficult to get the qualifications needed for this job.",
 	},
 	{
 		"It turns out that DuckBots are reprogrammable, although very few know how to do it.",
