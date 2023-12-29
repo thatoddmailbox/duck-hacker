@@ -6,6 +6,19 @@ namespace duckhacker
 {
 	namespace input
 	{
+		Manager::Manager()
+		{
+			horizontal_ = 0;
+			vertical_ = 0;
+
+			mouse_x_last_ = 0;
+			mouse_y_last_ = 0;
+			mouse_left_down_last_ = false;
+
+			mouse_scroll_x_ = 0;
+			mouse_scroll_y_ = 0;
+		}
+
 		double Manager::GetAxis(Axis axis)
 		{
 			if (axis == Axis::Horizontal)

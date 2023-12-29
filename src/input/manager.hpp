@@ -26,6 +26,8 @@ namespace duckhacker
 		class Manager
 		{
 		public:
+			Manager();
+
 			double GetAxis(Axis axis);
 
 		protected:
