@@ -1,5 +1,7 @@
 #include "input/manager.hpp"
 
+#include <cstring>
+
 #include "external/imgui/imgui.h"
 
 namespace duckhacker
@@ -8,6 +10,9 @@ namespace duckhacker
 	{
 		Manager::Manager()
 		{
+			memset(button_states_, 0, sizeof(button_states_));
+			memset(button_states_last_, 0, sizeof(button_states_last_));
+
 			horizontal_ = 0;
 			vertical_ = 0;
 
@@ -40,10 +45,17 @@ namespace duckhacker
 			return 0;
 		}
 
+		bool Manager::WasButtonPressed(Button button)
+		{
+			return button_states_[button] && !button_states_last_[button];
+		}
+
 		void Manager::EarlyUpdate()
 		{
 			mouse_scroll_x_ = 0;
 			mouse_scroll_y_ = 0;
+
+			memcpy(button_states_last_, button_states_, sizeof(button_states_));
 		}
 
 		void Manager::ProcessEvent(SDL_Event * e)
@@ -95,6 +107,13 @@ namespace duckhacker
 
 				mouse_scroll_x_ = 0;
 				mouse_scroll_y_ = 0;
+			}
+
+			if (!io.WantCaptureKeyboard)
+			{
+				const uint8_t * keyboard_state = SDL_GetKeyboardState(nullptr);
+
+				button_states_[Continue] = keyboard_state[SDL_SCANCODE_SPACE];
 			}
 		}
 	}
