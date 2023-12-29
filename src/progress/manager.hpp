@@ -15,6 +15,8 @@ namespace duckhacker
 		public:
 			void Init();
 
+			bool IsDebuggingEnabled();
+
 			void LoadProgress();
 			void SaveProgress();
 
@@ -27,6 +29,7 @@ namespace duckhacker
 			bool IsLevelUnlocked(int index);
 
 		private:
+			bool debugging_enabled_;
 			std::vector<bool> completed_;
 			std::string progress_path_;
 		};

@@ -1,5 +1,7 @@
 #include "progress/manager.hpp"
 
+#include <fstream>
+
 #include <SDL.h>
 
 #include "pugixml.hpp"
@@ -22,10 +24,20 @@ namespace duckhacker
 		void Manager::Init()
 		{
 			char * path = SDL_GetPrefPath("Dogo", "Duck Hacker");
+
 			progress_path_ = std::string(path) + "progress.xml";
+			std::string debug_path = std::string(path) + "debug.txt";
+
 			SDL_free(path);
 
+			debugging_enabled_ = std::ifstream(debug_path).good();
+
 			LoadProgress();
+		}
+
+		bool Manager::IsDebuggingEnabled()
+		{
+			return debugging_enabled_;
 		}
 
 		void Manager::LoadProgress()

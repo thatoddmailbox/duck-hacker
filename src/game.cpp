@@ -244,7 +244,10 @@ namespace duckhacker
 				{
 					if (e.key.keysym.sym == SDLK_BACKQUOTE)
 					{
-						show_imgui_demo = true;
+						if (progress_manager_.IsDebuggingEnabled())
+						{
+							show_imgui_demo = true;
+						}
 					}
 				}
 			}

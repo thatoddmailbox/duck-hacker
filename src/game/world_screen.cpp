@@ -380,7 +380,7 @@ namespace duckhacker
 
 			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 200 - 50, 100), ImGuiCond_Appearing);
 			ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Appearing);
-			if (ImGui::Begin("Scene settings"))
+			if (game_->GetProgressManager().IsDebuggingEnabled() && ImGui::Begin("Scene settings"))
 			{
 				ImGui::SeparatorText("Camera");
 				ImGui::SliderFloat("Radius##CameraRadius", &target_radius_, 1, 100);
