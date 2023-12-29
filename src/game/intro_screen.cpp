@@ -76,8 +76,14 @@ namespace duckhacker
 
 			ImGui::Begin("Intro", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
-			ImGui::SetCursorPosY(100);
 			ImGui::PushFont(content_manager->Font(content::FontType::LARGE));
+
+			ImVec2 text_size = ImGui::CalcTextSize(lines_->at(0).c_str());
+			int line_count = lines_->size();
+
+			ImGuiStyle& style = ImGui::GetStyle();
+
+			ImGui::SetCursorPosY((ImGui::GetWindowSize().y - ((text_size.y + style.ItemSpacing.y) * line_count)) / 2.0f);
 
 			for (std::string line : *lines_)
 			{
@@ -91,8 +97,8 @@ namespace duckhacker
 
 			if (lines_index_ > 0)
 			{
-				ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-				ImGui::SetCursorPosY(SCREEN_HEIGHT - 50 - BUTTON_HEIGHT);
+				ImGui::SetCursorPosX(25);
+				ImGui::SetCursorPosY((SCREEN_HEIGHT - BUTTON_HEIGHT) / 2);
 				if (ImGui::Button("<", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 				{
 					lines_index_--;
@@ -100,8 +106,8 @@ namespace duckhacker
 				}
 			}
 
-			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f + BUTTON_WIDTH + 20);
-			ImGui::SetCursorPosY(SCREEN_HEIGHT - 50 - BUTTON_HEIGHT);
+			ImGui::SetCursorPosX(ImGui::GetWindowSize().x - 25 - BUTTON_WIDTH);
+			ImGui::SetCursorPosY((SCREEN_HEIGHT - BUTTON_HEIGHT) / 2);
 			if (ImGui::Button(">", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				if (lines_index_ == all_lines_.size() - 1)
@@ -112,22 +118,6 @@ namespace duckhacker
 				lines_index_++;
 				lines_ = &all_lines_[lines_index_];
 			}
-
-			// ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			// ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 64 + 20);
-			// if (ImGui::Button("Play", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
-			// {
-			// 	game_->GoToLevelSelect();
-			// }
-
-			// ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			// ImGui::SetCursorPosY(50 + LOGO_SIZE + 30 + 64 + 20 + BUTTON_HEIGHT + 20);
-			// if (ImGui::Button("Quit", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
-			// {
-			// 	SDL_Event event;
-			// 	event.type = SDL_QUIT;
-			// 	SDL_PushEvent(&event);
-			// }
 
 			ImGui::End();
 
