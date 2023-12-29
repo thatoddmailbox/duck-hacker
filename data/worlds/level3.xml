@@ -82,7 +82,7 @@
 		<obstacle type="wall" x="2" y="-1" z="-1" blocks="npc-safe" />
 	</obstacles>
 	<mission goal="Get at least 100 posters.">
-		This is QuackPrints, a print shop in Duckland. They'll print the posters we need to advertise our Quacker account.
+		This is QuackPrints, a print shop in Duckland. They'll print some posters that we can use to advertise our Quacker account.
 
 		Our budget for posters is 200 coins, and we probably need 100 of them. Unfortunately, QuackPrints charges 5 coins per poster, which would be 500 coins total!
 
