@@ -115,9 +115,11 @@ namespace duckhacker
 					game_->GetProgressManager().SetLevelCompleted("intro");
 					game_->GoToWorld("worlds/level1.xml");
 				}
-
-				lines_index_++;
-				lines_ = &all_lines_[lines_index_];
+				else
+				{
+					lines_index_++;
+					lines_ = &all_lines_[lines_index_];
+				}
 			}
 
 			ImGui::End();
