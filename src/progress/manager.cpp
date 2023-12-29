@@ -133,11 +133,6 @@ namespace duckhacker
 				return true;
 			}
 
-			if (index == 1)
-			{
-				return true;
-			}
-
 			return completed_[index - 1];
 		}
 	}
