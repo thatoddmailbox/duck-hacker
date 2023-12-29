@@ -74,11 +74,11 @@ namespace duckhacker
 					const std::string level_path = game_->GetProgressManager().GetLevelPath(i);
 					if (level_path == "intro")
 					{
-						// TODO: implement
+						game_->GoToIntro();
 					}
 					else if (level_path == "outro")
 					{
-						// TODO: implement
+						game_->GoToOutro();
 					}
 					else
 					{
