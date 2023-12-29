@@ -54,6 +54,9 @@ namespace duckhacker
 
 			ImGui::PopFont();
 
+			ImGui::SetCursorPosY(ImGui::GetWindowSize().y - 26);
+			ImGui::Text("Press SPACE to continue");
+
 			ImGui::End();
 		}
 	}
