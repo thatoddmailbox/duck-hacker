@@ -14,12 +14,11 @@
 		<bot
 			id="100"
 			type="npc"
-			name="Featherwing"
+			name="Featherwing's DuckBot"
 			x="2"
 			y="0"
 			z="1"
 			rotation="90"
-			mesh="models/npc.obj"
 			src="worlds/level1_featherwing.lua"
 		/>
 	</bots>
@@ -33,9 +32,13 @@
 		</object> -->
 	</objects>
 	<mission goal="Tell Featherwing's DuckBot what 1 + 1 equals.">
-		Alright, the first thing you gotta learn is how to program DuckBots. Most ducks these days never learn this - they just use pre-made DuckBots. Disgusting.
+		Hi there. I'm Featherwing, and as you've heard, I've got an important message for Ducky. To deliver it, I'm going to first become a grasshopper deliveryman.
 
-		Here's a simple task. Move over to my DuckBot and say hello. Then it'll ask you a simple math question. That's it.
+		That job normally requires a lot of training. But if we can get into Duckland University's records, we can edit them so that it looks like I already have the training.
+
+		Anyways, we'll talk more about the plan later. First, you've got to learn how to program DuckBots.
+
+		Here's a simple task. Move over to my DuckBot and say hello. (Make sure you're facing towards it!) Then it'll ask you a simple math question. Answer it and you're done.
 
 		Think you're up to it?
 	</mission>
