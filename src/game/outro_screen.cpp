@@ -60,10 +60,11 @@ namespace duckhacker
 
 		void OutroScreen::Draw(content::Manager * content_manager)
 		{
+			static constexpr int SPEECH_WIDTH_MARGIN = 20;
 			static constexpr int SPEECH_HEIGHT = 200;
 
-			ImGui::SetNextWindowPos(ImVec2(0.0f, (SCREEN_HEIGHT - SPEECH_HEIGHT) / 2));
-			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SPEECH_HEIGHT));
+			ImGui::SetNextWindowPos(ImVec2(SPEECH_WIDTH_MARGIN / 2, (SCREEN_HEIGHT - SPEECH_HEIGHT) / 2));
+			ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH - SPEECH_WIDTH_MARGIN, SPEECH_HEIGHT));
 
 			ImGui::Begin("Conversation", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
