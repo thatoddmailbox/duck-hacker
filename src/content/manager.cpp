@@ -131,6 +131,18 @@ namespace duckhacker
 			return mesh_iter->second;
 		}
 
+		Mix_Music * Manager::Music(const std::string& path)
+		{
+			std::map<std::string, Mix_Music *>::iterator music_iter = musics_.find(path);
+			if (music_iter == musics_.end())
+			{
+				musics_[path] = Mix_LoadMUS_RW(PHYSFSRWOPS_openRead(path.c_str()), 1);
+
+				music_iter = musics_.find(path);
+			}
+			return music_iter->second;
+		}
+
 		render::Shader * Manager::Shader(const std::string& path)
 		{
 			std::map<std::string, render::Shader *>::iterator shader_iter = shaders_.find(path);

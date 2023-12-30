@@ -5,6 +5,7 @@
 #include <string>
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 
 #include "external/imgui/imgui.h"
 
@@ -39,6 +40,7 @@ namespace duckhacker
 
 			ImFont * Font(const FontType type);
 			render::Mesh * Mesh(const std::string& path, render::Shader * shader);
+			Mix_Music * Music(const std::string& path);
 			render::Shader * Shader(const std::string& path);
 			render::Texture * Texture(const std::string& path);
 
@@ -48,6 +50,7 @@ namespace duckhacker
 
 		private:
 			std::map<std::string, render::Mesh *> meshes_;
+			std::map<std::string, Mix_Music *> musics_;
 			std::map<std::string, render::Shader *> shaders_;
 			std::map<std::string, render::Texture *> textures_;
 
