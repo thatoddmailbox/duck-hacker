@@ -73,6 +73,8 @@ namespace duckhacker
 			io.Fonts->Build();
 			font_title_ = io.Fonts->Fonts[3];
 
+			io.Fonts->ClearInputData();
+
 			free(text_font_file_data);
 			free(icon_font_file_data);
 		}
