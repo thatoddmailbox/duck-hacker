@@ -26,7 +26,7 @@ namespace duckhacker
 				wxLaunchDefaultBrowser(url);
 			}
 
-			HelpFrame::HelpFrame() : wxFrame(NULL, wxID_ANY, "Help")
+			HelpFrame::HelpFrame() : wxFrame(NULL, wxID_ANY, "Help", wxDefaultPosition, wxSize(500, 300))
 			{
 				wxSizer * panel_base = new wxBoxSizer(wxVERTICAL);
 				wxPanel * panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
