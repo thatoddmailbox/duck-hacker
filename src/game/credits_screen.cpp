@@ -37,7 +37,6 @@ namespace duckhacker
 
 			ImGui::TextWrapped(
 				"Duck Hacker\n"
-				"\n"
 				"Created by Alex Studer\n"
 				"\n"
 				"Font:\n"
@@ -69,7 +68,7 @@ namespace duckhacker
 			constexpr int BUTTON_HEIGHT = 50;
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(SCREEN_HEIGHT - 125);
+			ImGui::SetCursorPosY(SCREEN_HEIGHT - 150);
 			if (ImGui::Button("Back to main menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToMainMenu();
