@@ -209,14 +209,8 @@ namespace duckhacker
 		glEnable(GL_MULTISAMPLE);
 
 		//
-		// set up audio
+		// set up physfs
 		//
-		music_manager_.Init(&content_manager_);
-
-		//
-		// launch editor thread
-		//
-		std::thread t(game::editor::EditorThread::Run, &editor_thread_);
 
 		// add both the zip archive and the folder
 		// this will try the folder first, then the archive
@@ -228,6 +222,16 @@ namespace duckhacker
 			HandleFatalError("Could not load data.");
 			return;
 		}
+
+		//
+		// set up audio
+		//
+		music_manager_.Init(&content_manager_);
+
+		//
+		// launch editor thread
+		//
+		std::thread t(game::editor::EditorThread::Run, &editor_thread_);
 
 		GoToMainMenu();
 
