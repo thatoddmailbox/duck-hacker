@@ -7,6 +7,9 @@ Make a folder called `deps/`.
 #### SDL2
 Download [SDL2-devel-2.28.5-VC.zip](https://github.com/libsdl-org/SDL/releases/tag/release-2.28.5). Extract it into the deps folder.
 
+#### SDL2_mixer
+Download [SDL2_mixer-devel-2.6.3-VC.zip ](https://github.com/libsdl-org/SDL_mixer/releases/tag/release-2.6.3). Extract it into the deps folder.
+
 #### PhysFS
 Download [v3.2.0 source code](https://github.com/icculus/physfs/releases/tag/release-3.2.0). Extract into deps. Then run:
 ```
@@ -60,7 +63,7 @@ Download [wxWidgets v3.2.4 Windows Binaries (Visual Studio 2022)](https://www.wx
 Create a folder called `wxWidgets` in deps, and extract both archives into there.
 
 ### Building it
-Creat a folder called `build` and open a terminal into it. Then run this command: `cmake -DSDL2_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2" -DSDL2MAIN_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2main.lib" -DSDL2_INCLUDE_DIR="../deps/SDL2-2.28.5/include/" -DPHYSFS_LIBRARY="../deps/physfs-release-3.2.0/build/Release/physfs.lib" -DPHYSFS_INCLUDE_DIR="../deps/physfs-release-3.2.0/src" -DLIBPNG_LIBRARY="../deps/lpng1640/projects/vstudio/x64/Release/libpng16.lib" -DLIBPNG_INCLUDE_DIR="../deps/lpng1640/" -DLUA_LIBRARY="../deps/lua-5.4.6/src/lua5.4.6.lib" -DLUA_INCLUDE_DIR="../deps/lua-5.4.6/src/" -DwxWidgets_ROOT_DIR="../deps/wxWidgets/" -DwxWidgets_CONFIGURATION=mswu -DwxWidgets_EXCLUDE_COMMON_LIBRARIES=ON ..`
+Creat a folder called `build` and open a terminal into it. Then run this command: `cmake -DSDL2_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2" -DSDL2MAIN_LIBRARY="../deps/SDL2-2.28.5/lib/x64/SDL2main.lib" -DSDL2_INCLUDE_DIR="../deps/SDL2-2.28.5/include/"  -DSDL2_MIXER_LIBRARY="../deps/SDL2_mixer-2.6.3/lib/x64/SDL2_mixer.lib" -DSDL2_MIXER_INCLUDE_DIR="../deps/SDL2_mixer-2.6.3/include" -DPHYSFS_LIBRARY="../deps/physfs-release-3.2.0/build/Release/physfs.lib" -DPHYSFS_INCLUDE_DIR="../deps/physfs-release-3.2.0/src" -DLIBPNG_LIBRARY="../deps/lpng1640/projects/vstudio/x64/Release/libpng16.lib" -DLIBPNG_INCLUDE_DIR="../deps/lpng1640/" -DLUA_LIBRARY="../deps/lua-5.4.6/src/lua5.4.6.lib" -DLUA_INCLUDE_DIR="../deps/lua-5.4.6/src/" -DwxWidgets_ROOT_DIR="../deps/wxWidgets/" -DwxWidgets_CONFIGURATION=mswu -DwxWidgets_EXCLUDE_COMMON_LIBRARIES=ON ..`
 
 ### Copying DLLs
 These should all be copied into the folder that the final executable (`duck-hacker.exe`) is built.
@@ -69,6 +72,7 @@ These should all be copied into the folder that the final executable (`duck-hack
 * `deps\lpng1640\projects\vstudio\x64\Release\libpng16.dll`
 * `deps\physfs-release-3.2.0\build\Release\physfs.dll`
 * `deps\SDL2-2.28.5\lib\x64\SDL2.dll`
+* `deps\SDL2_mixer-2.6.3\lib\x64\SDL2_mixer.dll`
 
 #### Debug builds
 * `deps\wxWidgets\lib\vc14x_x64_dll\wxbase32ud_vc14x_x64.dll`
