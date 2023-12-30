@@ -193,7 +193,7 @@ namespace duckhacker
 		//
 		// set up audio
 		//
-		music_manager_.Init();
+		music_manager_.Init(&content_manager_);
 
 		//
 		// launch editor thread
