@@ -66,7 +66,7 @@ namespace duckhacker
 		}
 
 		credits_screen_->OnEnter();
-		music_manager_.PlayTrack("menu");
+		music_manager_.PlayTrack("outro");
 		SetScreen_(credits_screen_);
 	}
 
