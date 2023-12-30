@@ -17,7 +17,7 @@ namespace duckhacker
 
 		void CreditsScreen::OnEnter()
 		{
-			// line_index_ = 0;
+			game_->GetProgressManager().SetLevelCompleted("credits");
 		}
 
 		void CreditsScreen::Update(double dt, input::Manager * input_manager)
