@@ -14,7 +14,7 @@ namespace duckhacker
 		{
 			void OnTextURL(wxTextUrlEvent & event)
 			{
-				if (!event.GetMouseEvent().ButtonUp(wxMOUSE_BTN_LEFT))
+				if (!event.GetMouseEvent().ButtonDown(wxMOUSE_BTN_LEFT))
 				{
 					return;
 				}
