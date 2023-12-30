@@ -17,6 +17,7 @@ namespace duckhacker
 	namespace world
 	{
 		class Bot;
+		class World;
 	}
 
 	namespace game
@@ -29,6 +30,15 @@ namespace duckhacker
 				std::mutex result_mutex;
 				std::condition_variable result_notify;
 				bool done = false;
+			};
+
+			struct SetWorldContext
+			{
+				world::World * world = nullptr;
+
+				bool done = false;
+				std::mutex done_mutex;
+				std::condition_variable done_notify;
 			};
 
 			class Frame;

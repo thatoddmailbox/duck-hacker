@@ -126,7 +126,7 @@ namespace duckhacker
 
 			void App::OnSetWorld(wxThreadEvent& e)
 			{
-				world::World * world = e.GetPayload<world::World *>();
+				SetWorldContext * ctx = e.GetPayload<SetWorldContext*>();
 
 				// close any open windows
 				// note how we build a list and then iterate over that, instead of iterating over the map directly
@@ -147,6 +147,13 @@ namespace duckhacker
 
 				frames_.clear();
 				bots_.clear();
+
+				ctx->done_mutex.lock();
+				ctx->done = true;
+				ctx->done_mutex.unlock();
+
+				ctx->done_notify.notify_one();
+
 			}
 		}
 	}

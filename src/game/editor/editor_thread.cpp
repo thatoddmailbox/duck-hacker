@@ -23,9 +23,19 @@ namespace duckhacker
 
 			void EditorThread::SetWorld(world::World * world)
 			{
+				SetWorldContext set_world_context;
+				set_world_context.world = world;
+
 				wxThreadEvent * e = new wxThreadEvent(EVENT_SET_WORLD);
-				e->SetPayload(world);
+				e->SetPayload(&set_world_context);
 				wxGetApp().QueueEvent(e);
+
+				{
+					std::unique_lock<std::mutex> lock(set_world_context.done_mutex);
+					set_world_context.done_notify.wait(lock, [&set_world_context] {
+						return set_world_context.done;
+					});
+				}
 			}
 
 			void EditorThread::OpenEditor(world::Bot * bot)
