@@ -11,11 +11,18 @@ namespace duckhacker
 			game_ = game;
 
 			lines_.clear();
-			lines_.push_back({ "Featherwing", "OK, I think this is the way to his office." });
+			lines_.push_back({ "Featherwing", "Alright. this is the moment of truth." });
+			lines_.push_back({ "Featherwing", "I'm going to go talk to Ducky." });
+			lines_.push_back({ "Featherwing", "I think this is the way to his office." });
+			lines_.push_back({ "Featherwing", "..." });
+			lines_.push_back({ "Featherwing", "Hello? It's me, the grasshopper deliveryman." });
 			lines_.push_back({ "Featherwing", "..." });
 			lines_.push_back({ "Featherwing", "Wait, I see him!!" });
 			lines_.push_back({ "Featherwing", "HEY DUCKY!" });
-			lines_.push_back({ "Featherwing", "THE SKY! IS BLUE!" });
+			lines_.push_back({ "Featherwing", "*deep breath*" });
+			lines_.push_back({ "Featherwing", "Here we go..." });
+			lines_.push_back({ "Featherwing", "THE SKY!!" });
+			lines_.push_back({ "Featherwing", "IS BLUE!" });
 			lines_.push_back({ "Featherwing", "AND YOU! ARE BLUE!!" });
 			lines_.push_back({ "Featherwing", "THEREFORE: YOU ARE THE SKY!" });
 			lines_.push_back({ "Featherwing", "AND THE SKY IS YOU!" });
