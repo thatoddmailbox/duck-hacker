@@ -71,7 +71,7 @@ namespace duckhacker
 				);
 				duckbot_text->SetEditable(false);
 				duckbot_text->SetBackgroundColour(wxColour(255, 255, 255));
-				duckbot_text->SetMargins(10, 10);
+				duckbot_text->SetMargins(5, 0);
 				duckbot_text->Bind(wxEVT_TEXT_URL, OnTextURL);
 				duckbot_panel_sizer->Add(duckbot_text, wxSizerFlags().Expand().Proportion(1));
 
@@ -128,7 +128,7 @@ namespace duckhacker
 				);
 				lua_text->SetEditable(false);
 				lua_text->SetBackgroundColour(wxColour(255, 255, 255));
-				lua_text->SetMargins(10, 10);
+				lua_text->SetMargins(5, 0);
 				lua_text->Bind(wxEVT_TEXT_URL, OnTextURL);
 				lua_panel_sizer->Add(lua_text, wxSizerFlags().Expand().Proportion(1));
 
