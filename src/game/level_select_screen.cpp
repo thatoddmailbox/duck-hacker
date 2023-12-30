@@ -80,6 +80,10 @@ namespace duckhacker
 					{
 						game_->GoToOutro();
 					}
+					else if (level_path == "credits")
+					{
+						game_->GoToCredits();
+					}
 					else
 					{
 						game_->GoToWorld(level_path);

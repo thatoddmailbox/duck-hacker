@@ -14,7 +14,8 @@ std::vector<std::string> levels = {
 	"worlds/level4.xml",
 	"worlds/level5.xml",
 	"worlds/level6.xml",
-	"outro"
+	"outro",
+	"credits"
 };
 
 namespace duckhacker
@@ -108,9 +109,13 @@ namespace duckhacker
 			{
 				return "Intro";
 			}
-			else if (index == levels.size() - 1)
+			else if (index == levels.size() - 2)
 			{
 				return "Outro";
+			}
+			else if (index == levels.size() - 1)
+			{
+				return "Credits";
 			}
 
 			return "Level " + std::to_string(index);
