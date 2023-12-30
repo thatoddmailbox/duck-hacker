@@ -35,7 +35,31 @@ namespace duckhacker
 
 			ImGui::PushFont(content_manager->Font(content::FontType::LARGE));
 
-			ImGui::TextWrapped("TODO: write credits");
+			ImGui::TextWrapped(
+				"Duck Hacker\n"
+				"\n"
+				"Created by Alex Studer\n"
+				"\n"
+				"Font: TODO put the right thing here\n"
+				"\n"
+				"Music:\n"
+				"- Adding the Sun\n"
+				"- Ethernight Club\n"
+				"- Twisting\n"
+				"All tracks by Kevin MacLeod (incompetech.com)\n"
+				"Licensed under Creative Commons: By Attribution 4.0 License\n"
+				"http://creativecommons.org/licenses/by/4.0/\n"
+				"\n"
+				"Open-source software used: TODO license text\n"
+				"- dear imgui\n"
+				"- libpng\n"
+				"- lua\n"
+				"- SDL2\n"
+				"- SDL2_mixer\n"
+				"- PhysicsFS\n"
+				"\n"
+				"Thanks for playing!\n"
+			);
 
 			ImGui::PopFont();
 
