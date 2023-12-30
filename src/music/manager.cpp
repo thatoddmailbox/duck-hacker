@@ -6,8 +6,10 @@ namespace duckhacker
 {
 	namespace music
 	{
-		void Manager::Init()
+		void Manager::Init(content::Manager * content_manager)
 		{
+			content_manager_ = content_manager;
+
 			if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0)
 			{
 				std::string message = "Failed to initialize audio: " + std::string(Mix_GetError());
@@ -17,7 +19,15 @@ namespace duckhacker
 
 		void Manager::PlayTrack(std::string track)
 		{
-			// TODO: implement
+			if (track == current_track_)
+			{
+				return;
+			}
+
+			Mix_Music * music = content_manager_->Music("music/" + track + ".ogg");
+			Mix_FadeOutMusic(50);
+			Mix_FadeInMusic(music, -1, 200);
+			current_track_ = track;
 		}
 	}
 }

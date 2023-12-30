@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "content/manager.hpp"
+
 namespace duckhacker
 {
 	class Game;
@@ -14,8 +16,12 @@ namespace duckhacker
 		class Manager
 		{
 		public:
-			void Init();
+			void Init(content::Manager * content_manager);
 			void PlayTrack(std::string track);
+
+		private:
+			content::Manager * content_manager_ = nullptr;
+			std::string current_track_ = "";
 		};
 	}
 }
