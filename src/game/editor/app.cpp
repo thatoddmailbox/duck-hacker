@@ -31,13 +31,6 @@ namespace duckhacker
 				Bind(EVENT_GATHER_CODE, &App::OnGatherCode, this);
 				Bind(EVENT_SET_WORLD, &App::OnSetWorld, this);
 
-				// wxMessageBox("Hellooooo this is wxWidgets!!","hi :)", wxOK | wxICON_INFORMATION, nullptr);
-
-				// wxString code = "duck";
-				// Frame * frame = new Frame(1, code);
-				// frame->Show(true);
-				// frames_[1] = frame;
-
 				return true;
 			}
 
