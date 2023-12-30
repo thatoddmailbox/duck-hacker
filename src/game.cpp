@@ -12,6 +12,7 @@
 #include "external/imgui/backends/imgui_impl_opengl3.h"
 
 #include "defs.hpp"
+#include "game/credits_screen.hpp"
 #include "game/intro_screen.hpp"
 #include "game/level_select_screen.hpp"
 #include "game/main_menu_screen.hpp"
@@ -55,6 +56,18 @@ namespace duckhacker
 	void Game::SetScreen_(game::Screen * screen)
 	{
 		current_screen_ = screen;
+	}
+
+	void Game::GoToCredits()
+	{
+		if (!credits_screen_)
+		{
+			credits_screen_ = new game::CreditsScreen(this, &content_manager_);
+		}
+
+		credits_screen_->OnEnter();
+		music_manager_.PlayTrack("menu");
+		SetScreen_(credits_screen_);
 	}
 
 	void Game::GoToIntro()
