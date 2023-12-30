@@ -65,6 +65,7 @@ namespace duckhacker
 		}
 
 		intro_screen_->OnEnter();
+		music_manager_.PlayTrack("menu");
 		SetScreen_(intro_screen_);
 	}
 
@@ -86,6 +87,7 @@ namespace duckhacker
 			level_select_screen_ = new game::LevelSelectScreen(this, &content_manager_);
 		}
 		level_select_screen_->OnEnter();
+		music_manager_.PlayTrack("menu");
 		SetScreen_(level_select_screen_);
 	}
 
@@ -106,6 +108,7 @@ namespace duckhacker
 		{
 			main_menu_screen_ = new game::MainMenuScreen(this, &content_manager_);
 		}
+		music_manager_.PlayTrack("menu");
 		SetScreen_(main_menu_screen_);
 	}
 
@@ -117,6 +120,7 @@ namespace duckhacker
 		}
 
 		outro_screen_->OnEnter();
+		music_manager_.PlayTrack("outro");
 		SetScreen_(outro_screen_);
 	}
 
@@ -139,6 +143,7 @@ namespace duckhacker
 		{
 			world_screen_->SetWorld(world_);
 		}
+		music_manager_.PlayTrack("game");
 		SetScreen_(world_screen_);
 	}
 
