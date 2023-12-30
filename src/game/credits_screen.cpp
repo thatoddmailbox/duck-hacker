@@ -53,8 +53,11 @@ namespace duckhacker
 				"\n"
 				"Open-source software used:\n"
 				"\t- dear imgui: Copyright (c) 2014-2023 Omar Cornut\n"
+				"\t- glad: Copyright (c) 2013-2021 David Herberth\n"
+				"\t- glm: Copyright (c) 2005 G-Truc Creation\n"
 				"\t- libpng: Copyright (c) 1995-2023 The PNG Reference Library Authors\n"
 				"\t- lua: Copyright (c) 1994-2023 Lua.org, PUC-Rio\n"
+				"\t- pugixml: Copyright (c) 2006-2023 Arseny Kapoulkine\n"
 				"\t- SDL: Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>\n"
 				"\t- SDL_mixer: Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>\n"
 				"\t- PhysicsFS: Copyright (c) 2001-2022 Ryan C. Gordon <icculus@icculus.org> and others.\n"
@@ -68,7 +71,7 @@ namespace duckhacker
 			constexpr int BUTTON_HEIGHT = 50;
 
 			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
-			ImGui::SetCursorPosY(SCREEN_HEIGHT - 150);
+			ImGui::SetCursorPosY(SCREEN_HEIGHT - 100);
 			if (ImGui::Button("Back to main menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
 			{
 				game_->GoToMainMenu();
