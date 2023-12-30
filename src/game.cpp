@@ -218,8 +218,16 @@ namespace duckhacker
 		//
 		std::thread t(game::editor::EditorThread::Run, &editor_thread_);
 
-		// TODO: error checking, read from an archive
-		PHYSFS_mount("data/", nullptr, 0);
+		// add both the zip archive and the folder
+		// this will try the folder first, then the archive
+		int err = PHYSFS_mount("data.zip", nullptr, 0);
+		int err2 = PHYSFS_mount("data/", nullptr, 0);
+		if (err == 0 && err2 == 0)
+		{
+			// could not load either the zip or the folder
+			HandleFatalError("Could not load data.");
+			return;
+		}
 
 		GoToMainMenu();
 
