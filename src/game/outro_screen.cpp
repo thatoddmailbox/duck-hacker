@@ -11,7 +11,7 @@ namespace duckhacker
 			game_ = game;
 
 			lines_.clear();
-			lines_.push_back({ "Featherwing", "Alright. this is the moment of truth." });
+			lines_.push_back({ "Featherwing", "Alright, this is the moment of truth." });
 			lines_.push_back({ "Featherwing", "I'm going to go talk to Ducky." });
 			lines_.push_back({ "Featherwing", "I think this is the way to his office." });
 			lines_.push_back({ "Featherwing", "..." });
