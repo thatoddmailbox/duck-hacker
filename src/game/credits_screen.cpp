@@ -65,6 +65,16 @@ namespace duckhacker
 
 			ImGui::PopFont();
 
+			constexpr int BUTTON_WIDTH = 200;
+			constexpr int BUTTON_HEIGHT = 50;
+
+			ImGui::SetCursorPosX((ImGui::GetWindowSize().x - BUTTON_WIDTH) / 2.0f);
+			ImGui::SetCursorPosY(SCREEN_HEIGHT - 125);
+			if (ImGui::Button("Back to main menu", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT)))
+			{
+				game_->GoToMainMenu();
+			}
+
 			ImGui::End();
 
 			ImGui::PopStyleColor();
