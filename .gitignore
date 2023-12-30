@@ -1,3 +1,4 @@
 build*/
 *.blend[0-9]
 deps
+*.aps

@@ -44,6 +44,10 @@ file(GLOB SOURCES
 	"src/world/*.cpp"
 )
 
+if(WIN32)
+	list(APPEND SOURCES "duck-hacker.rc")
+endif()
+
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
 if(MSVC)
