@@ -378,37 +378,40 @@ namespace duckhacker
 
 			ImGui::PopStyleVar(1);
 
-			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 200 - 50, 100), ImGuiCond_Appearing);
-			ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Appearing);
-			if (game_->GetProgressManager().IsDebuggingEnabled() && ImGui::Begin("Scene settings"))
+			if (game_->GetProgressManager().IsDebuggingEnabled())
 			{
-				ImGui::SeparatorText("Camera");
-				ImGui::SliderFloat("Radius##CameraRadius", &target_radius_, 1, 100);
-				ImGui::SliderFloat("Yaw##CameraYaw", &yaw_, 0, 360);
-				ImGui::SliderFloat("Pitch##CameraPitch", &pitch_, -89, 89);
-				ImGui::SliderFloat3("Focus point##CameraFocus", &focus_point_.x, -5, 5);
+				ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 200 - 50, 100), ImGuiCond_Appearing);
+				ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_Appearing);
+				if (ImGui::Begin("Scene settings"))
+				{
+					ImGui::SeparatorText("Camera");
+					ImGui::SliderFloat("Radius##CameraRadius", &target_radius_, 1, 100);
+					ImGui::SliderFloat("Yaw##CameraYaw", &yaw_, 0, 360);
+					ImGui::SliderFloat("Pitch##CameraPitch", &pitch_, -89, 89);
+					ImGui::SliderFloat3("Focus point##CameraFocus", &focus_point_.x, -5, 5);
 
-				ImGui::SeparatorText("Light 1");
-				ImGui::SliderFloat3("Direction##Light1Direction", &lights_[0].Direction.x, -1, 1);
-				ImGui::SliderFloat4("Diffuse##Light1Diffuse", &lights_[0].Diffuse.x, 0, 1);
-				ImGui::SliderFloat4("Ambient##Light1Ambient", &lights_[0].Ambient.x, 0, 1);
-				ImGui::SliderFloat4("Specular##Light1Specular", &lights_[0].Specular.x, 0, 1);
+					ImGui::SeparatorText("Light 1");
+					ImGui::SliderFloat3("Direction##Light1Direction", &lights_[0].Direction.x, -1, 1);
+					ImGui::SliderFloat4("Diffuse##Light1Diffuse", &lights_[0].Diffuse.x, 0, 1);
+					ImGui::SliderFloat4("Ambient##Light1Ambient", &lights_[0].Ambient.x, 0, 1);
+					ImGui::SliderFloat4("Specular##Light1Specular", &lights_[0].Specular.x, 0, 1);
 
-				ImGui::SeparatorText("Light 2");
-				ImGui::SliderFloat3("Direction##Light2Direction", &lights_[1].Direction.x, -1, 1);
-				ImGui::SliderFloat4("Diffuse##Light2Diffuse", &lights_[1].Diffuse.x, 0, 1);
-				ImGui::SliderFloat4("Ambient##Light2Ambient", &lights_[1].Ambient.x, 0, 1);
-				ImGui::SliderFloat4("Specular##Light2Specular", &lights_[1].Specular.x, 0, 1);
+					ImGui::SeparatorText("Light 2");
+					ImGui::SliderFloat3("Direction##Light2Direction", &lights_[1].Direction.x, -1, 1);
+					ImGui::SliderFloat4("Diffuse##Light2Diffuse", &lights_[1].Diffuse.x, 0, 1);
+					ImGui::SliderFloat4("Ambient##Light2Ambient", &lights_[1].Ambient.x, 0, 1);
+					ImGui::SliderFloat4("Specular##Light2Specular", &lights_[1].Specular.x, 0, 1);
 
-				// ImGui::SeparatorText("Sign");
-				// float r = -world_->objects[2].GetRotation().y;
-				// if (ImGui::SliderFloat("Rotation", &r, 0, 360))
-				// {
-				// 	world_->objects[2].SetRotation(glm::vec3(0, -r, 0));
-				// }
+					// ImGui::SeparatorText("Sign");
+					// float r = -world_->objects[2].GetRotation().y;
+					// if (ImGui::SliderFloat("Rotation", &r, 0, 360))
+					// {
+					// 	world_->objects[2].SetRotation(glm::vec3(0, -r, 0));
+					// }
+				}
+
+				ImGui::End();
 			}
-
-			ImGui::End();
 
 			world::Console& console = world_->GetConsole();
 
