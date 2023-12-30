@@ -54,7 +54,7 @@ namespace duckhacker
 				if (line_index_ >= lines_.size())
 				{
 					game_->GetProgressManager().SetLevelCompleted("outro");
-					game_->GoToMainMenu();
+					game_->GoToCredits();
 				}
 			}
 		}
