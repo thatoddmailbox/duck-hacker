@@ -549,29 +549,30 @@ namespace duckhacker
 				}
 
 				ImGui::PopStyleVar();
-			}
-			ImGui::PopID();
 
-
-			ImGui::PushOverrideID(EXIT_MODAL_ID);
-			ImGui::SetNextWindowSize(ImVec2(EXIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);
-			if (ImGui::BeginPopupModal(EXIT_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-			{
-				ImGui::TextWrapped("You will lose your progress in this level.");
-
-				ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100 * 2 - 8);
-				if (ImGui::Button("No", ImVec2(100, 0)))
+				ImGui::PushOverrideID(EXIT_MODAL_ID);
+				ImGui::SetNextWindowSize(ImVec2(EXIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+				if (ImGui::BeginPopupModal(EXIT_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 				{
-					ImGui::CloseCurrentPopup();
-				}
+					ImGui::TextWrapped("You will lose your progress in this level.");
 
-				ImGui::SameLine();
-				ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100);
-				if (ImGui::Button("Yes", ImVec2(100, 0)))
-				{
-					editor_thread_->SetWorld(nullptr);
-					game_->GoToMainMenu();
+					ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100 * 2 - 8);
+					if (ImGui::Button("No", ImVec2(100, 0)))
+					{
+						ImGui::CloseCurrentPopup();
+					}
+
+					ImGui::SameLine();
+					ImGui::SetCursorPosX(EXIT_MODAL_WIDTH - 100);
+					if (ImGui::Button("Yes", ImVec2(100, 0)))
+					{
+						editor_thread_->SetWorld(nullptr);
+						game_->GoToMainMenu();
+					}
+
+					ImGui::EndPopup();
 				}
+				ImGui::PopID();
 
 				ImGui::EndPopup();
 			}
