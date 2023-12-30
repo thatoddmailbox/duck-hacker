@@ -67,9 +67,11 @@ namespace duckhacker
 
 			OutroLine& line = lines_[line_index_];
 
-			ImGui::Text("%s", line.speaker.c_str());
-
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 1);
+			if (!line.speaker.empty())
+			{
+				ImGui::Text("%s", line.speaker.c_str());
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 1);
+			}
 
 			ImGui::PushFont(content_manager->Font(content::FontType::LARGE));
 
