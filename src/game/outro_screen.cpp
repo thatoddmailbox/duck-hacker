@@ -69,6 +69,8 @@ namespace duckhacker
 
 			ImGui::Text("%s", line.speaker.c_str());
 
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 1);
+
 			ImGui::PushFont(content_manager->Font(content::FontType::LARGE));
 
 			ImGui::TextWrapped("%s", line.text.c_str());
