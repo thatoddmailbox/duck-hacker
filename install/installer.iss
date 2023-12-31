@@ -9,6 +9,7 @@ Compression=lzma2
 SolidCompression=yes
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
+SourceDir=Input/
 
 [Files]
 Source: "duck-hacker.exe"; DestDir: "{app}"
