@@ -164,6 +164,18 @@ namespace duckhacker
 			return shader_iter->second;
 		}
 
+		Mix_Chunk * Manager::SoundEffect(const std::string& path)
+		{
+			std::map<std::string, Mix_Chunk *>::iterator sound_effect_iter = sound_effects_.find(path);
+			if (sound_effect_iter == sound_effects_.end())
+			{
+				sound_effects_[path] = Mix_LoadWAV_RW(PHYSFSRWOPS_openRead(path.c_str()), 1);
+
+				sound_effect_iter = sound_effects_.find(path);
+			}
+			return sound_effect_iter->second;
+		}
+
 		render::Texture * Manager::Texture(const std::string& path)
 		{
 			std::map<std::string, render::Texture *>::iterator texture_iter = textures_.find(path);

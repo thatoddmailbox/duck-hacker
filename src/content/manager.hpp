@@ -42,6 +42,7 @@ namespace duckhacker
 			render::Mesh * Mesh(const std::string& path, render::Shader * shader);
 			Mix_Music * Music(const std::string& path);
 			render::Shader * Shader(const std::string& path);
+			Mix_Chunk * SoundEffect(const std::string& path);
 			render::Texture * Texture(const std::string& path);
 
 		protected:
@@ -52,6 +53,7 @@ namespace duckhacker
 			std::map<std::string, render::Mesh *> meshes_;
 			std::map<std::string, Mix_Music *> musics_;
 			std::map<std::string, render::Shader *> shaders_;
+			std::map<std::string, Mix_Chunk *> sound_effects_;
 			std::map<std::string, render::Texture *> textures_;
 
 			ImFont * font_regular_;
