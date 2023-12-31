@@ -357,6 +357,7 @@ namespace duckhacker
 				ImGui::PushOverrideID(VICTORY_MODAL_ID);
 				if (!ImGui::IsPopupOpen(VICTORY_MODAL_NAME, ImGuiPopupFlags_AnyPopupId))
 				{
+					game_->GetMusicManager().PlaySoundEffect("win");
 					game_->GetProgressManager().SetLevelCompleted(world_->GetFilePath());
 					ImGui::OpenPopup(VICTORY_MODAL_NAME);
 				}
