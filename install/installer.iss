@@ -1,12 +1,13 @@
 [Setup]
 AppName=Duck Hacker
 AppVersion=1.0
+VersionInfoVersion=1.0
 WizardStyle=modern
 DefaultDirName={autopf}\Dogo\Duck Hacker
 DefaultGroupName=Dogo
 OutputBaseFilename=DuckHackerSetup
 UninstallDisplayIcon={app}\duck-hacker.exe
-Compression=zip
+Compression=bzip
 SolidCompression=yes
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
