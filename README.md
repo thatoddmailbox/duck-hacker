@@ -8,8 +8,4 @@ Make sure to run `git submodule update --init --recursive` to clone the submodul
 See the [Windows build instructions](./docs/build-windows.md).
 
 ### On Linux
-```bash
-# path is for wx-config for wxWidgets
-export PATH=$PATH:/home/alex/Documents/duck-stuff/root/bin
-SDL2DIR=/home/alex/Documents/duck-stuff/root PHYSFSDIR=/home/alex/Documents/duck-stuff/root LIBPNGDIR=/home/alex/Documents/duck-stuff/root cmake ..
-```
+See the [Linux build instructions](./docs/build-linux.md).
