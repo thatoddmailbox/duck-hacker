@@ -195,6 +195,7 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(MISSION_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(MISSION_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), ImGuiCond_Appearing, ImVec2(0.5, 0.5));
 			if (ImGui::BeginPopupModal(MISSION_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				ImGui::TextWrapped("%s", world_->GetMission().c_str());
