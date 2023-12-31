@@ -127,6 +127,8 @@ namespace duckhacker
 
 	void Game::GoToOutro()
 	{
+		editor_thread_.SetWorld(nullptr);
+
 		if (!outro_screen_)
 		{
 			outro_screen_ = new game::OutroScreen(this, &content_manager_);
