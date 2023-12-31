@@ -67,6 +67,8 @@ Create a folder called `build` and open a terminal into it. Then run this comman
 
 This will generate a `duck-hacker.sln` file which you can then open in Visual Studio. From there, set the `duck-hacker` project as your startup project and then you can just hit the Run button! Make sure to set the build type (Debug, RelWithDebInfo, Release).
 
+If you only have the command line tools installed, or you just want to use the CLI, you can also pass `-G "NMake Makefiles"` and then use `nmake` to build the project. Note that with nmake, you must set the build type beforehand with `-DCMAKE_BUILD_TYPE`, like on Linux.
+
 ### Copying DLLs
 These should all be copied into the folder that the final executable (`duck-hacker.exe`) is built.
 
