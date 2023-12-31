@@ -41,6 +41,7 @@ namespace duckhacker
 		void GoToOutro();
 		void GoToWorld(std::string world_path);
 
+		music::Manager& GetMusicManager() { return music_manager_; }
 		progress::Manager& GetProgressManager() { return progress_manager_; }
 
 		void Run();
