@@ -17,6 +17,12 @@ namespace duckhacker
 			}
 		}
 
+		void Manager::PlaySoundEffect(std::string sound_effect)
+		{
+			Mix_Chunk * chunk = content_manager_->SoundEffect("sounds/" + sound_effect + ".wav");
+			Mix_PlayChannel(-1, chunk, 0);
+		}
+
 		void Manager::PlayTrack(std::string track)
 		{
 			if (track == current_track_)

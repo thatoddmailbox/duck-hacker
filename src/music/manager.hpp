@@ -17,6 +17,7 @@ namespace duckhacker
 		{
 		public:
 			void Init(content::Manager * content_manager);
+			void PlaySoundEffect(std::string sound_effect);
 			void PlayTrack(std::string track);
 
 		private:
