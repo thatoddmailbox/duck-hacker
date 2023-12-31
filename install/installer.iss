@@ -7,7 +7,8 @@ DefaultGroupName=Dogo
 UninstallDisplayIcon={app}\duck-hacker.exe
 Compression=lzma2
 SolidCompression=yes
-; OutputDir=userdocs:Inno Setup Examples Output
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
 
 [Files]
 Source: "duck-hacker.exe"; DestDir: "{app}"
