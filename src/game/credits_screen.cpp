@@ -46,7 +46,7 @@ namespace duckhacker
 				"Music:\n"
 				"\t- Adding the Sun\n"
 				"\t- Ethernight Club\n"
-				"\t- Twisting\n"
+				"\t- Space 1990\n"
 				"\tAll tracks by Kevin MacLeod (incompetech.com)\n"
 				"\tLicensed under Creative Commons: By Attribution 4.0 License\n"
 				"\thttp://creativecommons.org/licenses/by/4.0/\n"
