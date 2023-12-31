@@ -467,6 +467,7 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(NO_EDIT_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(NO_EDIT_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), ImGuiCond_Appearing, ImVec2(0.5, 0.5));
 			if (ImGui::BeginPopupModal(NO_EDIT_MODAL_NAME, nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				ImGui::TextWrapped("You can only change the code of your DuckBot.");
@@ -483,6 +484,7 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(VICTORY_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(VICTORY_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), ImGuiCond_Appearing, ImVec2(0.5, 0.5));
 			if (ImGui::BeginPopupModal(VICTORY_MODAL_NAME, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				static const char * hacked_text = "Hacked!";
@@ -533,6 +535,7 @@ namespace duckhacker
 
 			ImGui::PushOverrideID(MENU_MODAL_ID);
 			ImGui::SetNextWindowSize(ImVec2(MENU_MODAL_WIDTH, 0), ImGuiCond_Appearing);
+			ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), ImGuiCond_Appearing, ImVec2(0.5, 0.5));
 			if (ImGui::BeginPopupModal(MENU_MODAL_NAME, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 8.0f));
