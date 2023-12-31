@@ -5,7 +5,7 @@ end
 while true do
 	while true do
 		local request = duckbot.listen()
-		print(request)
+		--print(request)
 		duckbot.say("OK!")
 
 		-- go into archives
@@ -25,7 +25,7 @@ while true do
 
 		for token in requestItems:gmatch("[^,]+") do
 			local trimmedToken = trim(token)
-			print(trimmedToken)
+			--print(trimmedToken)
 
 			trimmedToken, _ = trimmedToken:gsub("a ", "", 1)
 			trimmedToken, _ = trimmedToken:gsub("an ", "", 1)

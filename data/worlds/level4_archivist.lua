@@ -42,7 +42,7 @@ while true do
 	local intro = duckbot.listen() -- Here's what I found for your 3 requests.
 
 	local itemCount = tonumber(intro:match("%d+"))
-	print(itemCount)
+	--print(itemCount)
 
 	-- listen for each item
 	local itemNames = {}
@@ -51,12 +51,12 @@ while true do
 		local itemIntro = duckbot.listen() -- Here's the regular map.
 		local itemName = itemIntro:match("Here's the (.+).")
 		if itemName ~= nil then
-			print(itemName, "found")
+			--print(itemName, "found")
 			table.insert(itemNames, itemName)
 			table.insert(itemStatuses, "found")
 		else -- I couldn't find the regular map.
 			itemName = itemIntro:match("I couldn't find the (.+).")
-			print(itemName, "not found")
+			--print(itemName, "not found")
 			table.insert(itemNames, itemName)
 			table.insert(itemStatuses, "not found")
 		end
