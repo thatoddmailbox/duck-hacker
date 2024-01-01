@@ -1,5 +1,7 @@
 # Building on Linux
-You will need the following libraries built:
+You will need a working C++ compiler and `cmake` installed.
+
+You will also need the following libraries built:
 * SDL2
 * SDL2_mixer
 * PhysicsFS
