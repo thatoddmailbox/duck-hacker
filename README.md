@@ -1,6 +1,8 @@
 # duck-hacker
 This is a game where you hack various things by programming DuckBots, small robots that run Lua code.
 
+The game is written in C++ and uses OpenGL for rendering.
+
 ## Building
 Make sure to run `git submodule update --init --recursive` to clone the submodules, as some dependencies are included that way.
 
