@@ -9,6 +9,8 @@ You will also need the following libraries built:
 * Lua
 * wxWidgets (core, base, stc)
 
+For the libraries, it is recommended that you build them from source and install them into a local prefix.
+
 ## Actually building it
 ```bash
 # path is for wx-config for wxWidgets
