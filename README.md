@@ -1,5 +1,5 @@
 # duck-hacker
-This is a game where you hack various things by programming DuckBots, small robots that run Lua code.
+Duck Hacker is a game where you hack various things by programming DuckBots, small robots that run Lua code.
 
 The game is written in C++ and uses OpenGL for rendering. The code is based on [tigame](https://github.com/thatoddmailbox/tigame)'s rendering engine, but with many internal changes.
 
