@@ -8,8 +8,6 @@ SDL2 is also used to set up a window and initialize OpenGL. wxWidgets runs in a 
 ## Building
 Make sure to run `git submodule update --init --recursive` to clone the submodules, as some dependencies are included that way.
 
-### On Windows
-See the [Windows build instructions](./docs/build-windows.md).
-
-### On Linux
-See the [Linux build instructions](./docs/build-linux.md).
+Then, follow the build instructions for your platform:
+* [Windows build instructions](./docs/build-windows.md).
+* [Linux build instructions](./docs/build-linux.md).
