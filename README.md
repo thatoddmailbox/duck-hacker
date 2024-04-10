@@ -22,10 +22,10 @@ Then, follow the build instructions for your platform:
 Either I made them or they were generated with the Bing AI image creator. You can probably tell which is which.
 
 ### Music used
-* Adding the Sun, Kevin MacLeod (incompetech.com)
-* Ethernight Club, Kevin MacLeod (incompetech.com)
+* Adding the Sun by Kevin MacLeod, https://incompetech.com
+* Ethernight Club by Kevin MacLeod, https://incompetech.com
 * Jingle_Win_Synth_01, https://freesound.org/people/LittleRobotSoundFactory/sounds/274179/
-* Space 1990, Kevin MacLeod (incompetech.com)
+* Space 1990 by Kevin MacLeod, https://incompetech.com
 
 ### Libraries used
 * dear imgui
