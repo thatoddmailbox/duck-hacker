@@ -1,4 +1,9 @@
 # duck-hacker
+<p float="left">
+	<img src="./img/screenshot01.png" alt="Game screenshot" width="49%" />
+	<img src="./img/screenshot02.png" alt="Game screenshot" width="49%" />
+</p>
+
 Duck Hacker is a game where you hack various things by programming DuckBots, small robots that run Lua code.
 
 The game is written in C++ and uses OpenGL for rendering. The code is based on [tigame](https://github.com/thatoddmailbox/tigame)'s rendering engine, but with many internal changes.
