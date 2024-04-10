@@ -16,3 +16,24 @@ Make sure to run `git submodule update --init --recursive` to clone the submodul
 Then, follow the build instructions for your platform:
 * [Windows build instructions](./docs/build-windows.md).
 * [Linux build instructions](./docs/build-linux.md).
+
+## Credits
+### Graphics used
+Either I made them or they were generated with the Bing AI image creator. You can probably tell which is which.
+
+### Music used
+* Adding the Sun, Kevin MacLeod (incompetech.com)
+* Ethernight Club, Kevin MacLeod (incompetech.com)
+* Jingle_Win_Synth_01, https://freesound.org/people/LittleRobotSoundFactory/sounds/274179/
+* Space 1990, Kevin MacLeod (incompetech.com)
+
+### Libraries used
+* dear imgui
+* glad
+* glm
+* libpng
+* lua
+* pugixml
+* SDL
+* SDL_mixer
+* PhysicsFS
